@@ -7,15 +7,15 @@
     <div class="games">
         <div class="game" onclick="window.location.href='#';">
             <img src="https://via.placeholder.com/150" alt="Игра 1">
-            <p>Игра 1</p>
+            <a href="game-quest">Игра Квест</a>
         </div>
         <div class="game" onclick="window.location.href='#';">
             <img src="https://via.placeholder.com/150" alt="Игра 2">
-            <p>Игра 2</p>
+            <a href="game-roulette">Игра Рулетка</a>
         </div>
         <div class="game" onclick="window.location.href='#';">
             <img src="https://via.placeholder.com/150" alt="Игра 3">
-            <p>Игра 3</p>
+            <a href="game-quiz">Игра Викторина</a>
         </div>
     </div>
 </main>

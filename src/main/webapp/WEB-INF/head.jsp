@@ -11,17 +11,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <!-- Верхняя часть -->
-<header class="header">
-    <div class="stats">
-        <p>Игр: <span>0</span></p>
-        <p>Побед: <span>0</span></p>
-        <p>Поражений: <span>0</span></p>
-    </div>
-    <div class="auth">
-        <button class="btn">Регистрация</button>
-        <button class="btn">Войти</button>
-        <input type="text" placeholder="Логин" class="form-control">
-        <input type="password" placeholder="Пароль" class="form-control">
-    </div>
-</header>
+<c:if test="${1==1}">
+    <header class="header">
+
+        <div class="auth">
+            <button class="btn">Регистрация</button>
+            <button class="btn">Войти</button>
+            <input type="text" placeholder="Логин" class="form-control">
+            <input type="password" placeholder="Пароль" class="form-control">
+        </div>
+    </header>
+</c:if>
+<c:if test="${1==2}">
+    <header class="header">
+        <div class="stats">
+            <p>Игр: <span>0</span></p>
+            <p>Побед: <span>0</span></p>
+            <p>Поражений: <span>0</span></p>
+        </div>
+        <div class="auth">
+            <button class="btn">Регистрация</button>
+            <button class="btn">Войти</button>
+            <input type="text" placeholder="Логин" class="form-control">
+            <input type="password" placeholder="Пароль" class="form-control">
+        </div>
+    </header>
+</c:if>
