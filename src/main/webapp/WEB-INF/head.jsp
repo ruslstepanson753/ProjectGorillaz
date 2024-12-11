@@ -13,29 +13,31 @@
 <body>
 
 <!-- Верхняя часть -->
-<c:if test="${1==1}">
+<c:if test="${2==1}">
     <header class="header">
-
-        <div class="auth">
-            <button class="btn">Регистрация</button>
-            <button class="btn">Войти</button>
-            <input type="text" placeholder="Логин" class="form-control">
-            <input type="password" placeholder="Пароль" class="form-control">
+        <div class="left-part">
+            <img src="path/to/image.jpg" alt="Header Image" class="header-image">
+        </div>
+        <div class="right-part">
+            <div class="auth">
+                <button class="btn">Регистрация</button>
+                <button class="btn enter-btn">Войти</button>
+                <input type="text" placeholder="Логин" class="form-control">
+                <input type="password" placeholder="Пароль" class="form-control">
+            </div>
         </div>
     </header>
 </c:if>
-<c:if test="${1==2}">
+<c:if test="${2==2}">
     <header class="header">
-        <div class="stats">
-            <p>Игр: <span>0</span></p>
-            <p>Побед: <span>0</span></p>
-            <p>Поражений: <span>0</span></p>
+        <div class="left-part">
+            <p class="stat">Игр: <span>0</span></p>
+            <p class="stat">Побед: <span>0</span></p>
+            <p class="stat">Поражений: <span>0</span></p>
         </div>
-        <div class="auth">
-            <button class="btn">Регистрация</button>
-            <button class="btn">Войти</button>
-            <input type="text" placeholder="Логин" class="form-control">
-            <input type="password" placeholder="Пароль" class="form-control">
+        <div class="right-part">
+            <p class="login"> Hello World!</p>
+        </div>
         </div>
     </header>
 </c:if>
