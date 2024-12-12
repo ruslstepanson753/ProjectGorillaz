@@ -11,7 +11,15 @@
 <footer class="footer">
     <p>Санкт-Петербург 2024г</p>
 </footer>
-
+<script>
+    function submitForm(action) {
+        // Устанавливаем action формы в зависимости от нажатой кнопки
+        document.getElementById("authForm").action = action;
+        // Отправляем форму
+        document.getElementById("authForm").submit();
+    }
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

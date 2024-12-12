@@ -13,31 +13,44 @@
 <body>
 
 <!-- Верхняя часть -->
-<c:if test="${2==1}">
-    <header class="header">
-        <div class="left-part">
-            <img src="path/to/image.jpg" alt="Header Image" class="header-image">
+<c:choose>
+<c:when test="${not empty sessionScope.login}">
+<header class="header">
+    <div class="left-part">
+        <p class="stat">Игр:  <span>${sessionScope.gamescount}</span></p>
+        <p class="stat">Побед:  <span>${sessionScope.winscount}</span></p>
+        <p class="stat">Поражений:  <span>${sessionScope.losscount}</span></p>
+    </div>
+    <div class="right-part">
+        <p class="login"> ${sessionScope.login} к игре готов</p>
+    </div>
+    </div>
+</header>
+</c:when>
+<c:otherwise>
+<header class="header">
+    <div class="left-part">
+        <img src="path/to/image.jpg" alt="Header Image" class="header-image">
+    </div>
+    <div class="right-part">
+        <div class="auth">
+            <!-- Форма для входа -->
+            <form id="authForm" method="post">
+                <input type="text" name="login" placeholder="Логин" class="form-control">
+                <input type="password" name="password" placeholder="Пароль" class="form-control">
+
+                <!-- Кнопка для входа -->
+                <button type="submit" onclick="submitForm('login-entrance')" class="btn enter-btn">Войти</button>
+
+                <!-- Кнопка для регистрации -->
+                <button type="submit" onclick="submitForm('login-registration')" class="btn">Регистрация</button>
+            </form>
+
+
         </div>
-        <div class="right-part">
-            <div class="auth">
-                <button class="btn">Регистрация</button>
-                <button class="btn enter-btn">Войти</button>
-                <input type="text" placeholder="Логин" class="form-control">
-                <input type="password" placeholder="Пароль" class="form-control">
-            </div>
-        </div>
-    </header>
-</c:if>
-<c:if test="${2==2}">
-    <header class="header">
-        <div class="left-part">
-            <p class="stat">Игр: <span>0</span></p>
-            <p class="stat">Побед: <span>0</span></p>
-            <p class="stat">Поражений: <span>0</span></p>
-        </div>
-        <div class="right-part">
-            <p class="login"> Hello World!</p>
-        </div>
-        </div>
-    </header>
-</c:if>
+    </div>
+</header>
+</c:otherwise>
+</c:choose>
+
+

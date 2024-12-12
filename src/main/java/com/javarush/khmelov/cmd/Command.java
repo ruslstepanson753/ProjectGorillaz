@@ -1,5 +1,6 @@
 package com.javarush.khmelov.cmd;
 
+import com.javarush.khmelov.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.stream.Collectors;
@@ -31,6 +32,14 @@ public interface Command {
         return snakeName.startsWith("-")
                 ? snakeName.substring(1)
                 : snakeName;
+    }
+
+    default void addUserInfoToSession(HttpServletRequest req, User user) {
+        req.getSession().setAttribute("user", user);
+        req.getSession().setAttribute("login", user.getLogin());
+        req.getSession().setAttribute("gamescount", user.getGamesCount());
+        req.getSession().setAttribute("winscount", user.getWinsCount());
+        req.getSession().setAttribute("losscount", user.getLossCount());
     }
 
 
