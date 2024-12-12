@@ -12,8 +12,7 @@
     <div class="right-part">
         <!-- Верхняя часть: текст -->
         <div class="top-part">
-            <p>Это блок, в котором можно размещать любой контент.</p>
-            <p>Это блок, в котором можно размещать любой контент.</p>
+            <p>${fullText}</p>
         </div>
 
         <!-- Нижняя часть: кнопки и ресурсы -->
@@ -21,10 +20,10 @@
             <!-- Кнопки -->
             <div class="buttons">
                 <!-- Левая кнопка -->
-                <button class="btn">Левая кнопка</button>
+                <button class="btn">${buttonLeft}</button>
 
                 <!-- Правая кнопка -->
-                <button class="btn">Правая кнопка</button>
+                <button class="btn">${buttonRight}</button>
             </div>
 
             <!-- Ресурсы -->
@@ -32,19 +31,19 @@
                 <!-- Время -->
                 <div class="resource">
                     <img src="path/to/time-icon.png" alt="Время">
-                    <span>12:00</span>
+                    <span>${time}</span>
                 </div>
 
                 <!-- Деньги -->
                 <div class="resource">
                     <img src="path/to/money-icon.png" alt="Деньги">
-                    <span>500</span>
+                    <span>${evidence}</span>
                 </div>
 
                 <!-- Улики -->
                 <div class="resource">
                     <img src="path/to/clue-icon.png" alt="Улики">
-                    <span>3</span>
+                    <span>${gold}</span>
                 </div>
             </div>
         </div>
