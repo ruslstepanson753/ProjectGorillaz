@@ -13,6 +13,7 @@ import static com.javarush.khmelov.storage.quest.ResultText.*;
 public class QuestRepository  {
 
     private final static List<QuestInfoEntity> questList = new LinkedList<>();
+    private final static Map<String,String> winLossMap = new HashMap<>();
 
     public QuestRepository() {
 
@@ -76,10 +77,17 @@ public class QuestRepository  {
                 IMAGE_URL_STATE_FIVE
         ));
 
+        winLossMap.put("DESCRIPTION_TEXT_WIN",DESCRIPTION_TEXT_WIN);
+        winLossMap.put("DESCRIPTION_TEXT_LOSS",DESCRIPTION_TEXT_LOSS);
+        winLossMap.put("IMAGE_URL_WIN",IMAGE_URL_WIN);
+        winLossMap.put("IMAGE_URL_LOSS",IMAGE_URL_LOSS);
+
     }
 
     public List<QuestInfoEntity> getAll() {
         return questList;
     }
+
+    public Map<String,String> getWinLossMap() {return winLossMap;}
 
 }

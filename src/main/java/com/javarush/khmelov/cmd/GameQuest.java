@@ -5,6 +5,7 @@ import com.javarush.khmelov.storage.quest.QuestRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.javarush.khmelov.storage.ConstantsCommon.LEFT;
 
@@ -12,6 +13,7 @@ import static com.javarush.khmelov.storage.ConstantsCommon.LEFT;
 public class GameQuest implements Command {
 
     private  List<QuestInfoEntity> questList ;
+    private Map<String,String> winLossMap;
     private QuestInfoEntity conditionEntity;
     private Integer time;
     private Integer evidence;
@@ -20,19 +22,35 @@ public class GameQuest implements Command {
     int step;
 
     public GameQuest(QuestRepository questRepository) {
+        this.winLossMap = questRepository.getWinLossMap();
         this.questList = questRepository.getAll();
     }
 
     @Override
     public String doGet(HttpServletRequest req) {
+
+        //понимаю, что эта чать написана плохо, но беда со временем её исправлять
         String paramName = req.getParameter("pickedButton");
-        if (paramName == null)
-        setStartCondition(req);
-        else {
-            setCondition(req);
+        if (paramName == null){
+            setStartCondition(req);
         }
-        fillRequest(req);
+        else {
+            if(step<questList.size()) {
+                setCondition(req);
+            }
+        }
+
+        if(step<questList.size()){
+            fillRequest(req);
+        }
         step++;
+
+        if (lossCheck()){
+            goToLoss(req);
+        } else if (winCheck()) {
+            goToWin(req);
+        }
+
         return getView();
     }
 
@@ -40,7 +58,7 @@ public class GameQuest implements Command {
     public String doPost(HttpServletRequest req) {
         setCondition(req);
         fillRequest(req);
-        return getView();
+        return "start-page";
     }
 
     private void setStartCondition(HttpServletRequest req){
@@ -72,6 +90,32 @@ public class GameQuest implements Command {
         req.setAttribute("evidence", evidence);
         req.setAttribute("gold", gold);
         req.setAttribute("imageUrl", conditionEntity.getImageUrl());
+    }
+
+    private boolean winCheck(){
+        if(step==6){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean lossCheck(){
+        if((time<=0)||(evidence<=0)||(gold<=0)){
+            return true;
+        }
+        return false;
+    }
+
+    private void goToWin(HttpServletRequest req){
+        req.setAttribute("description", winLossMap.get("DESCRIPTION_TEXT_WIN"));
+        req.setAttribute("imageUrl", winLossMap.get("IMAGE_URL_WIN"));
+        req.setAttribute("isWin", true);
+    }
+
+    private void goToLoss(HttpServletRequest req){
+        req.setAttribute("description", winLossMap.get("DESCRIPTION_TEXT_LOSS"));
+        req.setAttribute("imageUrl", winLossMap.get("IMAGE_URL_LOSS"));
+        req.setAttribute("isLoss", true);
     }
 
 

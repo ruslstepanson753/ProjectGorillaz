@@ -1,59 +1,107 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="head.jsp"%>
 
-
-<div class="container">
-    <!-- Левая часть: картинка -->
-    <div class="left-part">
-        <img src="path/to/image.jpg" alt="Картинка">
-    </div>
-
-    <!-- Правая часть: блок для дальнейшей верстки -->
-    <div class="right-part">
-        <!-- Верхняя часть: текст -->
-        <div class="top-part">
-            <p>${result}</p>
-            <p>${description}</p>
-        </div>
-
-        <!-- Нижняя часть: кнопки и ресурсы -->
-        <div class="bottom-part">
-            <!-- Кнопки -->
-            <div class="buttons">
-                <!-- Левая кнопка -->
-                <form id="authFormLeft" action="/game-quest" method="get">
-                    <button type="submit" name="pickedButton" value="l" class="btn">${buttonLeft}</button>
-                </form>
-                <!-- Правая кнопка -->
-                <form id="authFormRight" action="/game-quest" method="get">
-                    <button type="submit" name="pickedButton" value="r" class="btn">${buttonRight}</button>
-                </form>
-
+<c:choose>
+    <c:when test="${isWin == true}">
+        <div class="container1">
+            <!-- Верхняя часть: картинка, занимающая две трети пространства -->
+            <div class="image-container1">
+                <img src="${imageUrl}" alt="Картинка" class="top-image1">
             </div>
 
-            <!-- Ресурсы -->
-            <div class="resources">
-                <!-- Время -->
-                <div class="resource">
-                    <img src="path/to/time-icon.png" alt="Время">
-                    <span>${time}</span>
+            <!-- Средняя часть: текст -->
+            <div class="text-container1">
+                <p>${description}</p>
+            </div>
+
+            <!-- Нижняя часть: кнопка -->
+            <div class="button-container1">
+                <form action="start-page" method="post">
+                    <button type="submit" class="btn">ОК</button>
+                </form>
+            </div>
+        </div>
+    </c:when>
+    <c:when test="${isLoss == true}">
+        <div class="container1">
+            <!-- Верхняя часть: картинка, занимающая две трети пространства -->
+            <div class="image-container1">
+                <img src="${imageUrl}" alt="Картинка" class="top-image1">
+            </div>
+
+            <!-- Средняя часть: текст -->
+            <div class="text-container1">
+                <p>${description}</p>
+            </div>
+
+            <!-- Нижняя часть: кнопка -->
+            <div class="button-container1">
+                <form action="start-page" method="post">
+                    <button type="submit" class="btn">ОК</button>
+                </form>
+            </div>
+        </div>
+    </c:when>
+    <c:when test="${isWin != true and isLoss != true}">
+
+        <div class="container">
+            <!-- Левая часть: картинка -->
+            <div class="left-part">
+                <img src="path/to/image.jpg" alt="Картинка">
+            </div>
+
+            <!-- Правая часть: блок для дальнейшей верстки -->
+            <div class="right-part">
+                <!-- Верхняя часть: текст -->
+                <div class="top-part">
+                    <p>${result}</p>
+                    <p>${description}</p>
                 </div>
 
-                <!-- Деньги -->
-                <div class="resource">
-                    <img src="path/to/money-icon.png" alt="Деньги">
-                    <span>${evidence}</span>
-                </div>
+                <!-- Нижняя часть: кнопки и ресурсы -->
+                <div class="bottom-part">
+                    <!-- Кнопки -->
+                    <div class="buttons">
+                        <!-- Левая кнопка -->
+                        <form id="authFormLeft" action="/game-quest" method="get">
+                            <button type="submit" name="pickedButton" value="l" class="btn">${buttonLeft}</button>
+                        </form>
+                        <!-- Правая кнопка -->
+                        <form id="authFormRight" action="/game-quest" method="get">
+                            <button type="submit" name="pickedButton" value="r" class="btn">${buttonRight}</button>
+                        </form>
 
-                <!-- Улики -->
-                <div class="resource">
-                    <img src="path/to/clue-icon.png" alt="Улики">
-                    <span>${gold}</span>
+                    </div>
+
+                    <!-- Ресурсы -->
+                    <div class="resources">
+                        <!-- Время -->
+                        <div class="resource">
+                            <img src="path/to/time-icon.png" alt="Время">
+                            <span>${time}</span>
+                        </div>
+
+                        <!-- Деньги -->
+                        <div class="resource">
+                            <img src="path/to/money-icon.png" alt="Деньги">
+                            <span>${evidence}</span>
+                        </div>
+
+                        <!-- Улики -->
+                        <div class="resource">
+                            <img src="path/to/clue-icon.png" alt="Улики">
+                            <span>${gold}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
+    </c:when>
+</c:choose>
+
+
+
 
 
 
@@ -133,6 +181,56 @@
         width: 24px;
         height: 24px;
         margin-right: 10px; /* Отступ между иконкой и текстом */
+    }
+</style>
+
+<%--стили для вин,луз--%>
+<style>
+    .container1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Занимает всю высоту экрана */
+        text-align: center;
+    }
+
+    .image-container1 {
+        width: 100%;
+        height: 66.66%; /* Две трети высоты */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* Чтобы изображение не выходило за границы */
+    }
+
+    .top-image1 {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain; /* Подгоняет изображение под размеры контейнера */
+    }
+
+    .text-container1 {
+        width: 100%;
+        height: 20%; /* Оставшаяся часть под текстом */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .button-container1 {
+        width: 100%;
+        height: 13.34%; /* Оставшаяся часть под кнопкой */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ok-button1 {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
     }
 </style>
 <%@include file="footer.jsp"%>
