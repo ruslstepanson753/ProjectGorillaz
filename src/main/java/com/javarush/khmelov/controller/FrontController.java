@@ -28,7 +28,6 @@ public class FrontController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
 
-
     }
 
     private static String getJsp(String view) {
