@@ -1,6 +1,6 @@
 package com.javarush.khmelov.service;
 
-import com.javarush.khmelov.repository.UserRepository;
+import com.javarush.khmelov.storage.repository.UserRepository;
 import com.javarush.khmelov.entity.User;
 
 import java.util.Collection;

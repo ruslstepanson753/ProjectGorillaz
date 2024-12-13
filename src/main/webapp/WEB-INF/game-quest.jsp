@@ -12,7 +12,8 @@
     <div class="right-part">
         <!-- Верхняя часть: текст -->
         <div class="top-part">
-            <p>${fullText}</p>
+            <p>${result}</p>
+            <p>${description}</p>
         </div>
 
         <!-- Нижняя часть: кнопки и ресурсы -->
@@ -20,10 +21,14 @@
             <!-- Кнопки -->
             <div class="buttons">
                 <!-- Левая кнопка -->
-                <button class="btn">${buttonLeft}</button>
-
+                <form id="authFormLeft" action="/game-quest" method="get">
+                    <button type="submit" name="pickedButton" value="l" class="btn">${buttonLeft}</button>
+                </form>
                 <!-- Правая кнопка -->
-                <button class="btn">${buttonRight}</button>
+                <form id="authFormRight" action="/game-quest" method="get">
+                    <button type="submit" name="pickedButton" value="r" class="btn">${buttonRight}</button>
+                </form>
+
             </div>
 
             <!-- Ресурсы -->

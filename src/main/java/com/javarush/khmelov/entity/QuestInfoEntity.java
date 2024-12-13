@@ -17,7 +17,9 @@ public class QuestInfoEntity {
 
     private String buttonRightText;
 
-    private Map<String,String> resultTexts;
+    private String resultLeftText;
+
+    private String resultRightText;
 
     private Map<String,Integer> deltaTime;
 
@@ -29,8 +31,16 @@ public class QuestInfoEntity {
 
     private String imageUrl;
 
-    public String getResultText(String pickedButton){
-        return resultTexts.get(pickedButton);
+    public Integer getDeltaTime(String pickedButton){
+        return deltaTime.get(pickedButton);
+    }
+
+    public Integer getDeltaEvidence(String pickedButton){
+        return deltaEvidence.get(pickedButton);
+    }
+
+    public Integer getDeltaGold(String pickedButton){
+        return deltaGold.get(pickedButton);
     }
 }
 
