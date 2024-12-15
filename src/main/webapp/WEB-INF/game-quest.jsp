@@ -11,13 +11,13 @@
 
             <!-- Средняя часть: текст -->
             <div class="text-container1">
-                <p>${description}</p>
+                <p style="white-space: pre-wrap;" >${description}</p>
             </div>
 
             <!-- Нижняя часть: кнопка -->
             <div class="button-container1">
                 <form action="start-page" method="post">
-                    <button type="submit" class="btn">ОК</button>
+                    <button type="submit" class="btn" style="white-space: pre-wrap;" >ОК</button>
                 </form>
             </div>
         </div>
@@ -30,14 +30,15 @@
             </div>
 
             <!-- Средняя часть: текст -->
-            <div class="text-container1">
-                <p>${description}</p>
+            <div class="text-container">
+                <p style="white-space: pre-wrap;" >${lossСause}</p>
+                <p style="white-space: pre-wrap;" >${description}</p>
             </div>
 
             <!-- Нижняя часть: кнопка -->
             <div class="button-container1">
                 <form action="start-page" method="post">
-                    <button type="submit" class="btn">ОК</button>
+                    <button type="submit" class="btn" style="white-space: pre-wrap;" >ОК</button>
                 </form>
             </div>
         </div>
@@ -54,8 +55,8 @@
             <div class="right-part">
                 <!-- Верхняя часть: текст -->
                 <div class="top-part">
-                    <p>${result}</p>
-                    <p>${description}</p>
+                    <p style="white-space: pre-wrap;" >${result}</p>
+                    <p style="white-space: pre-wrap;">${description}</p>
                 </div>
 
                 <!-- Нижняя часть: кнопки и ресурсы -->
@@ -64,11 +65,11 @@
                     <div class="buttons">
                         <!-- Левая кнопка -->
                         <form id="authFormLeft" action="/game-quest" method="get">
-                            <button type="submit" name="pickedButton" value="l" class="btn">${buttonLeft}</button>
+                            <button style="white-space: pre-wrap;" type="submit" name="pickedButton" value="l" class="btn">${buttonLeft}</button>
                         </form>
                         <!-- Правая кнопка -->
                         <form id="authFormRight" action="/game-quest" method="get">
-                            <button type="submit" name="pickedButton" value="r" class="btn">${buttonRight}</button>
+                            <button  style="white-space: pre-wrap;" type="submit" name="pickedButton" value="r" class="btn">${buttonRight}</button>
                         </form>
 
                     </div>

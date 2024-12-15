@@ -1,8 +1,10 @@
 package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.entity.User;
+import com.javarush.khmelov.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,6 +42,18 @@ public interface Command {
         req.getSession().setAttribute("gamescount", user.getGamesCount());
         req.getSession().setAttribute("winscount", user.getWinsCount());
         req.getSession().setAttribute("losscount", user.getLossCount());
+    }
+
+    default User findUser(HttpServletRequest req, UserService userService) {
+        String login = req.getSession().getAttribute("login").toString();
+        User user;
+        Collection<User> allUsers= userService.getAll();
+        for (User u : allUsers) {
+            if (u.getLogin().equals(login)) {
+                return u;
+            }
+        }
+        return null;
     }
 
 

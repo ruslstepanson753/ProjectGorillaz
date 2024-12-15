@@ -1,6 +1,8 @@
 package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.entity.QuestInfoEntity;
+import com.javarush.khmelov.entity.User;
+import com.javarush.khmelov.service.UserService;
 import com.javarush.khmelov.storage.quest.QuestRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -8,36 +10,35 @@ import java.util.List;
 import java.util.Map;
 
 import static com.javarush.khmelov.storage.ConstantsCommon.LEFT;
+import static com.javarush.khmelov.storage.ConstantsCommon.RIGHT;
 
 @SuppressWarnings("unused")
 public class GameQuest implements Command {
-
+    private final UserService userService;
     private  List<QuestInfoEntity> questList ;
-    private Map<String,String> winLossMap;
+    private Map<String,String> questMap;
     private QuestInfoEntity conditionEntity;
     private Integer time;
     private Integer evidence;
     private Integer gold;
-    private String pickedButton;
+    private String pickedButton =LEFT;
     int step;
 
-    public GameQuest(QuestRepository questRepository) {
-        this.winLossMap = questRepository.getWinLossMap();
-        this.questList = questRepository.getAll();
+    public GameQuest(QuestRepository questRepository, UserService userService) {
+        this.userService = userService;
+        this.questMap = questRepository.getQuestMap();
+        this.questList = questRepository.getQuestList();
     }
 
     @Override
     public String doGet(HttpServletRequest req) {
 
-        //понимаю, что эта чать написана плохо, но беда со временем её исправлять
         String paramName = req.getParameter("pickedButton");
         if (paramName == null){
             setStartCondition(req);
         }
         else {
-            if(step<questList.size()) {
                 setCondition(req);
-            }
         }
 
         if(step<questList.size()){
@@ -62,16 +63,17 @@ public class GameQuest implements Command {
     }
 
     private void setStartCondition(HttpServletRequest req){
-        pickedButton=LEFT;
-        step=0;
-        time = 5;
-        evidence = 4;
-        gold = 3;
+        step=Integer.parseInt(questMap.get("START_STEP"));
+        time = Integer.parseInt(questMap.get("START_TIME"));
+        evidence = Integer.parseInt(questMap.get("START_EVIDENCE"));
+        gold = Integer.parseInt(questMap.get("START_GOLD"));
         conditionEntity = questList.get(step);
     }
 
     private void setCondition(HttpServletRequest req){
-        conditionEntity = questList.get(step);
+        if(step<questList.size()){
+            conditionEntity = questList.get(step);
+        }
         pickedButton = req.getParameter("pickedButton");
         time += conditionEntity.getDeltaTime(pickedButton) ;
         evidence += conditionEntity.getDeltaEvidence(pickedButton);
@@ -100,22 +102,48 @@ public class GameQuest implements Command {
     }
 
     private boolean lossCheck(){
-        if((time<=0)||(evidence<=0)||(gold<=0)){
+        if((time<=0)||(evidence<=0)||(gold<=0)||((step==2)&(pickedButton.equals(RIGHT)))){
             return true;
         }
         return false;
     }
 
     private void goToWin(HttpServletRequest req){
-        req.setAttribute("description", winLossMap.get("DESCRIPTION_TEXT_WIN"));
-        req.setAttribute("imageUrl", winLossMap.get("IMAGE_URL_WIN"));
+        req.setAttribute("description", questMap.get("DESCRIPTION_TEXT_WIN"));
+        req.setAttribute("imageUrl", questMap.get("IMAGE_URL_WIN"));
         req.setAttribute("isWin", true);
+        User user = findUser(req,userService);
+        if (user != null) {
+            user.setGamesCount(user.getGamesCount()+1);
+            user.setWinsCount(user.getWinsCount()+1);
+            addUserInfoToSession(req, user);
+        }
     }
 
     private void goToLoss(HttpServletRequest req){
-        req.setAttribute("description", winLossMap.get("DESCRIPTION_TEXT_LOSS"));
-        req.setAttribute("imageUrl", winLossMap.get("IMAGE_URL_LOSS"));
+        String lossСause;
+        if (time == 0) {
+            lossСause = questMap.get("CAUSE_TEXT_TIME_LOSS");
+        } else if (gold == 0) {
+            lossСause = questMap.get("CAUSE_TEXT_GOLD_LOSS");
+        } else if (evidence == 0) {
+            lossСause = questMap.get("CAUSE_TEXT_EVIDENCE_LOSS");
+        } else if (step == 2 && pickedButton.equals(RIGHT)) {
+            lossСause = questMap.get("CAUSE_TEXT_WRONG_STEP_LOSS");
+        } else {
+            lossСause = questMap.get("CAUSE_TEXT_UNKNOWN_LOSS");
+        }
+        req.setAttribute("lossСause", lossСause);
+        req.setAttribute("description", questMap.get("DESCRIPTION_TEXT_LOSS"));
+        req.setAttribute("imageUrl", questMap.get("IMAGE_URL_LOSS"));
         req.setAttribute("isLoss", true);
+        User user = findUser(req,userService);
+        if (user != null) {
+            user.setGamesCount(user.getGamesCount()+1);
+            user.setLossCount(user.getLossCount()+1);
+            addUserInfoToSession(req, user);
+        }
+
     }
 
 

@@ -15,21 +15,11 @@ public class LoginEntrance implements Command {
 
     @Override
     public String doPost(HttpServletRequest req) {
-        String login = req.getParameter("login");
-        User user = findUser(login);
+        User user = findUser(req,userService);
         addUserInfoToSession(req, user);
         return "start-page";
     }
 
-    private User findUser(String login) {
-        User user;
-        Collection<User> allUsers= userService.getAll();
-        for (User u : allUsers) {
-            if (u.getLogin().equals(login)) {
-                return u;
-            }
-        }
-        return null;
-    }
+
 
 }

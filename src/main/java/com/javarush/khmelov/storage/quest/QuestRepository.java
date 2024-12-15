@@ -5,7 +5,7 @@ import com.javarush.khmelov.entity.QuestInfoEntity;
 import java.util.*;
 
 import static com.javarush.khmelov.storage.quest.ButtonText.*;
-import static com.javarush.khmelov.storage.quest.Delta.*;
+import static com.javarush.khmelov.storage.quest.SetResourse.*;
 import static com.javarush.khmelov.storage.quest.Description.*;
 import static com.javarush.khmelov.storage.quest.ImageUrl.*;
 import static com.javarush.khmelov.storage.quest.ResultText.*;
@@ -13,7 +13,7 @@ import static com.javarush.khmelov.storage.quest.ResultText.*;
 public class QuestRepository  {
 
     private final static List<QuestInfoEntity> questList = new LinkedList<>();
-    private final static Map<String,String> winLossMap = new HashMap<>();
+    private final static Map<String,String> questMap = new HashMap<>();
 
     public QuestRepository() {
 
@@ -77,17 +77,27 @@ public class QuestRepository  {
                 IMAGE_URL_STATE_FIVE
         ));
 
-        winLossMap.put("DESCRIPTION_TEXT_WIN",DESCRIPTION_TEXT_WIN);
-        winLossMap.put("DESCRIPTION_TEXT_LOSS",DESCRIPTION_TEXT_LOSS);
-        winLossMap.put("IMAGE_URL_WIN",IMAGE_URL_WIN);
-        winLossMap.put("IMAGE_URL_LOSS",IMAGE_URL_LOSS);
+        questMap.put("DESCRIPTION_TEXT_WIN",DESCRIPTION_TEXT_WIN);
+        questMap.put("DESCRIPTION_TEXT_LOSS",DESCRIPTION_TEXT_LOSS);
+        questMap.put("IMAGE_URL_WIN",IMAGE_URL_WIN);
+        questMap.put("IMAGE_URL_LOSS",IMAGE_URL_LOSS);
+        questMap.put("CAUSE_TEXT_TIME_LOSS",CAUSE_TEXT_TIME_LOSS);
+        questMap.put("CAUSE_TEXT_GOLD_LOSS",CAUSE_TEXT_GOLD_LOSS);
+        questMap.put("CAUSE_TEXT_WRONG_STEP_LOSS",CAUSE_TEXT_WRONG_STEP_LOSS);
+        questMap.put("CAUSE_TEXT_UNKNOWN_LOSS",CAUSE_TEXT_UNKNOWN_LOSS);
+        questMap.put("CAUSE_TEXT_EVIDENCE_LOSS",CAUSE_TEXT_EVIDENCE_LOSS);
+        questMap.put("START_EVIDENCE",START_EVIDENCE);
+        questMap.put("START_TIME",START_TIME);
+        questMap.put("START_GOLD",START_GOLD);
+        questMap.put("START_STEP",START_STEP);
+
 
     }
 
-    public List<QuestInfoEntity> getAll() {
+    public List<QuestInfoEntity> getQuestList() {
         return questList;
     }
 
-    public Map<String,String> getWinLossMap() {return winLossMap;}
+    public Map<String,String> getQuestMap() {return questMap;}
 
 }
