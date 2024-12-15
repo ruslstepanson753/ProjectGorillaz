@@ -30,7 +30,7 @@
 <c:otherwise>
 <header class="header">
     <div class="left-part">
-        <img src="path/to/image.jpg" alt="Header Image" class="header-image">
+        <img src="${sessionScope.IMG_START_HEAD}" alt="Header Image" class="header-image">
     </div>
     <div class="right-part">
         <div class="auth">
