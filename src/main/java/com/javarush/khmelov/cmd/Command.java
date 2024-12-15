@@ -45,7 +45,15 @@ public interface Command {
     }
 
     default User findUser(HttpServletRequest req, UserService userService) {
-        String login = req.getSession().getAttribute("login").toString();
+
+        Object loginAttribute = req.getSession().getAttribute("login");
+        String login;
+        if (loginAttribute != null) {
+             login = loginAttribute.toString();
+            // Дальнейшая обработка переменной login
+        } else {
+           return null;
+        }
         User user;
         Collection<User> allUsers= userService.getAll();
         for (User u : allUsers) {

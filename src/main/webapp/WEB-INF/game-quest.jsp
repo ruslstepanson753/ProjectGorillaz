@@ -48,7 +48,7 @@
         <div class="container">
             <!-- Левая часть: картинка -->
             <div class="left-part">
-                <img src="path/to/image.jpg" alt="Картинка">
+                <img src="${imageUrl}" alt="Картинка">
             </div>
 
             <!-- Правая часть: блок для дальнейшей верстки -->
@@ -77,20 +77,21 @@
                     <!-- Ресурсы -->
                     <div class="resources">
                         <!-- Время -->
+
                         <div class="resource">
-                            <img src="path/to/time-icon.png" alt="Время">
+                            <img src="${sessionScope.IMAGE_URL_TIME}" alt="Время">
                             <span>${time}</span>
                         </div>
 
                         <!-- Деньги -->
                         <div class="resource">
-                            <img src="path/to/money-icon.png" alt="Деньги">
+                            <img src="${sessionScope.IMAGE_URL_EVIDENCE}" alt="Улики">
                             <span>${evidence}</span>
                         </div>
 
                         <!-- Улики -->
                         <div class="resource">
-                            <img src="path/to/clue-icon.png" alt="Улики">
+                            <img src="${sessionScope.IMAGE_URL_GOLD}" alt="Деньги">
                             <span>${gold}</span>
                         </div>
                     </div>
@@ -108,6 +109,12 @@
 
 <style>
     /* Основные стили */
+
+
+    .resource span {
+        font-size: 2em; /* Увеличенный текст в 2 раза */
+    }
+
     body, html {
         margin: 0;
         padding: 0;
@@ -179,9 +186,9 @@
     }
 
     .resource img {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px; /* Отступ между иконкой и текстом */
+        width: 100px;
+        height: 100px;
+        margin-right: 20px; /* Отступ между иконкой и текстом */
     }
 </style>
 

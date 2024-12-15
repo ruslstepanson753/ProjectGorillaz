@@ -68,6 +68,9 @@ public class GameQuest implements Command {
         evidence = Integer.parseInt(questMap.get("START_EVIDENCE"));
         gold = Integer.parseInt(questMap.get("START_GOLD"));
         conditionEntity = questList.get(step);
+        req.getSession().setAttribute("IMAGE_URL_EVIDENCE",questMap.get("IMAGE_URL_EVIDENCE"));
+        req.getSession().setAttribute("IMAGE_URL_GOLD",questMap.get("IMAGE_URL_GOLD"));
+        req.getSession().setAttribute("IMAGE_URL_TIME",questMap.get("IMAGE_URL_TIME"));
     }
 
     private void setCondition(HttpServletRequest req){

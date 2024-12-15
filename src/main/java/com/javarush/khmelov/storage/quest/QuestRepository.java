@@ -81,6 +81,9 @@ public class QuestRepository  {
         questMap.put("DESCRIPTION_TEXT_LOSS",DESCRIPTION_TEXT_LOSS);
         questMap.put("IMAGE_URL_WIN",IMAGE_URL_WIN);
         questMap.put("IMAGE_URL_LOSS",IMAGE_URL_LOSS);
+        questMap.put("IMAGE_URL_TIME",IMAGE_URL_TIME);
+        questMap.put("IMAGE_URL_GOLD",IMAGE_URL_GOLD);
+        questMap.put("IMAGE_URL_EVIDENCE",IMAGE_URL_EVIDENCE);
         questMap.put("CAUSE_TEXT_TIME_LOSS",CAUSE_TEXT_TIME_LOSS);
         questMap.put("CAUSE_TEXT_GOLD_LOSS",CAUSE_TEXT_GOLD_LOSS);
         questMap.put("CAUSE_TEXT_WRONG_STEP_LOSS",CAUSE_TEXT_WRONG_STEP_LOSS);
@@ -90,7 +93,6 @@ public class QuestRepository  {
         questMap.put("START_TIME",START_TIME);
         questMap.put("START_GOLD",START_GOLD);
         questMap.put("START_STEP",START_STEP);
-
 
     }
 

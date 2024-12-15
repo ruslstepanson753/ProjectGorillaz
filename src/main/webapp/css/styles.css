@@ -31,11 +31,13 @@ body {
     padding: 20px;
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Равномерно распределяет пространство */
 }
 .header .left-part {
+    flex: 2; /* Задает пропорцию для left-part */
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 10px; /* Добавляем расстояние между элементами */
 }
 
 .header .left-part p {
@@ -51,8 +53,10 @@ body {
     width: 66.67%; /* 2/3 ширины контейнера */
 }
 .header .right-part {
-    width: 20.33%; /* 1/3 ширины контейнера */
-    align-items: center;
+    flex: 1; /* Задает пропорцию для right-part */
+    display: flex;
+    justify-content: flex-end; /* Элементы прижимаются к правому краю */
+    gap: 10px; /* Расстояние между кнопками */
 }
 
 .header .auth input,
@@ -103,7 +107,6 @@ body {
     flex: 1;
     max-width: 30%;
     padding: 20px;
-    border: 2px solid white;
     cursor: pointer;
     background-color: rgb(51, 51, 51);
     display: flex;
@@ -111,8 +114,10 @@ body {
     align-items: center;
 }
 .game img {
-    width: 80%;
-    height: auto;
+    border: none; /* Убирает рамки вокруг изображения */
+    display: block; /* Убирает лишние пробелы */
+    width: 100%; /* Подгоняет изображение под контейнер */
+    height: auto; /* Сохраняет пропорции изображения */
 }
 .game p {
     margin-top: 20px;
@@ -121,6 +126,16 @@ body {
 }
 .game:hover {
     background-color: rgb(51, 51, 51);
+}
+
+.game a {
+    color: white; /* Цвет текста ссылки */
+    text-decoration: none; /* Убирает подчёркивание */
+    transition: color 0.3s ease; /* Плавное изменение цвета */
+}
+
+.game a:hover {
+    color: gray; /* Цвет текста ссылки при наведении */
 }
 
 /* Нижняя часть */
