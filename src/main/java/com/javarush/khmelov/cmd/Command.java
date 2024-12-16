@@ -77,7 +77,7 @@ public interface Command {
         User user = findUser(req,userService);
         if (user != null) {
             user.setGamesCount(user.getGamesCount()+1);
-            user.setLossCount(user.getWinsCount()+1);
+            user.setWinsCount(user.getWinsCount()+1);
             addUserInfoToSession(req, user);
         }
     }

@@ -38,6 +38,7 @@ public class GameRoulette implements Command {
         String rouletteColor = rouletteService.getResultOfRotation();
         String resulColor = "RESULT_COLOR_"+rouletteColor;
         String resultImgColor = "IMAGE_URL_"+rouletteColor;
+
         req.setAttribute("imageUrl",rouletteMap.get(resultImgColor));
         req.setAttribute("resultColor",rouletteMap.get(resulColor));
         req.setAttribute("winLossDescription",
@@ -45,6 +46,7 @@ public class GameRoulette implements Command {
                 ?rouletteMap.get("RESULT_WIN")
                 :rouletteMap.get("RESULT_LOSS"));
         req.setAttribute("isDone", true);
+
         if (pickedColor.equals(rouletteColor)){
             addUserWin(req,userService);
         }else{

@@ -1,10 +1,10 @@
 package com.javarush.khmelov.storage.quest;
 
 public class Description {
-    protected static final String DESCRIPTION_TEXT_STATE_ONE = "   Вы очнулись в Санкт-Петербурге без воспоминаний. У вас есть карта города, странный ключ и записка: \"Найди реликвию, чтобы вернуть свою память. Осторожно: время, улики и деньги ограничены, и каждая ошибка приближает тебя к провалу. Если время, деньги или улики окажутся на нуле – квест провален\".\n   Начать приключение?";
+    protected static final String DESCRIPTION_TEXT_STATE_ONE = "   Вы очнулись в Санкт-Петербурге без воспоминаний. У вас есть карта города, странный ключ и записка: \"Найди реликвию, чтобы вернуть свою память. Осторожно: время, улики и деньги ограничены, и каждая ошибка приближает тебя к провалу. \n Как только любой из ресурсов равен 0 – квест провален!\".\n   Начать приключение?";
     protected static final String DESCRIPTION_TEXT_STATE_TWO = "   Вы изучаете карту города и идете на Дворцовую площадь. Предстоит выбор:";
     protected static final String DESCRIPTION_TEXT_STATE_THREE = "   Получив подсказку, вы узнаёте, что реликвия спрятана в Петропавловской крепости \n   Чтобы войти, нужно:";
-    protected static final String DESCRIPTION_TEXT_STATE_FOUR = "   Внутри дверь, рядом с которой шифр\n   Сделайте выбор:";
+    protected static final String DESCRIPTION_TEXT_STATE_FOUR = "   На пути дверь, закрытая шифром\n   Сделайте выбор:";
     protected static final String DESCRIPTION_TEXT_STATE_FIVE = "   Здесь нужно решить последнюю загадку.";
 
     protected static final String DESCRIPTION_TEXT_WIN = "   Вы находите реликвию. Память возвращается к вам. Ваше внутреннее состояние - экстаз";
