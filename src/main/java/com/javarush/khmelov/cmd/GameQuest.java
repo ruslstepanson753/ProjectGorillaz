@@ -3,7 +3,7 @@ package com.javarush.khmelov.cmd;
 import com.javarush.khmelov.entity.QuestInfoEntity;
 import com.javarush.khmelov.entity.User;
 import com.javarush.khmelov.service.UserService;
-import com.javarush.khmelov.storage.quest.QuestRepository;
+import com.javarush.khmelov.storage.quest.QuestService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -24,10 +24,10 @@ public class GameQuest implements Command {
     private String pickedButton =LEFT;
     int step;
 
-    public GameQuest(QuestRepository questRepository, UserService userService) {
+    public GameQuest(QuestService questService, UserService userService) {
         this.userService = userService;
-        this.questMap = questRepository.getQuestMap();
-        this.questList = questRepository.getQuestList();
+        this.questMap = questService.getQuestMap();
+        this.questList = questService.getQuestList();
     }
 
     @Override
@@ -115,12 +115,7 @@ public class GameQuest implements Command {
         req.setAttribute("description", questMap.get("DESCRIPTION_TEXT_WIN"));
         req.setAttribute("imageUrl", questMap.get("IMAGE_URL_WIN"));
         req.setAttribute("isWin", true);
-        User user = findUser(req,userService);
-        if (user != null) {
-            user.setGamesCount(user.getGamesCount()+1);
-            user.setWinsCount(user.getWinsCount()+1);
-            addUserInfoToSession(req, user);
-        }
+        addUserWin(req,userService);
     }
 
     private void goToLoss(HttpServletRequest req){
@@ -140,12 +135,7 @@ public class GameQuest implements Command {
         req.setAttribute("description", questMap.get("DESCRIPTION_TEXT_LOSS"));
         req.setAttribute("imageUrl", questMap.get("IMAGE_URL_LOSS"));
         req.setAttribute("isLoss", true);
-        User user = findUser(req,userService);
-        if (user != null) {
-            user.setGamesCount(user.getGamesCount()+1);
-            user.setLossCount(user.getLossCount()+1);
-            addUserInfoToSession(req, user);
-        }
+        addUserLoss(req,userService);
 
     }
 

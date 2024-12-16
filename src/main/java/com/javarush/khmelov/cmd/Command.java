@@ -64,5 +64,23 @@ public interface Command {
         return null;
     }
 
+    default void addUserLoss(HttpServletRequest req, UserService userService) {
+        User user = findUser(req,userService);
+        if (user != null) {
+            user.setGamesCount(user.getGamesCount()+1);
+            user.setLossCount(user.getLossCount()+1);
+            addUserInfoToSession(req, user);
+        }
+    }
+
+    default void addUserWin(HttpServletRequest req,UserService userService) {
+        User user = findUser(req,userService);
+        if (user != null) {
+            user.setGamesCount(user.getGamesCount()+1);
+            user.setLossCount(user.getWinsCount()+1);
+            addUserInfoToSession(req, user);
+        }
+    }
+
 
 }
