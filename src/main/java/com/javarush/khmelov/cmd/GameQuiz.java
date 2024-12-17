@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.javarush.khmelov.storage.ConstantsCommon.FIRST_STEP;
+
 @SuppressWarnings("unused")
 public class GameQuiz implements Command {
     UserService userService;
@@ -29,20 +31,22 @@ public class GameQuiz implements Command {
     public String doGet(HttpServletRequest req) {
         String paramName = req.getParameter("pickedButton");
         if (paramName == null){
-            setStartCondition(req);
-        } else {
-            getInfo(req);
+            startCondition(req);
         }
-        if (step== questionsMap.size()){
-            setFinalCondition(req);
-        } else {
-            setCondition(req);
+        else {
+            if (step!= questionsMap.size()){
+                getInfo(req);
+                setCondition(req);
+            }else {
+                setFinalCondition(req);
+            }
         }
         step++;
         return getView();
     }
 
     private void setFinalCondition(HttpServletRequest req) {
+        сheckingCorrectnessAnswer(req);
         StringBuilder resultText = new StringBuilder();
         resultText.append("Верных ответов ");
         resultText.append(10-wrongAnswers.size());
@@ -68,18 +72,23 @@ public class GameQuiz implements Command {
         }
     }
 
-    private void setStartCondition(HttpServletRequest req) {
-        step = 0;
+    private void startCondition(HttpServletRequest req) {
+        step = FIRST_STEP;
         questionsMap = quizRepository.getRandomQuestionMap();
         for(String question: questionsMap.keySet()){
             questions.add(question);
         }
         question = questions.get(step);
+        setCondition(req);
     }
 
     private void getInfo(HttpServletRequest req) {
+        сheckingCorrectnessAnswer(req);
+        question = questions.get(step);
+    }
+
+    private void сheckingCorrectnessAnswer(HttpServletRequest req) {
         String usersAnswer = req.getParameter("answer");
-        question = questions.get(step-1);
         answer = questionsMap.get(question);
         if (!usersAnswer.toLowerCase().equals(answer.toLowerCase())){
             wrongAnswers.put(question,usersAnswer);

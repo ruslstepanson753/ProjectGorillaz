@@ -6,6 +6,8 @@ public class ConstantsCommon {
     public static final String LEFT = "l";
     public static final String RIGHT = "r";
 
+    public static final int FIRST_STEP = 0;
+
     public static final String IMG_PATH = "images"+File.separator;
 
     public static final String IMG_START_QUEST = IMG_PATH+"start_quest.jpg";
