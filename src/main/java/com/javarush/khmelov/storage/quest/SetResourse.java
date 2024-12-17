@@ -6,6 +6,11 @@ import static com.javarush.khmelov.storage.ConstantsCommon.LEFT;
 import static com.javarush.khmelov.storage.ConstantsCommon.RIGHT;
 
 public class SetResourse {
+
+    public static final int QUEST_END_STEP = 6;
+    public static final int QUEST_LOSS_STEP = 2;
+    public static final int QUEST_MIN_RESOURCE = 0;
+
     //---------------------------------------------TIME-------------------------------------------------
 
     protected static final Map<String, Integer> DELTA_TIME_MAP_STATE_ONE = Map.of(

@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static com.javarush.khmelov.storage.quiz.QuizConstants.NUMBER_OF_QUESTIONS;
 import static com.javarush.khmelov.storage.quiz.QuizConstants.TEXT_FILE;
 
 public class QuizRepository {
@@ -33,7 +34,7 @@ public class QuizRepository {
     public Map<String, String> getRandomQuestionMap() {
         List<String> keys = new ArrayList<>(questionMap.keySet());
         Collections.shuffle(keys);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < NUMBER_OF_QUESTIONS; i++) {
             String key = keys.get(i);
             randomMap.put(key, questionMap.get(key));
         }

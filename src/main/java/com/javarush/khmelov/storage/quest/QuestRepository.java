@@ -10,12 +10,12 @@ import static com.javarush.khmelov.storage.quest.Description.*;
 import static com.javarush.khmelov.storage.quest.ImageUrl.*;
 import static com.javarush.khmelov.storage.quest.ResultText.*;
 
-public class QuestService {
+public class QuestRepository {
 
     private final static List<QuestInfoEntity> questList = new LinkedList<>();
     private final static Map<String,String> questMap = new HashMap<>();
 
-    public QuestService() {
+    public QuestRepository() {
 
         questList.add(new QuestInfoEntity(
                 BUTTON_TEXT_LEFT_STATE_ONE,

@@ -65,6 +65,8 @@ public class GameQuiz implements Command {
         StringBuilder resultText = new StringBuilder();
         resultText.append("Верных ответов ");
         resultText.append(10-wrongAnswers.size());
+        resultText.append(" из  ");
+        resultText.append(questionsMap.size());
         resultText.append("\n");
         resultText.append("\n");
         for (String question : wrongAnswers.keySet()) {
