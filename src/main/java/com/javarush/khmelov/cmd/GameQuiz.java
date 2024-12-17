@@ -47,6 +47,21 @@ public class GameQuiz implements Command {
 
     private void setFinalCondition(HttpServletRequest req) {
         сheckingCorrectnessAnswer(req);
+        StringBuilder resultText = buildResultText();
+        setFinalAttributes(req, resultText);
+        setUserInfo(req);
+        clearDataCash();
+    }
+
+    private void setUserInfo(HttpServletRequest req) {
+        if (wrongAnswers.size()==0){
+            addUserWin(req,userService);
+        } else {
+            addUserLoss(req,userService);
+        }
+    }
+
+    private StringBuilder buildResultText() {
         StringBuilder resultText = new StringBuilder();
         resultText.append("Верных ответов ");
         resultText.append(10-wrongAnswers.size());
@@ -63,13 +78,13 @@ public class GameQuiz implements Command {
             resultText.append(questionsMap.get(question));
             resultText.append("\n\n");
         }
+        return resultText;
+    }
+
+    private void setFinalAttributes(HttpServletRequest req, StringBuilder resultText) {
         req.setAttribute("description", resultText.toString());
+        req.setAttribute("questionNumber", step+1);
         req.setAttribute("isDone", true);
-        if (wrongAnswers.size()==0){
-            addUserWin(req,userService);
-        } else {
-            addUserLoss(req,userService);
-        }
     }
 
     private void startCondition(HttpServletRequest req) {
@@ -98,5 +113,12 @@ public class GameQuiz implements Command {
     private void setCondition(HttpServletRequest req) {
         req.setAttribute("description", question);
         req.setAttribute("questionNumber", step+1);
+    }
+
+    private void clearDataCash(){
+        questionsMap.clear();
+        questions.clear();
+        wrongAnswers.clear();
+        quizRepository.clearRandomMap();
     }
 }

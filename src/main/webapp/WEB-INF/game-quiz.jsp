@@ -15,17 +15,29 @@
 <div class="container1">
     <!-- Средняя часть: текст -->
     <div class="text-container">
+<c:choose>
+    <c:when test="${isDone != true}">
         <p style="white-space: pre-wrap;" >Вопрос: №  ${questionNumber}</p>
+    </c:when>
+</c:choose>
         <p style="white-space: pre-wrap;" > ${description}</p>
     </div>
 
 
+<c:choose>
+    <c:when test="${isDone != true}">
+        <form id="authFormRight" method="get" action="game-quiz">
+            <input type="text" name="answer" placeholder="Ответ" class="form-control">
+            <button  type="submit" name="pickedButton" value="BLACK" class="btn">Отправить</button>
+        </form>
+    </c:when>
+    <c:when test="${isDone == true}">
+        <form action="start-page" method="post">
+            <button type="submit" class="btn" style="white-space: pre-wrap;" >ОК</button>
+        </form>
+    </c:when>
+</c:choose>
 
-
-    <form id="authFormRight" method="get" action="game-quiz">
-        <input type="text" name="answer" placeholder="Ответ" class="form-control">
-        <button  type="submit" name="pickedButton" value="BLACK" class="btn">Отправить</button>
-    </form>
 
 
 

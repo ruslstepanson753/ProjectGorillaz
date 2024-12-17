@@ -39,4 +39,8 @@ public class QuizRepository {
         }
         return randomMap;
     }
+
+    public void clearRandomMap(){
+        randomMap.clear();
+    }
 }
