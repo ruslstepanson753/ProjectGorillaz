@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.javarush.khmelov.storage.ConstantsCommon.FIRST_STEP;
+import static com.javarush.khmelov.storage.quiz.QuizConstants.NUMBER_OF_QUESTIONS;
 
 @SuppressWarnings("unused")
 public class GameQuiz implements Command {
@@ -64,7 +65,7 @@ public class GameQuiz implements Command {
     private StringBuilder buildResultText() {
         StringBuilder resultText = new StringBuilder();
         resultText.append("Верных ответов ");
-        resultText.append(10-wrongAnswers.size());
+        resultText.append(NUMBER_OF_QUESTIONS-wrongAnswers.size());
         resultText.append(" из  ");
         resultText.append(questionsMap.size());
         resultText.append("\n");
