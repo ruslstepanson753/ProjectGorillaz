@@ -4,6 +4,6 @@ import java.io.File;
 
 public class QuizConstants {
     protected static String TEXT_FILE = "questions.txt";
-    protected static int NUMBER_OF_QUESTIONS = 10;
+    public static int NUMBER_OF_QUESTIONS = 5;
 
 }

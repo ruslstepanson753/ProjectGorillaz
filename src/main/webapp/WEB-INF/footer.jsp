@@ -8,26 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Нижняя часть -->
 <footer class="footer">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-        <p style="margin: 0; text-align: center; width: 100%;">Санкт-Петербург 2024г</p>
-        <c:choose>
-            <c:when test="${not empty sessionScope.login}">
-                <div style="margin-left: 20px; text-align: center;">
-                    <!-- Аудиоплеер -->
-                    <audio id="audioPlayer" controls style="width: 300px;">
-                        <source src="${sessionScope.AUDIO_START_FOOTER}" type="audio/mpeg">
-                        Ваш браузер не поддерживает аудио.
-                    </audio>
-                    <!-- Регулировка громкости -->
-                    <div style="margin-top: 10px;">
-                        <label for="volumeControl">Громкость:</label>
-                        <input id="volumeControl" type="range" min="0" max="1" step="0.01" value="0.5"
-                               onchange="setVolume(this.value)" />
-                    </div>
-                </div>
-            </c:when>
-        </c:choose>
+    <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+        <p style="margin: 0; text-align: center;">Санкт-Петербург 2024г</p>
     </div>
+    <c:choose>
+        <c:when test="${not empty sessionScope.login}">
+            <div style="margin: 20px; text-align: center;">
+                <!-- Аудиоплеер -->
+                <audio id="audioPlayer" controls style="width: 300px;">
+                    <source src="${sessionScope.AUDIO_START_FOOTER}" type="audio/mpeg">
+                    Ваш браузер не поддерживает аудио.
+                </audio>
+                <!-- Регулировка громкости -->
+                <div style="margin-top: 10px;">
+                    <label for="volumeControl">Громкость:</label>
+                    <input id="volumeControl" type="range" min="0" max="1" step="0.01" value="0.5"
+                           onchange="setVolume(this.value)" />
+                </div>
+            </div>
+        </c:when>
+    </c:choose>
 </footer>
 <script>
     const audioPlayer = document.getElementById('audioPlayer');

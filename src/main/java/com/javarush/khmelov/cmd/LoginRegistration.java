@@ -39,9 +39,11 @@ public class LoginRegistration implements Command {
     }
 
     private User createUser(HttpServletRequest req) {
+        enteredLogin = req.getParameter("login");
+        enteredPassword = req.getParameter("password");
         User user = User.builder()
-                .login(req.getParameter(enteredLogin))
-                .password(req.getParameter(enteredPassword))
+                .login(enteredLogin)
+                .password(enteredPassword)
                 .build();
         userService.create(user);
         return user;
