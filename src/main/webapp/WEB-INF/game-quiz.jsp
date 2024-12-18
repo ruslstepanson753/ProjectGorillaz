@@ -8,180 +8,65 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="head.jsp"%>
 
-
-
-
 <!-- Средняя часть -->
 <div class="container1">
     <!-- Средняя часть: текст -->
     <div class="text-container">
-<c:choose>
-    <c:when test="${isDone != true}">
-        <p style="white-space: pre-wrap;" >Вопрос: №  ${questionNumber}</p>
-    </c:when>
-</c:choose>
-        <p style="white-space: pre-wrap;" > ${description}</p>
+        <c:choose>
+            <c:when test="${isDone != true}">
+                <p style="white-space: pre-wrap;">Вопрос: № ${questionNumber}</p>
+            </c:when>
+        </c:choose>
+        <p style="white-space: pre-wrap;">${description}</p>
     </div>
 
-
-<c:choose>
-    <c:when test="${isDone != true}">
-        <form id="authFormRight" method="get" action="game-quiz">
-            <input type="text" name="answer" placeholder="Ответ" class="form-control">
-            <button  type="submit" name="pickedButton" value="BLACK" class="btn">Отправить</button>
-        </form>
-    </c:when>
-    <c:when test="${isDone == true}">
-        <form action="start-page" method="post">
-            <button type="submit" class="btn" style="white-space: pre-wrap;" >ОК</button>
-        </form>
-    </c:when>
-</c:choose>
-
-
-
-
-
+    <c:choose>
+        <c:when test="${isDone != true}">
+            <form id="authFormRight" method="get" action="game-quiz">
+                <input type="text" name="answer" placeholder="Ответ" class="form-control">
+                <button type="submit" name="pickedButton" value="BLACK" class="btn">Отправить</button>
+            </form>
+        </c:when>
+        <c:when test="${isDone == true}">
+            <form action="start-page" method="post">
+                <button type="submit" class="btn" style="white-space: pre-wrap;">ОК</button>
+            </form>
+        </c:when>
+    </c:choose>
 </div>
-
-
-
-
 
 <style>
     /* Основные стили */
-
-
-    .resource span {
-        font-size: 2em; /* Увеличенный текст в 2 раза */
-    }
-
     body, html {
         margin: 0;
         padding: 0;
         height: 100%;
-        font-family: "Orbitron", sans-serif; /* Шрифт */
-        background-color: #333333; /* Задний фон */
-        color: white; /* Белый текст */
+        font-family: "Orbitron", sans-serif;
+        background-color: #333333;
+        color: white;
     }
 
-    .container {
-        display: flex;
-        height: 100vh; /* Контейнер занимает всю высоту экрана */
-    }
-
-    .left-part {
-        flex: 1; /* Левая часть занимает половину ширины */
-    }
-
-    .left-part img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Картинка заполняет весь блок */
-    }
-
-    .right-part {
-        flex: 1; /* Правая часть занимает половину ширины */
-        display: flex;
-        flex-direction: column; /* Разделение на верхнюю и нижнюю части */
-        padding: 20px; /* Отступы внутри блока */
-    }
-
-    .top-part {
-        flex: 1; /* Верхняя часть занимает половину высоты правой части */
-        display: block; /* Строки будут идти одна под другой */
-    }
-
-    .bottom-part {
-        flex: 1; /* Нижняя часть занимает половину высоты правой части */
-        display: flex;
-        flex-direction: column; /* Разделение на кнопки и ресурсы */
-        margin-top: 20px; /* Отступ между верхней и нижней частями */
-    }
-
-    .buttons {
-        display: flex;
-        justify-content: space-between; /* Растягиваем кнопки по горизонтали */
-    }
-
-    .btn {
-        flex: 1; /* Кнопки растягиваются по горизонтали */
-        margin: 0 10px; /* Отступы между кнопками */
-        padding: 10px;
-        text-align: center;
-        background-color: black; /* Цвет кнопок */
-        color: white; /* Белый текст на кнопках */
-        border: none;
-        cursor: pointer;
-    }
-
-    .resources {
-        display: flex;
-        justify-content: space-between; /* Расположение ресурсов по горизонтали */
-        margin-top: 20px; /* Отступ между кнопками и ресурсами */
-    }
-
-    .resource {
-        display: flex;
-        align-items: center; /* Выравнивание иконки и текста по вертикали */
-    }
-
-    .resource img {
-        width: 100px;
-        height: 100px;
-        margin-right: 20px; /* Отступ между иконкой и текстом */
-    }
-</style>
-
-<%--стили для вин,луз--%>
-<style>
     .container1 {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh; /* Занимает всю высоту экрана */
+        height: 500vh;
         text-align: center;
+        padding: 20px; /* Добавлен отступ */
     }
 
-    .image-container1 {
-        width: 100%;
-        height: 66.66%; /* Две трети высоты */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden; /* Чтобы изображение не выходило за границы */
-    }
-
-    .top-image1 {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain; /* Подгоняет изображение под размеры контейнера */
-    }
-
-    .text-container1 {
-        width: 100%;
-        height: 20%; /* Оставшаяся часть под текстом */
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .btn {
+        flex: 1;
+        margin: 0 10px;
         padding: 10px;
-    }
-
-    .button-container1 {
-        width: 100%;
-        height: 13.34%; /* Оставшаяся часть под кнопкой */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .ok-button1 {
-        padding: 10px 20px;
-        font-size: 16px;
+        text-align: center;
+        background-color: black;
+        color: white;
+        border: none;
         cursor: pointer;
+        display: block; /* Убедитесь, что кнопка отображается */
     }
 </style>
 
 <%@include file="footer.jsp"%>
-

@@ -24,6 +24,7 @@ public class ConstantsCommon {
 
     public static final String AUDIO_PATH = "audio"+File.separator;
     public static final String AUDIO_START_FOOTER = AUDIO_PATH+"Vesennijj_Leningrad.mp3";
+    public static final String AUDIO_JSP_FOOTER = AUDIO_PATH+"audioPlayer.jsp";
 
 
 

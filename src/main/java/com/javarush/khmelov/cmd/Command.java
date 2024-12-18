@@ -4,6 +4,7 @@ import com.javarush.khmelov.entity.User;
 import com.javarush.khmelov.service.UserService;
 import com.javarush.khmelov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -47,8 +48,8 @@ public interface Command {
         req.getSession().setAttribute("losscount", user.getLossCount());
     }
 
-    default User findUser(String login , UserService userService) {
-        Collection<User> allUsers= userService.getAll();
+    default User findUser(String login, UserService userService) {
+        Collection<User> allUsers = userService.getAll();
         for (User u : allUsers) {
             if (u.getLogin().equals(login)) {
                 return u;
@@ -56,7 +57,6 @@ public interface Command {
         }
         return null;
     }
-
 
     default boolean isEmptyArg(HttpServletRequest req, String arg) {
         if (arg.equals("")) {
@@ -67,22 +67,29 @@ public interface Command {
     }
 
     default void addUserLoss(HttpServletRequest req, UserService userService) {
-        User user = findUser(req.getSession().getAttribute("login").toString(),userService);
-        if (user != null) {
-            user.setGamesCount(user.getGamesCount()+1);
-            user.setLossCount(user.getLossCount()+1);
+        if (islogged(req)) {
+            User user = findUser(req.getSession().getAttribute("login").toString(), userService);
+            user.setGamesCount(user.getGamesCount() + 1);
+            user.setLossCount(user.getLossCount() + 1);
             addUserInfoToSession(req, user);
         }
     }
 
-    default void addUserWin(HttpServletRequest req,UserService userService) {
-        User user = findUser(req.getSession().getAttribute("login").toString(),userService);
-        if (user != null) {
-            user.setGamesCount(user.getGamesCount()+1);
-            user.setWinsCount(user.getWinsCount()+1);
+    default void addUserWin(HttpServletRequest req, UserService userService) {
+        if (islogged(req)) {
+            User user = findUser(req.getSession().getAttribute("login").toString(), userService);
+            user.setGamesCount(user.getGamesCount() + 1);
+            user.setWinsCount(user.getWinsCount() + 1);
             addUserInfoToSession(req, user);
         }
     }
 
+    private boolean islogged(HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+        if (session != null && session.getAttribute("login") != null) {
+            return true;
+        }
+        return false;
+    }
 
 }
