@@ -53,13 +53,6 @@ public class GameQuest implements Command {
         return getView();
     }
 
-    @Override
-    public String doPost(HttpServletRequest req) {
-        setCondition(req);
-        fillRequest(req);
-        return "start-page";
-    }
-
     private void setStartCondition(HttpServletRequest req) {
         step = Integer.parseInt(questMap.get("START_STEP"));
         time = Integer.parseInt(questMap.get("START_TIME"));
@@ -103,10 +96,10 @@ public class GameQuest implements Command {
     }
 
     private boolean lossCheck() {
-        if (    (time <= QUEST_MIN_RESOURCE)
-             || (evidence <= QUEST_MIN_RESOURCE)
-             || (gold <= QUEST_MIN_RESOURCE)
-             || ((step == QUEST_LOSS_STEP) & (pickedButton.equals(RIGHT)))) {
+        if ((time <= QUEST_MIN_RESOURCE)
+                || (evidence <= QUEST_MIN_RESOURCE)
+                || (gold <= QUEST_MIN_RESOURCE)
+                || ((step == QUEST_LOSS_STEP) & (pickedButton.equals(RIGHT)))) {
             return true;
         }
         return false;
