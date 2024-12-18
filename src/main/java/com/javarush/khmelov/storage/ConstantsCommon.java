@@ -8,6 +8,13 @@ public class ConstantsCommon {
 
     public static final int FIRST_STEP = 0;
 
+    public static final String ERROR_MESSAGE = "errorMessage";
+
+    public static final String ERROR_NO_ARGS = "there is no password";
+    public static final String ERROR_USER_EXIST = "such user already exists";
+
+    public static final String ERROR_PASSWORD_LOGIN_INCORRECT = "login or password is incorrect";
+
     public static final String IMG_PATH = "images"+File.separator;
 
     public static final String IMG_START_QUEST = IMG_PATH+"start_quest.jpg";

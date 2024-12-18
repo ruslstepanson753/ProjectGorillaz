@@ -58,6 +58,7 @@ public interface Command {
         Collection<User> allUsers= userService.getAll();
         for (User u : allUsers) {
             if (u.getLogin().equals(login)) {
+
                 return u;
             }
         }

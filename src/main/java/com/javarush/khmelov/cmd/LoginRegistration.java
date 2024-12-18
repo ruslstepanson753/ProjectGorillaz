@@ -2,10 +2,16 @@ package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.entity.User;
 import com.javarush.khmelov.service.UserService;
+import com.javarush.khmelov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
+
+import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_NO_ARGS;
+import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_USER_EXIST;
 
 public class LoginRegistration implements Command {
     private final UserService userService;
+    private String enteredLogin;
+    private String enteredPassword;
 
     public LoginRegistration(UserService userService) {
         this.userService = userService;
@@ -13,15 +19,37 @@ public class LoginRegistration implements Command {
 
     @Override
     public String doPost(HttpServletRequest req) {
-        User user = createUser(req);
-        addUserInfoToSession(req, user);
+        if (validTest(req)){
+            User user = createUser(req);
+            addUserInfoToSession(req, user);
+        }
         return "start-page";
+    }
+
+    private boolean validTest(HttpServletRequest req) {
+        enteredLogin = req.getParameter("login");
+        enteredPassword = req.getParameter("password");
+        if (isEmptyArg(req,enteredLogin)) return false;
+        if (isEmptyArg(req,enteredLogin)) return false;
+        if (userService.isExistLogin(enteredLogin)) {
+            RequestHelpers.createError(req, ERROR_USER_EXIST);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isEmptyArg(HttpServletRequest req, String arg) {
+        if (arg.equals("")) {
+            RequestHelpers.createError(req, ERROR_NO_ARGS);
+            return true;
+        }
+        return false;
     }
 
     private User createUser(HttpServletRequest req) {
         User user = User.builder()
-                .login(req.getParameter("login"))
-                .password(req.getParameter("password"))
+                .login(req.getParameter(enteredLogin))
+                .password(req.getParameter(enteredPassword))
                 .build();
         userService.create(user);
         return user;

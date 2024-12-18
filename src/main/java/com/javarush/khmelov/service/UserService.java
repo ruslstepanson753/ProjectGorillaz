@@ -20,14 +20,6 @@ public class UserService {
         userRepository.create(user);
     }
 
-    public void update(User user) {
-        userRepository.update(user);
-    }
-
-    public void delete(User user) {
-        userRepository.delete(user);
-    }
-
     public Collection<User> getAll() {
         return userRepository.getAll();
     }
@@ -35,4 +27,25 @@ public class UserService {
     public Optional<User> get(long id) {
         return userRepository.get(id);
     }
+
+    public boolean isCorrectLoginPassword(String login, String password) {
+        Collection<User> users = getAll();
+        for (User user : users) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isExistLogin(String login){
+        Collection<User> users = getAll();
+        for (User user : users) {
+            if (user.getLogin().equals(login)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

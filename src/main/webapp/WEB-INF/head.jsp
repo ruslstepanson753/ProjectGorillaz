@@ -53,4 +53,10 @@
 </c:otherwise>
 </c:choose>
 
+<c:if test="${not empty sessionScope.errorMessage}">
+<h5 class="mb-1 alert-danger text-white text-center" style="background-color: red;">
+        ${sessionScope.errorMessage}
+</h5>
+</c:if>
+
 
