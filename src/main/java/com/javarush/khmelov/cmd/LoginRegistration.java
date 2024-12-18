@@ -38,14 +38,6 @@ public class LoginRegistration implements Command {
         return true;
     }
 
-    private boolean isEmptyArg(HttpServletRequest req, String arg) {
-        if (arg.equals("")) {
-            RequestHelpers.createError(req, ERROR_NO_ARGS);
-            return true;
-        }
-        return false;
-    }
-
     private User createUser(HttpServletRequest req) {
         User user = User.builder()
                 .login(req.getParameter(enteredLogin))

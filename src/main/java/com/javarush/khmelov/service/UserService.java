@@ -28,14 +28,14 @@ public class UserService {
         return userRepository.get(id);
     }
 
-    public boolean isCorrectLoginPassword(String login, String password) {
+    public boolean loginOrPasswordIsIncorrect(String login, String password) {
         Collection<User> users = getAll();
         for (User user : users) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public boolean isExistLogin(String login){
