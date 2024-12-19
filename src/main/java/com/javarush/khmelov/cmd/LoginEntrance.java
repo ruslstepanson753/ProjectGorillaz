@@ -6,6 +6,7 @@ import com.javarush.khmelov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_PASSWORD_OR_LOGIN_INCORRECT;
+import static com.javarush.khmelov.storage.ConstantsCommon.GO_START;
 
 public class LoginEntrance implements Command {
     private final UserService userService;
@@ -22,7 +23,7 @@ public class LoginEntrance implements Command {
             User user = findUser(enteredLogin,userService);
             addUserInfoToSession(req, user);
         }
-        return "start-page";
+        return GO_START;
     }
 
     private boolean validTest(HttpServletRequest req) {

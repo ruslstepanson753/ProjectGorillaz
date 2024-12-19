@@ -25,4 +25,13 @@ public class ConstantsCommon {
     public static final String AUDIO_PATH = "audio"+File.separator;
     public static final String AUDIO_START_FOOTER = AUDIO_PATH+"Vesennijj_Leningrad.mp3";
 
+    public static final String GO_EMPTY_ADRESS = "";
+    public static final String GO_HOME = "/home";
+    public static final String GO_START = "/start-page";
+    public static final String GO_QUEST = "/game-quest";
+    public static final String GO_QUIZ = "/game-quiz";
+    public static final String GO_ROULETTE = "/game-roulette";
+    public static final String GO_LOGIN_ENTRANCE = "/login-entrance";
+    public static final String GO_LOGIN_REGISTRATION = "/login-registration";
+
 }

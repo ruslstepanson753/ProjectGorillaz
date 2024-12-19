@@ -5,8 +5,7 @@ import com.javarush.khmelov.service.UserService;
 import com.javarush.khmelov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_NO_ARGS;
-import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_USER_EXIST;
+import static com.javarush.khmelov.storage.ConstantsCommon.*;
 
 public class LoginRegistration implements Command {
     private final UserService userService;
@@ -23,14 +22,14 @@ public class LoginRegistration implements Command {
             User user = createUser(req);
             addUserInfoToSession(req, user);
         }
-        return "start-page";
+        return GO_START;
     }
 
     private boolean validTest(HttpServletRequest req) {
         enteredLogin = req.getParameter("login");
         enteredPassword = req.getParameter("password");
         if (isEmptyArg(req,enteredLogin)) return false;
-        if (isEmptyArg(req,enteredLogin)) return false;
+        if (isEmptyArg(req,enteredPassword)) return false;
         if (userService.isExistLogin(enteredLogin)) {
             RequestHelpers.createError(req, ERROR_USER_EXIST);
             return false;
@@ -39,8 +38,6 @@ public class LoginRegistration implements Command {
     }
 
     private User createUser(HttpServletRequest req) {
-        enteredLogin = req.getParameter("login");
-        enteredPassword = req.getParameter("password");
         User user = User.builder()
                 .login(enteredLogin)
                 .password(enteredPassword)
