@@ -19,6 +19,10 @@ public class FrontController extends HttpServlet {
 
     private final HttpResolver httpResolver = Winter.find(HttpResolver.class);
 
+    private static String getJsp(String view) {
+        return "/WEB-INF/" + view + ".jsp";
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Command command = httpResolver.resolve(req);
@@ -30,10 +34,6 @@ public class FrontController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
 
-    }
-
-    private static String getJsp(String view) {
-        return "/WEB-INF/" + view + ".jsp";
     }
 
     @Override

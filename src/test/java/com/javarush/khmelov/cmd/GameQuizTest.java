@@ -1,44 +1,38 @@
 package com.javarush.khmelov.cmd;
 
+import com.javarush.khmelov.config.Winter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+@ExtendWith(MockitoExtension.class)
+class GameQuizTest extends AbstractTestClass{
+ private GameQuiz gameQuiz;
 
-class GameQuizTest {
+ @BeforeEach
+    void setUp() {
+     gameQuiz= Winter.find(GameQuiz.class);
+ }
 
     @Test
-    void doGet() {
+    @DisplayName("when user answer is wrong then add wrong to list")
+    void whenUserAnswerIsWrongThenAddWrongToList() {
+        fail("Not implemented");
     }
 
     @Test
-    void doPost() {
+    @DisplayName("when step first then start condition set")
+    void whenStepFirstThenStartConditionSet() {
+        fail("Not implemented");
     }
 
     @Test
-    void getView() {
+    @DisplayName("when step last then clear data cash")
+    void whenStepLastThenClearDataCash() {
+        fail("Not implemented");
     }
 
-    @Test
-    void addUserInfoToSession() {
-    }
-
-    @Test
-    void findUser() {
-    }
-
-    @Test
-    void isEmptyArg() {
-    }
-
-    @Test
-    void addUserLoss() {
-    }
-
-    @Test
-    void addUserWin() {
-    }
-
-    @Test
-    void testDoGet() {
-    }
 }

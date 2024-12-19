@@ -17,9 +17,9 @@
 <c:when test="${not empty sessionScope.login}">
 <header class="header">
     <div class="left-part">
-        <p class="stat">Игр:  <span>${sessionScope.gamescount}</span></p>
-        <p class="stat">Побед:  <span>${sessionScope.winscount}</span></p>
-        <p class="stat">Поражений:  <span>${sessionScope.losscount}</span></p>
+        <p class="stat">Игр: <span>${sessionScope.gamescount}</span></p>
+        <p class="stat">Побед: <span>${sessionScope.winscount}</span></p>
+        <p class="stat">Поражений: <span>${sessionScope.losscount}</span></p>
     </div>
     <div class="right-part">
         <p class="login"> ${sessionScope.login} к игре готов</p>

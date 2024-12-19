@@ -33,6 +33,7 @@ body {
     align-items: center;
     justify-content: space-between; /* Равномерно распределяет пространство */
 }
+
 .header .left-part {
     flex: 2; /* Задает пропорцию для left-part */
     display: flex;
@@ -49,9 +50,11 @@ body {
     width: 50px;
     text-align: center;
 }
+
 .header .left-part {
     width: 66.67%; /* 2/3 ширины контейнера */
 }
+
 .header .right-part {
     flex: 1; /* Задает пропорцию для right-part */
     display: flex;
@@ -85,7 +88,6 @@ body {
 }
 
 
-
 /* Средняя часть */
 .main {
     background-color: #333333;
@@ -94,15 +96,18 @@ body {
     padding: 40px 20px;
     flex: 1;
 }
+
 .main h1 {
     margin-bottom: 40px;
     font-size: 36px;
 }
+
 .games {
     display: flex;
     justify-content: space-between;
     gap: 20px;
 }
+
 .game {
     flex: 1;
     max-width: 30%;
@@ -113,17 +118,20 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
 .game img {
     border: none; /* Убирает рамки вокруг изображения */
     display: block; /* Убирает лишние пробелы */
     width: 100%; /* Подгоняет изображение под контейнер */
     height: auto; /* Сохраняет пропорции изображения */
 }
+
 .game p {
     margin-top: 20px;
     color: white;
     font-size: 18px;
 }
+
 .game:hover {
     background-color: rgb(51, 51, 51);
 }

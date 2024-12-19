@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="head.jsp"%>
+<%@include file="head.jsp" %>
 
 <c:choose>
     <c:when test="${isWin == true}">
@@ -11,13 +11,13 @@
 
             <!-- Средняя часть: текст -->
             <div class="text-container1">
-                <p style="white-space: pre-wrap;" >${description}</p>
+                <p style="white-space: pre-wrap;">${description}</p>
             </div>
 
             <!-- Нижняя часть: кнопка -->
             <div class="button-container1">
                 <form action="start-page" method="post">
-                    <button type="submit" class="btn" style="white-space: pre-wrap;" >ОК</button>
+                    <button type="submit" class="btn" style="white-space: pre-wrap;">ОК</button>
                 </form>
             </div>
         </div>
@@ -31,14 +31,14 @@
 
             <!-- Средняя часть: текст -->
             <div class="text-container">
-                <p style="white-space: pre-wrap;" >${lossСause}</p>
-                <p style="white-space: pre-wrap;" >${description}</p>
+                <p style="white-space: pre-wrap;">${lossСause}</p>
+                <p style="white-space: pre-wrap;">${description}</p>
             </div>
 
             <!-- Нижняя часть: кнопка -->
             <div class="button-container1">
                 <form action="start-page" method="post">
-                    <button type="submit" class="btn" style="white-space: pre-wrap;" >ОК</button>
+                    <button type="submit" class="btn" style="white-space: pre-wrap;">ОК</button>
                 </form>
             </div>
         </div>
@@ -55,7 +55,7 @@
             <div class="right-part">
                 <!-- Верхняя часть: текст -->
                 <div class="top-part">
-                    <p style="white-space: pre-wrap;" >${result}</p>
+                    <p style="white-space: pre-wrap;">${result}</p>
                     <p style="white-space: pre-wrap;">${description}</p>
                 </div>
 
@@ -65,11 +65,13 @@
                     <div class="buttons">
                         <!-- Левая кнопка -->
                         <form id="authFormLeft" action="/game-quest" method="get">
-                            <button style="white-space: pre-wrap;" type="submit" name="pickedButton" value="l" class="btn">${buttonLeft}</button>
+                            <button style="white-space: pre-wrap;" type="submit" name="pickedButton" value="l"
+                                    class="btn">${buttonLeft}</button>
                         </form>
                         <!-- Правая кнопка -->
                         <form id="authFormRight" action="/game-quest" method="get">
-                            <button  style="white-space: pre-wrap;" type="submit" name="pickedButton" value="r" class="btn">${buttonRight}</button>
+                            <button style="white-space: pre-wrap;" type="submit" name="pickedButton" value="r"
+                                    class="btn">${buttonRight}</button>
                         </form>
 
                     </div>
@@ -101,10 +103,6 @@
 
     </c:when>
 </c:choose>
-
-
-
-
 
 
 <style>
@@ -241,4 +239,4 @@
         cursor: pointer;
     }
 </style>
-<%@include file="footer.jsp"%>
+<%@include file="footer.jsp" %>

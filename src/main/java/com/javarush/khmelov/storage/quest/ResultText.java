@@ -1,7 +1,7 @@
 package com.javarush.khmelov.storage.quest;
 
 public class ResultText {
-    protected static final String RESULT_TEXT_LEFT_STATE_ONE =  " ";
+    protected static final String RESULT_TEXT_LEFT_STATE_ONE = " ";
     protected static final String RESULT_TEXT_LEFT_STATE_TWO = " ";
     protected static final String RESULT_TEXT_LEFT_STATE_THREE = "   Вы нашли несколько кошельков, после чего отыскали художницу и получили от неё подсказку\n   (+ 3 золота, -2 время)";
     protected static final String RESULT_TEXT_LEFT_STATE_FOUR = "   Вы экономите время, но теряете золото\n   (- 2 золота) ";

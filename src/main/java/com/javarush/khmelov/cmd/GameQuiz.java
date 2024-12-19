@@ -16,9 +16,9 @@ import static com.javarush.khmelov.storage.quiz.QuizConstants.NUMBER_OF_QUESTION
 public class GameQuiz implements Command {
     UserService userService;
     QuizRepository quizRepository;
-    Map <String,String> questionsMap;
+    Map<String, String> questionsMap;
     List<String> questions = new ArrayList<>();
-    Map <String,String> wrongAnswers = new HashMap<>();
+    Map<String, String> wrongAnswers = new HashMap<>();
     String question;
     String answer;
     int step;
@@ -31,14 +31,13 @@ public class GameQuiz implements Command {
     @Override
     public String doGet(HttpServletRequest req) {
         String paramName = req.getParameter("pickedButton");
-        if (paramName == null){
+        if (paramName == null) {
             startCondition(req);
-        }
-        else {
-            if (step!= questionsMap.size()){
+        } else {
+            if (step != questionsMap.size()) {
                 getInfo(req);
                 setCondition(req);
-            }else {
+            } else {
                 setFinalCondition(req);
             }
         }
@@ -55,17 +54,17 @@ public class GameQuiz implements Command {
     }
 
     private void setUserInfo(HttpServletRequest req) {
-        if (wrongAnswers.size()==0){
-            addUserWin(req,userService);
+        if (wrongAnswers.size() == 0) {
+            addUserWin(req, userService);
         } else {
-            addUserLoss(req,userService);
+            addUserLoss(req, userService);
         }
     }
 
     private StringBuilder buildResultText() {
         StringBuilder resultText = new StringBuilder();
         resultText.append("Верных ответов ");
-        resultText.append(NUMBER_OF_QUESTIONS-wrongAnswers.size());
+        resultText.append(NUMBER_OF_QUESTIONS - wrongAnswers.size());
         resultText.append(" из  ");
         resultText.append(questionsMap.size());
         resultText.append("\n");
@@ -86,14 +85,14 @@ public class GameQuiz implements Command {
 
     private void setFinalAttributes(HttpServletRequest req, StringBuilder resultText) {
         req.setAttribute("description", resultText.toString());
-        req.setAttribute("questionNumber", step+1);
+        req.setAttribute("questionNumber", step + 1);
         req.setAttribute("isDone", true);
     }
 
     private void startCondition(HttpServletRequest req) {
         step = FIRST_STEP;
         questionsMap = quizRepository.getRandomQuestionMap();
-        for(String question: questionsMap.keySet()){
+        for (String question : questionsMap.keySet()) {
             questions.add(question);
         }
         question = questions.get(step);
@@ -108,17 +107,17 @@ public class GameQuiz implements Command {
     private void сheckingCorrectnessAnswer(HttpServletRequest req) {
         String usersAnswer = req.getParameter("answer");
         answer = questionsMap.get(question);
-        if (!usersAnswer.toLowerCase().equals(answer.toLowerCase())){
-            wrongAnswers.put(question,usersAnswer);
+        if (!usersAnswer.equalsIgnoreCase(answer)) {
+            wrongAnswers.put(question, usersAnswer);
         }
     }
 
     private void setCondition(HttpServletRequest req) {
         req.setAttribute("description", question);
-        req.setAttribute("questionNumber", step+1);
+        req.setAttribute("questionNumber", step + 1);
     }
 
-    private void clearDataCash(){
+    private void clearDataCash() {
         questionsMap.clear();
         questions.clear();
         wrongAnswers.clear();

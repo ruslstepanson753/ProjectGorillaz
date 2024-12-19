@@ -11,7 +11,7 @@ import java.util.Map;
 public class GameRoulette implements Command {
     private final UserService userService;
     private final RouletteService rouletteService;
-    private Map<String,String> rouletteMap;
+    private final Map<String, String> rouletteMap;
 
     public GameRoulette(UserService userService, RouletteService rouletteService) {
         this.userService = userService;
@@ -23,10 +23,9 @@ public class GameRoulette implements Command {
     public String doGet(HttpServletRequest req) {
 
         String paramName = req.getParameter("pickedButton");
-        if (paramName == null){
+        if (paramName == null) {
             setStartCondition(req);
-        }
-        else {
+        } else {
             setFinishCondition(req);
         }
 
@@ -36,21 +35,21 @@ public class GameRoulette implements Command {
     private void setFinishCondition(HttpServletRequest req) {
         String pickedColor = req.getParameter("pickedButton");
         String rouletteColor = rouletteService.getResultOfRotation();
-        String resulColor = "RESULT_COLOR_"+rouletteColor;
-        String resultImgColor = "IMAGE_URL_"+rouletteColor;
+        String resulColor = "RESULT_COLOR_" + rouletteColor;
+        String resultImgColor = "IMAGE_URL_" + rouletteColor;
 
-        req.setAttribute("imageUrl",rouletteMap.get(resultImgColor));
-        req.setAttribute("resultColor",rouletteMap.get(resulColor));
+        req.setAttribute("imageUrl", rouletteMap.get(resultImgColor));
+        req.setAttribute("resultColor", rouletteMap.get(resulColor));
         req.setAttribute("winLossDescription",
                 (pickedColor.equals(rouletteColor))
-                ?rouletteMap.get("RESULT_WIN")
-                :rouletteMap.get("RESULT_LOSS"));
+                        ? rouletteMap.get("RESULT_WIN")
+                        : rouletteMap.get("RESULT_LOSS"));
         req.setAttribute("isDone", true);
 
-        if (pickedColor.equals(rouletteColor)){
-            addUserWin(req,userService);
-        }else{
-            addUserLoss(req,userService);
+        if (pickedColor.equals(rouletteColor)) {
+            addUserWin(req, userService);
+        } else {
+            addUserLoss(req, userService);
         }
     }
 

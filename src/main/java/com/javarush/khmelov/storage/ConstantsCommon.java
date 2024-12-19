@@ -15,15 +15,15 @@ public class ConstantsCommon {
 
     public static final String ERROR_PASSWORD_OR_LOGIN_INCORRECT = "login or password is incorrect";
 
-    public static final String IMG_PATH = "images"+File.separator;
+    public static final String IMG_PATH = "images" + File.separator;
 
-    public static final String IMG_START_QUEST = IMG_PATH+"start_quest.jpg";
-    public static final String IMG_START_ROULETTE = IMG_PATH+"start_roulette.jpg";
-    public static final String IMG_START_QUIZ = IMG_PATH+"start_quiz.jpg";
-    public static final String IMG_START_HEAD = IMG_PATH+"start_head.jpg";
+    public static final String IMG_START_QUEST = IMG_PATH + "start_quest.jpg";
+    public static final String IMG_START_ROULETTE = IMG_PATH + "start_roulette.jpg";
+    public static final String IMG_START_QUIZ = IMG_PATH + "start_quiz.jpg";
+    public static final String IMG_START_HEAD = IMG_PATH + "start_head.jpg";
 
-    public static final String AUDIO_PATH = "audio"+File.separator;
-    public static final String AUDIO_START_FOOTER = AUDIO_PATH+"Vesennijj_Leningrad.mp3";
+    public static final String AUDIO_PATH = "audio" + File.separator;
+    public static final String AUDIO_START_FOOTER = AUDIO_PATH + "Vesennijj_Leningrad.mp3";
 
     public static final String GO_EMPTY_ADRESS = "";
     public static final String GO_HOME = "/home";

@@ -19,8 +19,8 @@ public class LoginEntrance implements Command {
 
     @Override
     public String doPost(HttpServletRequest req) {
-        if (validTest(req)){
-            User user = findUser(enteredLogin,userService);
+        if (validTest(req)) {
+            User user = findUser(enteredLogin, userService);
             addUserInfoToSession(req, user);
         }
         return GO_START;
@@ -29,9 +29,9 @@ public class LoginEntrance implements Command {
     private boolean validTest(HttpServletRequest req) {
         enteredLogin = req.getParameter("login");
         enteredPassword = req.getParameter("password");
-        if (isEmptyArg(req,enteredLogin)) return false;
-        if (isEmptyArg(req,enteredPassword)) return false;
-        if (userService.loginOrPasswordIsIncorrect(enteredLogin,enteredPassword)) {
+        if (isEmptyArg(req, enteredLogin)) return false;
+        if (isEmptyArg(req, enteredPassword)) return false;
+        if (userService.loginOrPasswordIsIncorrect(enteredLogin, enteredPassword)) {
             RequestHelpers.createError(req, ERROR_PASSWORD_OR_LOGIN_INCORRECT);
             return false;
         }

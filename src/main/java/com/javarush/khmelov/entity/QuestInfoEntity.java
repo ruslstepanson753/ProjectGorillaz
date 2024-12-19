@@ -21,25 +21,25 @@ public class QuestInfoEntity {
 
     private String resultRightText;
 
-    private Map<String,Integer> deltaTime;
+    private Map<String, Integer> deltaTime;
 
-    private Map<String,Integer> deltaEvidence;
+    private Map<String, Integer> deltaEvidence;
 
-    private Map<String,Integer> deltaGold;
+    private Map<String, Integer> deltaGold;
 
     private String description;
 
     private String imageUrl;
 
-    public Integer getDeltaTime(String pickedButton){
+    public Integer getDeltaTime(String pickedButton) {
         return deltaTime.get(pickedButton);
     }
 
-    public Integer getDeltaEvidence(String pickedButton){
+    public Integer getDeltaEvidence(String pickedButton) {
         return deltaEvidence.get(pickedButton);
     }
 
-    public Integer getDeltaGold(String pickedButton){
+    public Integer getDeltaGold(String pickedButton) {
         return deltaGold.get(pickedButton);
     }
 }

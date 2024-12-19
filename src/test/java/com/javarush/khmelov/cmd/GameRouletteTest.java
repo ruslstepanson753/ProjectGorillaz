@@ -1,44 +1,39 @@
 package com.javarush.khmelov.cmd;
 
+import com.javarush.khmelov.config.Winter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-class GameRouletteTest {
-
-    @Test
-    void doGet() {
+import static org.mockito.Mockito.when;
+@ExtendWith(MockitoExtension.class)
+class GameRouletteTest extends AbstractTestClass{
+    private GameRoulette gameRoulette;
+    
+    @BeforeEach
+    void init(){
+        gameRoulette = Winter.find(GameRoulette.class);        
     }
 
     @Test
-    void doPost() {
+    @DisplayName("when button not picked then start set")
+    void whenButtonNotPickedThenStartSet() {
+        fail("Not implemented");
     }
 
     @Test
-    void getView() {
+    @DisplayName("when the bet matched then win")
+    void whenTheBetMatchedThenWin() {
+        fail("Not implemented");
     }
 
     @Test
-    void addUserInfoToSession() {
+    @DisplayName("when win then users win count rice")
+    void whenWinThenUsersWinCountRice() {
+        org.junit.jupiter.api.Assertions.fail("Not implemented");
     }
-
-    @Test
-    void findUser() {
-    }
-
-    @Test
-    void isEmptyArg() {
-    }
-
-    @Test
-    void addUserLoss() {
-    }
-
-    @Test
-    void addUserWin() {
-    }
-
-    @Test
-    void testDoGet() {
-    }
+    
 }

@@ -14,19 +14,6 @@ import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_NO_ARGS;
 
 public interface Command {
 
-    default String doGet(HttpServletRequest request) {
-        return getView();
-    }
-
-    default String doPost(HttpServletRequest request) {
-        return getView();
-    }
-
-    default String getView() {
-        String simpleName = this.getClass().getSimpleName();
-        return convertCamelCaseToKebabStyle(simpleName);
-    }
-
     private static String convertCamelCaseToKebabStyle(String string) {
         String snakeName = string.chars()
                 .mapToObj(s -> String.valueOf((char) s))
@@ -38,6 +25,19 @@ public interface Command {
         return snakeName.startsWith("-")
                 ? snakeName.substring(1)
                 : snakeName;
+    }
+
+    default String doGet(HttpServletRequest request) {
+        return getView();
+    }
+
+    default String doPost(HttpServletRequest request) {
+        return getView();
+    }
+
+    default String getView() {
+        String simpleName = this.getClass().getSimpleName();
+        return convertCamelCaseToKebabStyle(simpleName);
     }
 
     default void addUserInfoToSession(HttpServletRequest req, User user) {
@@ -86,10 +86,7 @@ public interface Command {
 
     private boolean islogged(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
-        if (session != null && session.getAttribute("login") != null) {
-            return true;
-        }
-        return false;
+        return session != null && session.getAttribute("login") != null;
     }
 
 }

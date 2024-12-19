@@ -23,7 +23,7 @@
                 <div style="margin-top: 10px;">
                     <label for="volumeControl">Громкость:</label>
                     <input id="volumeControl" type="range" min="0" max="1" step="0.01" value="0.5"
-                           onchange="setVolume(this.value)" />
+                           onchange="setVolume(this.value)"/>
                 </div>
             </div>
         </c:when>
@@ -39,7 +39,7 @@
     }
 
     // Восстанавливаем состояние плеера
-    window.onload = function() {
+    window.onload = function () {
         const savedVolume = localStorage.getItem('audioVolume');
         if (savedVolume !== null) {
             audioPlayer.volume = parseFloat(savedVolume); // Восстанавливаем громкость
@@ -58,7 +58,7 @@
     };
 
     // Сохраняем состояние плеера перед перезагрузкой страницы
-    window.onbeforeunload = function() {
+    window.onbeforeunload = function () {
         localStorage.setItem('audioVolume', audioPlayer.volume); // Сохраняем громкость
         localStorage.setItem('audioTime', audioPlayer.currentTime); // Сохраняем текущее время
         localStorage.setItem('audioPlaying', !audioPlayer.paused); // Сохраняем статус воспроизведения

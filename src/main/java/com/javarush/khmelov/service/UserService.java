@@ -1,13 +1,12 @@
 package com.javarush.khmelov.service;
 
-import com.javarush.khmelov.storage.repository.UserRepository;
 import com.javarush.khmelov.entity.User;
+import com.javarush.khmelov.storage.repository.UserRepository;
 
 import java.util.Collection;
 import java.util.Optional;
 
 public class UserService {
-
 
 
     private final UserRepository userRepository;
@@ -38,10 +37,10 @@ public class UserService {
         return true;
     }
 
-    public boolean isExistLogin(String login){
+    public boolean isExistLogin(String login) {
         Collection<User> users = getAll();
         for (User user : users) {
-            if (user.getLogin().equals(login)){
+            if (user.getLogin().equals(login)) {
                 return true;
             }
         }

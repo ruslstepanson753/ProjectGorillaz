@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="head.jsp"%>
+<%@include file="head.jsp" %>
 
 <c:choose>
     <c:when test="${isDone == true}">
@@ -25,7 +25,7 @@
             <!-- Нижняя часть: кнопка -->
             <div class="button-container1">
                 <form action="start-page" method="post">
-                    <button type="submit" class="btn" style="white-space: pre-wrap;" >ОК</button>
+                    <button type="submit" class="btn" style="white-space: pre-wrap;">ОК</button>
                 </form>
             </div>
         </div>
@@ -52,15 +52,18 @@
                     <div class="buttons">
                         <!-- Левая кнопка -->
                         <form id="authFormLeft" action="/game-roulette" method="get">
-                            <button style="white-space: pre-wrap;" type="submit" name="pickedButton" value="RED" class="btn">${RED_BUTTON_DESCRIPTION}</button>
+                            <button style="white-space: pre-wrap;" type="submit" name="pickedButton" value="RED"
+                                    class="btn">${RED_BUTTON_DESCRIPTION}</button>
                         </form>
                         <!-- Средняя кнопка -->
                         <form id="authFormCentre" action="/game-roulette" method="get">
-                            <button  style="white-space: pre-wrap;" type="submit" name="pickedButton" value="ZERO" class="btn">${ZERO_BUTTON_DESCRIPTION}</button>
+                            <button style="white-space: pre-wrap;" type="submit" name="pickedButton" value="ZERO"
+                                    class="btn">${ZERO_BUTTON_DESCRIPTION}</button>
                         </form>
                         <!-- Правая кнопка -->
                         <form id="authFormRight" action="/game-roulette" method="get">
-                            <button  style="white-space: pre-wrap;" type="submit" name="pickedButton" value="BLACK" class="btn">${BLACK_BUTTON_DESCRIPTION}</button>
+                            <button style="white-space: pre-wrap;" type="submit" name="pickedButton" value="BLACK"
+                                    class="btn">${BLACK_BUTTON_DESCRIPTION}</button>
                         </form>
                     </div>
                 </div>
@@ -221,4 +224,4 @@
     }
 </style>
 
-<%@include file="footer.jsp"%>
+<%@include file="footer.jsp" %>

@@ -5,7 +5,8 @@ import com.javarush.khmelov.service.UserService;
 import com.javarush.khmelov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.*;
+import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_USER_EXIST;
+import static com.javarush.khmelov.storage.ConstantsCommon.GO_START;
 
 public class LoginRegistration implements Command {
     private final UserService userService;
@@ -18,7 +19,7 @@ public class LoginRegistration implements Command {
 
     @Override
     public String doPost(HttpServletRequest req) {
-        if (validTest(req)){
+        if (validTest(req)) {
             User user = createUser(req);
             addUserInfoToSession(req, user);
         }
@@ -28,8 +29,8 @@ public class LoginRegistration implements Command {
     private boolean validTest(HttpServletRequest req) {
         enteredLogin = req.getParameter("login");
         enteredPassword = req.getParameter("password");
-        if (isEmptyArg(req,enteredLogin)) return false;
-        if (isEmptyArg(req,enteredPassword)) return false;
+        if (isEmptyArg(req, enteredLogin)) return false;
+        if (isEmptyArg(req, enteredPassword)) return false;
         if (userService.isExistLogin(enteredLogin)) {
             RequestHelpers.createError(req, ERROR_USER_EXIST);
             return false;

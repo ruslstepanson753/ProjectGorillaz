@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_MESSAGE;
+
 @WebFilter({"", "/home", "/start-page", "/game-quest", "/game-quiz",
         "/game-roulette", "/login-entrance", "/login-registration"})
 public class ErrorCleanerFilter extends HttpFilter {

@@ -1,48 +1,38 @@
 package com.javarush.khmelov.cmd;
 
+import com.javarush.khmelov.config.Winter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@ExtendWith(MockitoExtension.class)
 class GameQuestTest {
+private GameQuest gameQuest;
+
+@BeforeEach
+    void setUp() {
+    gameQuest = Winter.find(GameQuest.class);
+}
 
     @Test
-    void doGet() {
+    @DisplayName("when step wrong then loss")
+    void whenStepWrongThenLoss() {
+        fail("Not implemented");
     }
 
     @Test
-    void doPost() {
+    @DisplayName("when resourse null then loss")
+    void whenResourseNullThenLoss() {
+        fail("Not implemented");
     }
 
     @Test
-    void getView() {
+    @DisplayName("when resourse not null and last turn then win")
+    void whenResourseNotNullAndLastTurnThenWin() {
+        fail("Not implemented");
     }
 
-    @Test
-    void addUserInfoToSession() {
-    }
-
-    @Test
-    void findUser() {
-    }
-
-    @Test
-    void isEmptyArg() {
-    }
-
-    @Test
-    void addUserLoss() {
-    }
-
-    @Test
-    void addUserWin() {
-    }
-
-    @Test
-    void testDoGet() {
-    }
-
-    @Test
-    void testDoPost() {
-    }
 }

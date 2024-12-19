@@ -1,22 +1,22 @@
 package com.javarush.khmelov.storage.quiz;
 
-import jakarta.servlet.ServletContext;
-
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static com.javarush.khmelov.storage.quiz.QuizConstants.NUMBER_OF_QUESTIONS;
 import static com.javarush.khmelov.storage.quiz.QuizConstants.TEXT_FILE;
 
 public class QuizRepository {
-    Map<String, String> randomMap = new LinkedHashMap<>();
     private final static Map<String, String> questionMap = new LinkedHashMap<>();
+    Map<String, String> randomMap = new LinkedHashMap<>();
 
     public QuizRepository() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(TEXT_FILE);
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))) {
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
             while (bufferedReader.ready()) {
                 String line = bufferedReader.readLine();
@@ -41,7 +41,7 @@ public class QuizRepository {
         return randomMap;
     }
 
-    public void clearRandomMap(){
+    public void clearRandomMap() {
         randomMap.clear();
     }
 }

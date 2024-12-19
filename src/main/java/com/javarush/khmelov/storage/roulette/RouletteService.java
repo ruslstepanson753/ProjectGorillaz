@@ -1,10 +1,9 @@
 package com.javarush.khmelov.storage.roulette;
 
-import com.javarush.khmelov.entity.QuestInfoEntity;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
-import java.util.*;
-
-import static com.javarush.khmelov.storage.ConstantsCommon.IMG_PATH;
 import static com.javarush.khmelov.storage.roulette.RouletteData.*;
 
 public class RouletteService {

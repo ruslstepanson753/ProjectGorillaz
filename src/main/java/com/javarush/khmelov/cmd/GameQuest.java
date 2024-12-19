@@ -8,14 +8,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.*;
+import static com.javarush.khmelov.storage.ConstantsCommon.LEFT;
+import static com.javarush.khmelov.storage.ConstantsCommon.RIGHT;
 import static com.javarush.khmelov.storage.quest.SetResourse.*;
 
 @SuppressWarnings("unused")
 public class GameQuest implements Command {
     private final UserService userService;
-    private List<QuestInfoEntity> questList;
-    private Map<String, String> questMap;
+    private final List<QuestInfoEntity> questList;
+    private final Map<String, String> questMap;
     private QuestInfoEntity conditionEntity;
     private Integer time;
     private Integer evidence;
@@ -89,20 +90,14 @@ public class GameQuest implements Command {
     }
 
     private boolean winCheck() {
-        if (step == QUEST_END_STEP) {
-            return true;
-        }
-        return false;
+        return step == QUEST_END_STEP;
     }
 
     private boolean lossCheck() {
-        if ((time <= QUEST_MIN_RESOURCE)
+        return (time <= QUEST_MIN_RESOURCE)
                 || (evidence <= QUEST_MIN_RESOURCE)
                 || (gold <= QUEST_MIN_RESOURCE)
-                || ((step == QUEST_LOSS_STEP) & (pickedButton.equals(RIGHT)))) {
-            return true;
-        }
-        return false;
+                || ((step == QUEST_LOSS_STEP) & (pickedButton.equals(RIGHT)));
     }
 
     private void goToWin(HttpServletRequest req) {
