@@ -44,4 +44,8 @@ public class QuizRepository {
     public void clearRandomMap() {
         randomMap.clear();
     }
+
+    public Map<String, String> getRandomMapForTest() {
+        return randomMap;
+    }
 }

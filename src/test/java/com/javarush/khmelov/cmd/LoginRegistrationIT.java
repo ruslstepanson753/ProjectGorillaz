@@ -2,24 +2,18 @@ package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.config.Winter;
 import com.javarush.khmelov.entity.User;
-import com.javarush.khmelov.exception.AppException;
-import com.javarush.khmelov.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.jsp.jstl.core.Config;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.ObjectInputFilter;
-
 import static com.javarush.khmelov.storage.ConstantsCommon.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class LoginRegistrationIT extends AbstractTestClass{
+class LoginRegistrationIT extends AbstractTestClass {
 
     private LoginRegistration loginReg;
 
@@ -50,7 +44,7 @@ class LoginRegistrationIT extends AbstractTestClass{
 
         verify(session, never()).setAttribute(eq("user"), any(User.class));
 
-        Assertions.assertEquals(eq(ERROR_NO_ARGS),session.getAttribute(ERROR_MESSAGE));
+        Assertions.assertEquals(eq(ERROR_NO_ARGS), session.getAttribute(ERROR_MESSAGE));
     }
 
     @Test
@@ -63,7 +57,7 @@ class LoginRegistrationIT extends AbstractTestClass{
 
         verify(session, never()).setAttribute(eq("user"), any(User.class));
 
-        Assertions.assertEquals(eq(ERROR_USER_EXIST),session.getAttribute(ERROR_MESSAGE));
+        Assertions.assertEquals(eq(ERROR_USER_EXIST), session.getAttribute(ERROR_MESSAGE));
     }
 
 

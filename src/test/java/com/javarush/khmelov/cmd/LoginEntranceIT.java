@@ -13,7 +13,7 @@ import static com.javarush.khmelov.storage.ConstantsCommon.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class LoginEntranceIT extends AbstractTestClass{
+class LoginEntranceIT extends AbstractTestClass {
 
     private LoginEntrance loginEntr;
 
@@ -44,7 +44,7 @@ class LoginEntranceIT extends AbstractTestClass{
 
         verify(session, never()).setAttribute(eq("user"), any(User.class));
 
-        Assertions.assertEquals(eq(ERROR_NO_ARGS),session.getAttribute(ERROR_MESSAGE));
+        Assertions.assertEquals(eq(ERROR_NO_ARGS), session.getAttribute(ERROR_MESSAGE));
     }
 
     @Test
@@ -57,7 +57,7 @@ class LoginEntranceIT extends AbstractTestClass{
 
         verify(session, never()).setAttribute(eq("user"), any(User.class));
 
-        Assertions.assertEquals(eq(ERROR_PASSWORD_OR_LOGIN_INCORRECT),session.getAttribute(ERROR_MESSAGE));
+        Assertions.assertEquals(eq(ERROR_PASSWORD_OR_LOGIN_INCORRECT), session.getAttribute(ERROR_MESSAGE));
     }
 
 
