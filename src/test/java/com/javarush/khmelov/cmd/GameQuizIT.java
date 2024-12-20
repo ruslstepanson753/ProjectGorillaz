@@ -9,29 +9,29 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
-class GameQuestTest {
-private GameQuest gameQuest;
+class GameQuizIT extends AbstractTestClass{
+ private GameQuiz gameQuiz;
 
-@BeforeEach
+ @BeforeEach
     void setUp() {
-    gameQuest = Winter.find(GameQuest.class);
-}
+     gameQuiz= Winter.find(GameQuiz.class);
+ }
 
     @Test
-    @DisplayName("when step wrong then loss")
-    void whenStepWrongThenLoss() {
+    @DisplayName("when user answer is wrong then add wrong to list")
+    void whenUserAnswerIsWrongThenAddWrongToList() {
         fail("Not implemented");
     }
 
     @Test
-    @DisplayName("when resourse null then loss")
-    void whenResourseNullThenLoss() {
+    @DisplayName("when step first then start condition set")
+    void whenStepFirstThenStartConditionSet() {
         fail("Not implemented");
     }
 
     @Test
-    @DisplayName("when resourse not null and last turn then win")
-    void whenResourseNotNullAndLastTurnThenWin() {
+    @DisplayName("when step last then clear data cash")
+    void whenStepLastThenClearDataCash() {
         fail("Not implemented");
     }
 
