@@ -24,8 +24,4 @@ public class User {
 
     private int lossCount;
 
-    public String getImage() { //TODO move to DTO
-        return "image-" + id;
-    }
-
 }
