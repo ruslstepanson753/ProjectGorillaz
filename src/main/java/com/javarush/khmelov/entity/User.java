@@ -1,5 +1,6 @@
 package com.javarush.khmelov.entity;
 
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class User {
-
+    @Id
     private Long id;
 
     private String login;
