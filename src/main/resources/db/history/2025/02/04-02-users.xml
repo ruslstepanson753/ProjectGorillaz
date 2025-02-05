@@ -7,7 +7,7 @@
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
 
 <changeSet id="04-02-01-add-users" author="stepanov">
-    <createTable tableName="users">
+    <createTable tableName="users" >
         <column autoIncrement="true" name="id" type="BIGINT">
             <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
         </column>

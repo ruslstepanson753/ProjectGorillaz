@@ -23,7 +23,7 @@ public class UserRepository implements Repository<User> {
 
     private final SessionCreator sessionCreator;
 
-    private final Class<User> entityClass;
+    private final Class<User> entityClass = User.class;
 
     @Override
     public Collection<User> getAll() {

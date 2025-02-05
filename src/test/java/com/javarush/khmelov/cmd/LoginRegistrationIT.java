@@ -1,6 +1,6 @@
 package com.javarush.khmelov.cmd;
 
-import com.javarush.khmelov.config.Winter;
+import com.javarush.khmelov.config.NanoSpring;
 import com.javarush.khmelov.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ class LoginRegistrationIT extends AbstractTestClass {
 
     @BeforeEach
     void init() {
-        loginReg = Winter.find(LoginRegistration.class);
+        loginReg = NanoSpring.find(LoginRegistration.class);
     }
 
     @Test

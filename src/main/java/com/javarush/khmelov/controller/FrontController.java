@@ -1,8 +1,12 @@
 package com.javarush.khmelov.controller;
 
 import com.javarush.khmelov.cmd.Command;
-import com.javarush.khmelov.config.Winter;
+import com.javarush.khmelov.config.Config;
+import com.javarush.khmelov.config.LiqubaseInit;
+import com.javarush.khmelov.config.SessionCreator;
+import com.javarush.khmelov.config.NanoSpring;
 import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +21,7 @@ import static com.javarush.khmelov.storage.ConstantsCommon.*;
         GO_ROULETTE, GO_LOGIN_ENTRANCE, GO_LOGIN_REGISTRATION})
 public class FrontController extends HttpServlet {
 
-    private final HttpResolver httpResolver = Winter.find(HttpResolver.class);
+    private final HttpResolver httpResolver = NanoSpring.find(HttpResolver.class);
 
     private static String getJsp(String view) {
         return "/WEB-INF/" + view + ".jsp";
@@ -32,8 +36,9 @@ public class FrontController extends HttpServlet {
     }
 
     @Override
-    public void init(ServletConfig config) {
-
+    public void init(ServletConfig servletConfig) {
+        Config config = NanoSpring.find(Config.class);
+        config.fillEmptyRepository();
     }
 
     @Override

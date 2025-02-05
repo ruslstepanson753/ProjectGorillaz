@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LiqubaseInit {
-    public static void main(String[] args) {
-        init();
-    }
-    public static void init() {
+    public void init() {
         log.info("Running Liquibase...");
         try {
             Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
