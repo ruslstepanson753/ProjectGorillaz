@@ -1,7 +1,7 @@
 package com.javarush.khmelov.service;
 
 import com.javarush.khmelov.entity.User;
-import com.javarush.khmelov.storage.repository.UserRepository;
+import com.javarush.khmelov.repository.UserRepository;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public Optional<User> get(long id) {
-        return userRepository.get(id);
+        return Optional.ofNullable(userRepository.get(id));
     }
 
     public boolean loginOrPasswordIsIncorrect(String login, String password) {

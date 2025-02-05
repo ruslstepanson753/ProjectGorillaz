@@ -1,4 +1,4 @@
-package com.javarush.khmelov.storage.repository;
+package com.javarush.khmelov.repository;
 
 import com.javarush.khmelov.entity.User;
 
@@ -9,7 +9,7 @@ public interface Repository<T> {
 
     Collection<User> getAll();
 
-    Optional<T> get(long id);
+    T get(long id);
 
     void create(T entity);
 
