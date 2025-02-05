@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+<changeSet id="04-02-01-users-data" author="stepanov">
+    <insert tableName="users">
+        <column name="login">Ivanov</column>
+        <column name="password">qwerty</column>
+        <column name="games_count">10</column>
+        <column name="wins_count">1</column>
+        <column name="loss_count">9</column>
+    </insert>
+    <insert tableName="users">
+        <column name="login">JakVelnev</column>
+        <column name="password">123</column>
+        <column name="games_count">4</column>
+        <column name="wins_count">2</column>
+        <column name="loss_count">2</column>
+    </insert>
+    <insert tableName="users">
+        <column name="login">Buynov</column>
+        <column name="password">admin1</column>
+        <column name="games_count">7</column>
+        <column name="wins_count">3</column>
+        <column name="loss_count">4</column>
+    </insert>
+    <insert tableName="users">
+        <column name="login">Khmelov</column>
+        <column name="password">admin</column>
+        <column name="games_count">777</column>
+        <column name="wins_count">777</column>
+        <column name="loss_count">0</column>
+    </insert>
+</changeSet>
+</databaseChangeLog>

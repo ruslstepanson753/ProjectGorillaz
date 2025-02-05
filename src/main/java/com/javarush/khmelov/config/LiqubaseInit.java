@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LiqubaseInit {
     public static void main(String[] args) {
+        init();
+    }
+    public static void init() {
         log.info("Running Liquibase...");
         try {
             Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
@@ -15,24 +18,6 @@ public class LiqubaseInit {
 
                 update.addArgumentValue("changelogFile", "db/changelog.xml");
                 update.addArgumentValue("url", "jdbc:postgresql://localhost:2345/game");
-                update.addArgumentValue("username", "postgres");
-                update.addArgumentValue("password", "postgres");
-
-                update.execute();
-            });
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        log.info("Running Liquibase...DONE");
-    }
-    public void init() {
-        log.info("Running Liquibase...");
-        try {
-            Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
-                CommandScope update = new CommandScope("update");
-
-                update.addArgumentValue("changelogFile", "db/changelog.xml");
-                update.addArgumentValue("url", "jdbc:postgresql://localhost:5432/game");
                 update.addArgumentValue("username", "postgres");
                 update.addArgumentValue("password", "postgres");
 

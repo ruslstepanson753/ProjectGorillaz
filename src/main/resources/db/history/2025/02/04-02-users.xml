@@ -13,9 +13,9 @@
         </column>
         <column name="login" type="VARCHAR(128)"/>
         <column name="password" type="VARCHAR(256)"/>
-        <column name="gamesCount" type="INTEGER"/>
-        <column name="winsCount" type="INTEGER"/>
-        <column name="lossCount" type="INTEGER"/>
+        <column name="games_count" type="INTEGER"/>
+        <column name="wins_count" type="INTEGER"/>
+        <column name="loss_count" type="INTEGER"/>
     </createTable>
 </changeSet>
 </databaseChangeLog>
