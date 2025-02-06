@@ -16,7 +16,7 @@ public class SessionCreator implements AutoCloseable {
 
     @SneakyThrows
     public SessionCreator() {
-        Configuration configuration = new Configuration();        //1. hibernate.properties
+        Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(QuestInfoEntity.class);
         configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
@@ -32,20 +32,6 @@ public class SessionCreator implements AutoCloseable {
         sessionFactory.close();
     }
 
-    public static void newSessionCreator() {
-        SessionCreator sessionCreator = new SessionCreator();
-        try (sessionCreator){
-            Session session = sessionCreator.getSession();
-            Transaction tx = session.beginTransaction();
-            try {
-                QuestInfoEntity questInfo = session.find(QuestInfoEntity.class, 1L);
-                System.out.println(questInfo);
-                tx.commit();
-            } catch (Exception e){
-                e.printStackTrace();
-                tx.rollback();
-            }
-        }
 
-    }
+
 }

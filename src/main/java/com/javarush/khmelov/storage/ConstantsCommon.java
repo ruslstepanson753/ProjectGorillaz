@@ -13,6 +13,9 @@ public class ConstantsCommon {
     public static final String ERROR_NO_ARGS = "login or password is empty";
     public static final String ERROR_USER_EXIST = "such user already exists";
 
+    public static final String ERROR_MAP_TO_JSON = "Ошибка при преобразовании Map в JSON";
+    public static final String ERROR_JSON_TO_MAP = "Ошибка при преобразовании JSON в Map";
+
     public static final String ERROR_PASSWORD_OR_LOGIN_INCORRECT = "login or password is incorrect";
 
     public static final String IMG_PATH = "images" + File.separator;

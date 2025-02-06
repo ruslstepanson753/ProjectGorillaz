@@ -39,7 +39,6 @@ public class FrontController extends HttpServlet {
     public void init(ServletConfig servletConfig) {
         Config config = NanoSpring.find(Config.class);
         config.fillEmptyRepository();
-        SessionCreator.newSessionCreator();
     }
 
     @Override
@@ -47,5 +46,10 @@ public class FrontController extends HttpServlet {
         Command command = httpResolver.resolve(req);
         String redirect = command.doPost(req);
         resp.sendRedirect(redirect);
+    }
+
+    @Override
+    public void destroy() {
+        NanoSpring.find(SessionCreator.class).close();
     }
 }
