@@ -1,13 +1,13 @@
 package com.javarush.khmelov.repository;
 
-import com.javarush.khmelov.entity.User;
-
 import java.util.Collection;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface Repository<T> {
 
-    Collection<User> getAll();
+    Collection<T> getAll();
+
+    Stream<T> find(T pattern);
 
     T get(long id);
 
