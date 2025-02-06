@@ -21,7 +21,7 @@
         Осторожно: время, улики и деньги ограничены, и каждая ошибка приближает тебя к провалу.
         Как только любой из ресурсов равен 0 – квест провален!".
         Начать приключение?]]></column>
-        <column name="imageUrl">quest_one.jpg</column>
+        <column name="image_url">quest_one.jpg</column>
     </insert>
     <insert tableName="quest_info_entity">
         <column name="button_left_text">Обследовать площадь</column>
@@ -33,7 +33,7 @@
         <column name="delta_gold" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
         <column name="description"><![CDATA[   Вы изучаете карту города и идете на Дворцовую площадь.
         Предстоит выбор:]]></column>
-        <column name="imageUrl">quest_two.jpg</column>
+        <column name="image_url">quest_two.jpg</column>
     </insert>
     <insert tableName="quest_info_entity">
         <column name="button_left_text">Заплатить стражнику</column>
@@ -47,7 +47,7 @@
         <column name="delta_gold" value="{&quot;LEFT&quot;: 3, &quot;RIGHT&quot;: 0}" />
         <column name="description"><![CDATA[   Получив подсказку, вы узнаёте, что реликвия спрятана в Петропавловской крепости
    Чтобы войти, нужно:]]></column>
-        <column name="imageUrl">quest_three.jpg</column>
+        <column name="image_url">quest_three.jpg</column>
     </insert>
     <insert tableName="quest_info_entity">
         <column name="button_left_text">Попытаться разгадать шифр</column>
@@ -61,7 +61,7 @@
         <column name="delta_gold" value="{&quot;LEFT&quot;: -2, &quot;RIGHT&quot;: 0}" />
         <column name="description"><![CDATA[   На пути дверь, закрытая шифром
    Сделайте выбор:]]></column>
-        <column name="imageUrl">quest_four.jpg</column>
+        <column name="image_url">quest_four.jpg</column>
     </insert>
     <insert tableName="quest_info_entity">
         <column name="button_left_text">Использовать улику</column>
@@ -74,7 +74,7 @@
         <column name="delta_evidence" value="{&quot;LEFT&quot;: -1, &quot;RIGHT&quot;: 0}" />
         <column name="delta_gold" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: -2}" />
         <column name="description"><![CDATA[   Здесь нужно решить последнюю загадку.]]></column>
-        <column name="imageUrl">quest_five.jpg</column>
+        <column name="image_url">quest_five.jpg</column>
     </insert>
 </changeSet>
 </databaseChangeLog>

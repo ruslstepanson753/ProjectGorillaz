@@ -24,10 +24,10 @@ public class GameQuest implements Command {
     private String pickedButton = LEFT;
     private int step;
 
-    public GameQuest(QuestRepository questService, UserService userService) {
+    public GameQuest(QuestRepository questRepository, UserService userService) {
         this.userService = userService;
-        this.questMap = questService.getQuestMap();
-        this.questList = questService.getQuestList();
+        this.questMap = questRepository.getQuestMap();
+        this.questList = questRepository.getQuestList();
     }
 
     @Override

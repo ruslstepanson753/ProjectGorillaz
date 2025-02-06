@@ -19,7 +19,7 @@
         <column name="delta_evidence" type="jsonb"/>
         <column name="delta_gold" type="jsonb"/>
         <column name="description" type="VARCHAR(1024)"/>
-        <column name="imageUrl" type="VARCHAR(64)"/>
+        <column name="image_url" type="VARCHAR(64)"/>
     </createTable>
 </changeSet>
 </databaseChangeLog>

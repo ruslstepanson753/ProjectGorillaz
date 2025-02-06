@@ -1,34 +1,50 @@
 package com.javarush.khmelov.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Map;
 
-@Data
+@Entity
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Table(name = "quest_info_entity")
 public class QuestInfoEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "button_left_text", length = 256)
     private String buttonLeftText;
 
+    @Column(name = "button_right_text", length = 256)
     private String buttonRightText;
 
+    @Column(name = "result_left_text", length = 256)
     private String resultLeftText;
 
+    @Column(name = "result_right_text", length = 256)
     private String resultRightText;
 
+    @Column(columnDefinition = "jsonb")
+    @Convert(converter = MapToJsonConverter.class)
     private Map<String, Integer> deltaTime;
 
+    @Column(columnDefinition = "jsonb")
+    @Convert(converter = MapToJsonConverter.class)
     private Map<String, Integer> deltaEvidence;
 
+    @Column(columnDefinition = "jsonb")
+    @Convert(converter = MapToJsonConverter.class)
     private Map<String, Integer> deltaGold;
 
+    @Column(length = 1024)
     private String description;
 
+    @Column(name = "image_url", length = 64)
     private String imageUrl;
 
     public Integer getDeltaTime(String pickedButton) {
