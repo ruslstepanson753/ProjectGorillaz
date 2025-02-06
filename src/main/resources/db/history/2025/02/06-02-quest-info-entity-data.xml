@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+<changeSet id="2025-02-06-02-quest-info-entity-data" author="stepanov">
+    <insert tableName="quest_info_entity">
+        <column name="button_left_text">Принять вызов</column>
+        <column name="button_right_text">Игнорировать вызов</column>
+        <column name="result_left_text"> </column>
+        <column name="result_right_text"> </column>
+        <column name="delta_time" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_evidence" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_gold" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="description"><![CDATA[   Вы очнулись в Санкт-Петербурге без воспоминаний.
+        У вас есть карта города, странный ключ и записка:
+        "Найди реликвию, чтобы вернуть свою память.
+        Осторожно: время, улики и деньги ограничены, и каждая ошибка приближает тебя к провалу.
+        Как только любой из ресурсов равен 0 – квест провален!".
+        Начать приключение?]]></column>
+        <column name="imageUrl">quest_one.jpg</column>
+    </insert>
+    <insert tableName="quest_info_entity">
+        <column name="button_left_text">Обследовать площадь</column>
+        <column name="button_right_text">Спросить уличную художницу </column>
+        <column name="result_left_text"> </column>
+        <column name="result_right_text"> </column>
+        <column name="delta_time" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_evidence" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_gold" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="description"><![CDATA[   Вы изучаете карту города и идете на Дворцовую площадь.
+        Предстоит выбор:]]></column>
+        <column name="imageUrl">quest_two.jpg</column>
+    </insert>
+    <insert tableName="quest_info_entity">
+        <column name="button_left_text">Заплатить стражнику</column>
+        <column name="button_right_text">Найти обходной путь</column>
+        <column name="result_left_text"><![CDATA[   Вы нашли несколько кошельков, после чего отыскали художницу и получили от неё подсказку
+   (+ 3 золота, -2 время)]]></column>
+        <column name="result_right_text"><![CDATA[   Художница подсказала вам путь
+   (-1 время)]]></column>
+        <column name="delta_time" value="{&quot;LEFT&quot;: -2, &quot;RIGHT&quot;: -1}" />
+        <column name="delta_evidence" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_gold" value="{&quot;LEFT&quot;: 3, &quot;RIGHT&quot;: 0}" />
+        <column name="description"><![CDATA[   Получив подсказку, вы узнаёте, что реликвия спрятана в Петропавловской крепости
+   Чтобы войти, нужно:]]></column>
+        <column name="imageUrl">quest_three.jpg</column>
+    </insert>
+    <insert tableName="quest_info_entity">
+        <column name="button_left_text">Попытаться разгадать шифр</column>
+        <column name="button_right_text">Дать золото привратнику и открыть дверь ключом</column>
+        <column name="result_left_text"><![CDATA[   Вы экономите время, но теряете золото
+   (- 2 золота) ]]></column>
+        <column name="result_right_text"><![CDATA[   Вы тратите время и находите улику вместе с обходным путём
+   (+ 1 улика, -2 время)]]></column>
+        <column name="delta_time" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: -2}" />
+        <column name="delta_evidence" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 1}" />
+        <column name="delta_gold" value="{&quot;LEFT&quot;: -2, &quot;RIGHT&quot;: 0}" />
+        <column name="description"><![CDATA[   На пути дверь, закрытая шифром
+   Сделайте выбор:]]></column>
+        <column name="imageUrl">quest_four.jpg</column>
+    </insert>
+    <insert tableName="quest_info_entity">
+        <column name="button_left_text">Использовать улику</column>
+        <column name="button_right_text">Поискать коренного Петербуржца, заплатить ему, чтоб всё разрулил</column>
+        <column name="result_left_text"><![CDATA[   Вы потратили улику и проходите дальше
+   (-1 улика)]]></column>
+        <column name="result_right_text"><![CDATA[  Вы тратите золото и проходите дальше
+   (-2 золота)]]></column>
+        <column name="delta_time" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_evidence" value="{&quot;LEFT&quot;: -1, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_gold" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: -2}" />
+        <column name="description"><![CDATA[   Здесь нужно решить последнюю загадку.]]></column>
+        <column name="imageUrl">quest_five.jpg</column>
+    </insert>
+</changeSet>
+</databaseChangeLog>
