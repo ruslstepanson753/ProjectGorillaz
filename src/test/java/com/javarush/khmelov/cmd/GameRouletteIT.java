@@ -66,7 +66,7 @@ class GameRouletteIT {
         String actualRedirect = gameRoulette.doGet(req);
 
         // Проверки
-        verify(req).setAttribute("imageUrl", "/images/red.png");
+        verify(req).setAttribute("imageUrl", "images\\/images/red.png");
         verify(req).setAttribute("resultColor", "Red");
         verify(req).setAttribute("winLossDescription", "You win!");
         verify(req).setAttribute("isDone", true);
@@ -88,7 +88,7 @@ class GameRouletteIT {
         String actualRedirect = gameRoulette.doGet(req);
 
         // Проверки
-        verify(req).setAttribute("imageUrl", "/images/black.png");
+        verify(req).setAttribute("imageUrl", "images\\/images/black.png");
         verify(req).setAttribute("resultColor", "Black");
         verify(req).setAttribute("winLossDescription", "You lose!");
         verify(req).setAttribute("isDone", true);
@@ -111,7 +111,7 @@ class GameRouletteIT {
         verify(req).setAttribute("RED_BUTTON_DESCRIPTION", "Bet on red");
         verify(req).setAttribute("BLACK_BUTTON_DESCRIPTION", "Bet on black");
         verify(req).setAttribute("ZERO_BUTTON_DESCRIPTION", "Bet on zero");
-        verify(req).setAttribute("IMAGE_URL_START", "/images/start.png");
+        verify(req).setAttribute("IMAGE_URL_START", "images\\/images/start.png");
 
         assertEquals("game-roulette", actualRedirect);
     }

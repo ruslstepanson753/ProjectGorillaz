@@ -73,7 +73,7 @@ public interface Command {
             User user = findUser(req.getSession().getAttribute("login").toString(), userService);
             user.setGamesCount(user.getGamesCount() + 1);
             user.setLossCount(user.getLossCount() + 1);
-            update(user);
+            updateUser(user);
             addUserInfoToSession(req, user);
         }
     }
@@ -83,12 +83,12 @@ public interface Command {
             User user = findUser(req.getSession().getAttribute("login").toString(), userService);
             user.setGamesCount(user.getGamesCount() + 1);
             user.setWinsCount(user.getWinsCount() + 1);
-            update(user);
+            updateUser(user);
             addUserInfoToSession(req, user);
         }
     }
 
-    private static void update(User user) {
+    private static void updateUser(User user) {
         UserRepository userRepository = NanoSpring.find(UserRepository.class);
         userRepository.update(user);
     }

@@ -1,13 +1,17 @@
 package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.config.NanoSpring;
+import com.javarush.khmelov.config.SessionCreator;
 import com.javarush.khmelov.entity.User;
+import com.javarush.khmelov.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static com.javarush.khmelov.constants.ConstantsCommon.*;
 import static org.mockito.Mockito.*;
@@ -25,13 +29,22 @@ class LoginRegistrationIT extends AbstractTestClass {
     @Test
     @DisplayName("when registr then return to start with new user in session")
     void whenRegistrThenReturnToStartWithNewUserInSession() {
-        when(req.getParameter("login")).thenReturn("Ivanov1");
-        when(req.getParameter("password")).thenReturn("123");
+        when(req.getParameter("login")).thenReturn("Ivanov9");
+        when(req.getParameter("password")).thenReturn("124");
 
         String actualRedirect = loginReg.doPost(req);
         Assertions.assertEquals(actualRedirect, GO_START);
 
         verify(session).setAttribute(eq("user"), any(User.class));
+
+        deleteLastUser();
+    }
+
+    private static void deleteLastUser() {
+        UserRepository userRepository = NanoSpring.find(UserRepository.class);
+        List<User> users = (List<User>)userRepository.getAll();
+        User actualUser = users.get(users.size() - 1);
+        userRepository.delete(actualUser);
     }
 
     @Test

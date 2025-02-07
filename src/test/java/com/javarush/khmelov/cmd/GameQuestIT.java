@@ -29,7 +29,7 @@ class GameQuestIT extends AbstractTestClass {
         Assertions.assertEquals(actualRedirect, "game-quest");
         verify(req).setAttribute(eq("buttonLeft"), eq("Принять вызов"));
         verify(req).setAttribute(eq("buttonRight"), eq("Игнорировать вызов"));
-        verify(req).setAttribute(eq("result"), eq(" "));
+        verify(req).setAttribute(eq("result"), eq(null));
         verify(req).setAttribute(eq("time"), eq(4));
     }
 
