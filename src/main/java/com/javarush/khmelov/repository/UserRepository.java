@@ -5,7 +5,6 @@ import com.javarush.khmelov.config.SessionCreator;
 
 public class UserRepository extends BaseRepository<User> {
 
-
     public UserRepository(SessionCreator sessionCreator) {
         super(sessionCreator, User.class);
     }

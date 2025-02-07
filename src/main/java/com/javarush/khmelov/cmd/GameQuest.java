@@ -2,7 +2,8 @@ package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.entity.QuestInfoEntity;
 import com.javarush.khmelov.service.UserService;
-import com.javarush.khmelov.storage.quest.QuestRepository;
+import com.javarush.khmelov.service.QuestService;
+import com.javarush.khmelov.util.UrlHelper;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -24,10 +25,10 @@ public class GameQuest implements Command {
     private String pickedButton = LEFT;
     private int step;
 
-    public GameQuest(QuestRepository questRepository, UserService userService) {
+    public GameQuest(QuestService questService, UserService userService) {
         this.userService = userService;
-        this.questMap = questRepository.getQuestMap();
-        this.questList = questRepository.getQuestList();
+        this.questMap = questService.getQuestMap();
+        this.questList = questService.getQuestList();
     }
 
     @Override
@@ -60,9 +61,18 @@ public class GameQuest implements Command {
         evidence = Integer.parseInt(questMap.get("START_EVIDENCE"));
         gold = Integer.parseInt(questMap.get("START_GOLD"));
         conditionEntity = questList.get(step);
-        req.getSession().setAttribute("IMAGE_URL_EVIDENCE", questMap.get("IMAGE_URL_EVIDENCE"));
-        req.getSession().setAttribute("IMAGE_URL_GOLD", questMap.get("IMAGE_URL_GOLD"));
-        req.getSession().setAttribute("IMAGE_URL_TIME", questMap.get("IMAGE_URL_TIME"));
+
+        String nameFileEvidence =  questMap.get("IMAGE_URL_EVIDENCE");
+        String urlEvidence = UrlHelper.createUrlFromFileName(nameFileEvidence);
+        req.getSession().setAttribute("IMAGE_URL_EVIDENCE",urlEvidence );
+
+        String nameFileGold =  questMap.get("IMAGE_URL_GOLD");
+        String urlGold = UrlHelper.createUrlFromFileName(nameFileGold);
+        req.getSession().setAttribute("IMAGE_URL_GOLD", urlGold);
+
+        String nameFileTime =  questMap.get("IMAGE_URL_TIME");
+        String urlTime = UrlHelper.createUrlFromFileName(nameFileTime);
+        req.getSession().setAttribute("IMAGE_URL_TIME", urlTime);
     }
 
     private void setCondition(HttpServletRequest req) {
@@ -86,7 +96,10 @@ public class GameQuest implements Command {
         req.setAttribute("time", time);
         req.setAttribute("evidence", evidence);
         req.setAttribute("gold", gold);
-        req.setAttribute("imageUrl", conditionEntity.getImageUrl());
+
+        String nameFileConditionEntity =   conditionEntity.getImageUrl();
+        String urlFileConditionEntity = UrlHelper.createUrlFromFileName(nameFileConditionEntity);
+        req.setAttribute("imageUrl", urlFileConditionEntity);
     }
 
     private boolean winCheck() {
@@ -107,7 +120,10 @@ public class GameQuest implements Command {
 
     private void setWinAtributes(HttpServletRequest req, String DESCRIPTION_TEXT_WIN, String IMAGE_URL_WIN, String isWin) {
         req.setAttribute("description", questMap.get(DESCRIPTION_TEXT_WIN));
-        req.setAttribute("imageUrl", questMap.get(IMAGE_URL_WIN));
+
+        String nameFileWin =  questMap.get(IMAGE_URL_WIN);
+        String urlFileWin = UrlHelper.createUrlFromFileName(nameFileWin);
+        req.setAttribute("imageUrl",urlFileWin);
         req.setAttribute(isWin, true);
     }
 
@@ -121,7 +137,9 @@ public class GameQuest implements Command {
     private void setLossAtributes(HttpServletRequest req, String lossСause) {
         req.setAttribute("lossСause", lossСause);
         req.setAttribute("description", questMap.get("DESCRIPTION_TEXT_LOSS"));
-        req.setAttribute("imageUrl", questMap.get("IMAGE_URL_LOSS"));
+        String nameFileLoss =  questMap.get("IMAGE_URL_LOSS");
+        String urlFileLoss = UrlHelper.createUrlFromFileName(nameFileLoss);
+        req.setAttribute("imageUrl", urlFileLoss);
         req.setAttribute("isLoss", true);
     }
 
@@ -140,6 +158,5 @@ public class GameQuest implements Command {
         }
         return lossСause;
     }
-
 
 }

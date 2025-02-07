@@ -92,6 +92,21 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
         }
     }
 
+    public Entity get(String id) {
+        Session session = sessionCreator.getSession();
+        try (session) {
+            Transaction tx = session.beginTransaction();
+            try {
+                Entity entity = session.find(entityClass, id);
+                tx.commit();
+                return entity;
+            } catch (Exception e) {
+                tx.rollback();
+                throw new AppException("not found Entity with id " + id, e);
+            }
+        }
+    }
+
     @Override
     public void create(Entity entity) {
         Session session = sessionCreator.getSession();

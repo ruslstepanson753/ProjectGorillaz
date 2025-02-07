@@ -12,15 +12,18 @@
         <column name="button_right_text">Игнорировать вызов</column>
         <column name="result_left_text"> </column>
         <column name="result_right_text"> </column>
-        <column name="delta_time" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
-        <column name="delta_evidence" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
-        <column name="delta_gold" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
-        <column name="description"><![CDATA[   Вы очнулись в Санкт-Петербурге без воспоминаний.
-        У вас есть карта города, странный ключ и записка:
-        "Найди реликвию, чтобы вернуть свою память.
-        Осторожно: время, улики и деньги ограничены, и каждая ошибка приближает тебя к провалу.
-        Как только любой из ресурсов равен 0 – квест провален!".
-        Начать приключение?]]></column>
+        <column name="delta_time" value="{&quot;l&quot;: 0, &quot;r&quot;: 0}" />
+        <column name="delta_evidence" value="{&quot;l&quot;: 0, &quot;r&quot;: 0}" />
+        <column name="delta_gold" value="{&quot;l&quot;: 0, &quot;r&quot;: 0}" />
+        <column name="description">
+            <![CDATA[.
+            Вы очнулись в Санкт-Петербурге без воспоминаний.
+            У вас есть карта города, странный ключ и записка:
+              "Найди реликвию, чтобы вернуть свою память.
+              Осторожно: время, улики и деньги ограничены!
+              Каждая ошибка приближает тебя к провалу!!!
+              Как только любой из ресурсов равен 0 – квест провален!".
+            Начать приключение?]]></column>
         <column name="image_url">quest_one.jpg</column>
     </insert>
     <insert tableName="quest_info_entity">
@@ -28,9 +31,9 @@
         <column name="button_right_text">Спросить уличную художницу </column>
         <column name="result_left_text"> </column>
         <column name="result_right_text"> </column>
-        <column name="delta_time" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
-        <column name="delta_evidence" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
-        <column name="delta_gold" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_time" value="{&quot;l&quot;: 0, &quot;r&quot;: 0}" />
+        <column name="delta_evidence" value="{&quot;l&quot;: 0, &quot;r&quot;: 0}" />
+        <column name="delta_gold" value="{&quot;l&quot;: 0, &quot;r&quot;: 0}" />
         <column name="description"><![CDATA[   Вы изучаете карту города и идете на Дворцовую площадь.
         Предстоит выбор:]]></column>
         <column name="image_url">quest_two.jpg</column>
@@ -42,9 +45,9 @@
    (+ 3 золота, -2 время)]]></column>
         <column name="result_right_text"><![CDATA[   Художница подсказала вам путь
    (-1 время)]]></column>
-        <column name="delta_time" value="{&quot;LEFT&quot;: -2, &quot;RIGHT&quot;: -1}" />
-        <column name="delta_evidence" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
-        <column name="delta_gold" value="{&quot;LEFT&quot;: 3, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_time" value="{&quot;l&quot;: -2, &quot;r&quot;: -1}" />
+        <column name="delta_evidence" value="{&quot;l&quot;: 0, &quot;r&quot;: 0}" />
+        <column name="delta_gold" value="{&quot;l&quot;: 3, &quot;r&quot;: 0}" />
         <column name="description"><![CDATA[   Получив подсказку, вы узнаёте, что реликвия спрятана в Петропавловской крепости
    Чтобы войти, нужно:]]></column>
         <column name="image_url">quest_three.jpg</column>
@@ -56,9 +59,9 @@
    (- 2 золота) ]]></column>
         <column name="result_right_text"><![CDATA[   Вы тратите время и находите улику вместе с обходным путём
    (+ 1 улика, -2 время)]]></column>
-        <column name="delta_time" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: -2}" />
-        <column name="delta_evidence" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 1}" />
-        <column name="delta_gold" value="{&quot;LEFT&quot;: -2, &quot;RIGHT&quot;: 0}" />
+        <column name="delta_time" value="{&quot;l&quot;: 0, &quot;r&quot;: -2}" />
+        <column name="delta_evidence" value="{&quot;l&quot;: 0, &quot;r&quot;: 1}" />
+        <column name="delta_gold" value="{&quot;l&quot;: -2, &quot;r&quot;: 0}" />
         <column name="description"><![CDATA[   На пути дверь, закрытая шифром
    Сделайте выбор:]]></column>
         <column name="image_url">quest_four.jpg</column>
@@ -70,9 +73,9 @@
    (-1 улика)]]></column>
         <column name="result_right_text"><![CDATA[  Вы тратите золото и проходите дальше
    (-2 золота)]]></column>
-        <column name="delta_time" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: 0}" />
-        <column name="delta_evidence" value="{&quot;LEFT&quot;: -1, &quot;RIGHT&quot;: 0}" />
-        <column name="delta_gold" value="{&quot;LEFT&quot;: 0, &quot;RIGHT&quot;: -2}" />
+        <column name="delta_time" value="{&quot;l&quot;: 0, &quot;r&quot;: 0}" />
+        <column name="delta_evidence" value="{&quot;l&quot;: -1, &quot;r&quot;: 0}" />
+        <column name="delta_gold" value="{&quot;l&quot;: 0, &quot;r&quot;: -2}" />
         <column name="description"><![CDATA[   Здесь нужно решить последнюю загадку.]]></column>
         <column name="image_url">quest_five.jpg</column>
     </insert>
