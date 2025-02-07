@@ -1,6 +1,8 @@
 package com.javarush.khmelov.cmd;
 
+import com.javarush.khmelov.config.NanoSpring;
 import com.javarush.khmelov.entity.User;
+import com.javarush.khmelov.repository.UserRepository;
 import com.javarush.khmelov.service.UserService;
 import com.javarush.khmelov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,6 +73,7 @@ public interface Command {
             User user = findUser(req.getSession().getAttribute("login").toString(), userService);
             user.setGamesCount(user.getGamesCount() + 1);
             user.setLossCount(user.getLossCount() + 1);
+            update(user);
             addUserInfoToSession(req, user);
         }
     }
@@ -80,8 +83,14 @@ public interface Command {
             User user = findUser(req.getSession().getAttribute("login").toString(), userService);
             user.setGamesCount(user.getGamesCount() + 1);
             user.setWinsCount(user.getWinsCount() + 1);
+            update(user);
             addUserInfoToSession(req, user);
         }
+    }
+
+    private static void update(User user) {
+        UserRepository userRepository = NanoSpring.find(UserRepository.class);
+        userRepository.update(user);
     }
 
     private boolean islogged(HttpServletRequest req) {
