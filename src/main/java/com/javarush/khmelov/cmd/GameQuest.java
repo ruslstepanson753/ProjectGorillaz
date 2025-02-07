@@ -9,9 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.LEFT;
-import static com.javarush.khmelov.storage.ConstantsCommon.RIGHT;
-import static com.javarush.khmelov.storage.quest.SetResourse.*;
+import static com.javarush.khmelov.constants.ConstantsCommon.*;
 
 @SuppressWarnings("unused")
 public class GameQuest implements Command {

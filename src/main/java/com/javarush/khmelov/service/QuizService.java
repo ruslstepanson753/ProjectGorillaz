@@ -1,4 +1,4 @@
-package com.javarush.khmelov.storage.quiz;
+package com.javarush.khmelov.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,14 +7,14 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static com.javarush.khmelov.storage.quiz.QuizConstants.NUMBER_OF_QUESTIONS;
-import static com.javarush.khmelov.storage.quiz.QuizConstants.TEXT_FILE;
+import static com.javarush.khmelov.constants.ConstantsCommon.NUMBER_OF_QUESTIONS;
+import static com.javarush.khmelov.constants.ConstantsCommon.TEXT_FILE;
 
-public class QuizRepository {
+public class QuizService {
     private final static Map<String, String> questionMap = new LinkedHashMap<>();
     Map<String, String> randomMap = new LinkedHashMap<>();
 
-    public QuizRepository() {
+    public QuizService() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(TEXT_FILE);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 

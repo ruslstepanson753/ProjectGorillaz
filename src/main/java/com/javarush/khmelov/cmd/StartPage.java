@@ -2,7 +2,7 @@ package com.javarush.khmelov.cmd;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.*;
+import static com.javarush.khmelov.constants.ConstantsCommon.*;
 
 @SuppressWarnings("unused")
 public class StartPage implements Command {

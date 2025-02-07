@@ -1,7 +1,7 @@
 package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.service.UserService;
-import com.javarush.khmelov.storage.roulette.RouletteService;
+import com.javarush.khmelov.service.RouletteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;

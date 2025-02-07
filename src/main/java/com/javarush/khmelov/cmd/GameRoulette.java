@@ -1,7 +1,8 @@
 package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.service.UserService;
-import com.javarush.khmelov.storage.roulette.RouletteService;
+import com.javarush.khmelov.service.RouletteService;
+import com.javarush.khmelov.util.UrlHelper;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
@@ -38,7 +39,10 @@ public class GameRoulette implements Command {
         String resulColor = "RESULT_COLOR_" + rouletteColor;
         String resultImgColor = "IMAGE_URL_" + rouletteColor;
 
-        req.setAttribute("imageUrl", rouletteMap.get(resultImgColor));
+
+        String nameFile =  rouletteMap.get(resultImgColor);
+        String urlFile = UrlHelper.createUrlFromFileName(nameFile);
+        req.setAttribute("imageUrl",urlFile );
         req.setAttribute("resultColor", rouletteMap.get(resulColor));
         req.setAttribute("winLossDescription",
                 (pickedColor.equals(rouletteColor))
@@ -58,8 +62,10 @@ public class GameRoulette implements Command {
         req.setAttribute("RED_BUTTON_DESCRIPTION", rouletteMap.get("RED_BUTTON_DESCRIPTION"));
         req.setAttribute("BLACK_BUTTON_DESCRIPTION", rouletteMap.get("BLACK_BUTTON_DESCRIPTION"));
         req.setAttribute("ZERO_BUTTON_DESCRIPTION", rouletteMap.get("ZERO_BUTTON_DESCRIPTION"));
-        req.setAttribute("IMAGE_URL_START", rouletteMap.get("IMAGE_URL_START"));
 
+        String nameFile =  rouletteMap.get("IMAGE_URL_START");
+        String urlFile = UrlHelper.createUrlFromFileName(nameFile);
+        req.setAttribute("IMAGE_URL_START", urlFile);
     }
 
 }

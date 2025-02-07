@@ -36,5 +36,4 @@ public class QuestService {
         return map;
     }
 
-
 }

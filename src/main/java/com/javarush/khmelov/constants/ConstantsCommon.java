@@ -1,4 +1,4 @@
-package com.javarush.khmelov.storage;
+package com.javarush.khmelov.constants;
 
 import java.io.File;
 
@@ -37,4 +37,14 @@ public class ConstantsCommon {
     public static final String GO_LOGIN_ENTRANCE = "/login-entrance";
     public static final String GO_LOGIN_REGISTRATION = "/login-registration";
 
+    public static final int QUEST_END_STEP = 6;
+    public static final int QUEST_MIN_RESOURCE = 0;
+    public static final int QUEST_LOSS_STEP = 2;
+
+    public static int NUMBER_OF_QUESTIONS = 5;
+    public static String TEXT_FILE = "questions.txt";
+
+    public final static String RED = "RED";
+    public final static String BLACK = "BLACK";
+    public final static String ZERO = "ZERO";
 }

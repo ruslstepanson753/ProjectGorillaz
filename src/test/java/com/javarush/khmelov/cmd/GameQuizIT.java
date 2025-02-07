@@ -1,7 +1,7 @@
 package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.service.UserService;
-import com.javarush.khmelov.storage.quiz.QuizRepository;
+import com.javarush.khmelov.service.QuizService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,23 +16,23 @@ class GameQuizIT {
 
     private GameQuiz gameQuiz;
     private UserService userService;
-    private QuizRepository quizRepository;
+    private QuizService quizService;
     private HttpServletRequest httpServletRequest;
 
     @BeforeEach
     void setUp() {
         userService = mock(UserService.class);
-        quizRepository = mock(QuizRepository.class);
+        quizService = mock(QuizService.class);
         httpServletRequest = mock(HttpServletRequest.class);
 
-        gameQuiz = new GameQuiz(userService, quizRepository);
+        gameQuiz = new GameQuiz(userService, quizService);
 
         // Мокаем данные для квиза
         Map<String, String> mockQuestions = new LinkedHashMap<>();
         mockQuestions.put("What is 2 + 2?", "4");
         mockQuestions.put("What is the capital of France?", "Paris");
 
-        when(quizRepository.getRandomQuestionMap()).thenReturn(mockQuestions);
+        when(quizService.getRandomQuestionMap()).thenReturn(mockQuestions);
     }
 
     @Test
@@ -43,7 +43,7 @@ class GameQuizIT {
 
         // Проверяем вызовы методов и состояния
         assertEquals("game-quiz", view); // Имя view, соответствующее классу
-        verify(quizRepository, times(1)).getRandomQuestionMap();
+        verify(quizService, times(1)).getRandomQuestionMap();
         verify(httpServletRequest, times(1)).setAttribute("description", "What is 2 + 2?");
         verify(httpServletRequest, times(1)).setAttribute("questionNumber", 1);
     }

@@ -1,7 +1,7 @@
 package com.javarush.khmelov.cmd;
 
 import com.javarush.khmelov.service.UserService;
-import com.javarush.khmelov.storage.quiz.QuizRepository;
+import com.javarush.khmelov.service.QuizService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.FIRST_STEP;
-import static com.javarush.khmelov.storage.quiz.QuizConstants.NUMBER_OF_QUESTIONS;
+import static com.javarush.khmelov.constants.ConstantsCommon.FIRST_STEP;
+import static com.javarush.khmelov.constants.ConstantsCommon.NUMBER_OF_QUESTIONS;
 
 @SuppressWarnings("unused")
 public class GameQuiz implements Command {
     UserService userService;
-    QuizRepository quizRepository;
+    QuizService quizService;
     Map<String, String> questionsMap;
     List<String> questions = new ArrayList<>();
     Map<String, String> wrongAnswers = new HashMap<>();
@@ -23,9 +23,9 @@ public class GameQuiz implements Command {
     String answer;
     int step;
 
-    public GameQuiz(UserService userService, QuizRepository quizRepository) {
+    public GameQuiz(UserService userService, QuizService quizService) {
         this.userService = userService;
-        this.quizRepository = quizRepository;
+        this.quizService = quizService;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class GameQuiz implements Command {
 
     private void startCondition(HttpServletRequest req) {
         step = FIRST_STEP;
-        questionsMap = quizRepository.getRandomQuestionMap();
+        questionsMap = quizService.getRandomQuestionMap();
         for (String question : questionsMap.keySet()) {
             questions.add(question);
         }
@@ -121,6 +121,6 @@ public class GameQuiz implements Command {
         questionsMap.clear();
         questions.clear();
         wrongAnswers.clear();
-        quizRepository.clearRandomMap();
+        quizService.clearRandomMap();
     }
 }

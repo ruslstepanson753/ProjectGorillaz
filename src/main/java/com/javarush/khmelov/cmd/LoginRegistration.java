@@ -5,8 +5,8 @@ import com.javarush.khmelov.service.UserService;
 import com.javarush.khmelov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_USER_EXIST;
-import static com.javarush.khmelov.storage.ConstantsCommon.GO_START;
+import static com.javarush.khmelov.constants.ConstantsCommon.ERROR_USER_EXIST;
+import static com.javarush.khmelov.constants.ConstantsCommon.GO_START;
 
 public class LoginRegistration implements Command {
     private final UserService userService;

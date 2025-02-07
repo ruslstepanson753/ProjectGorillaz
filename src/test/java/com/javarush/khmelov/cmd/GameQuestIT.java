@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.LEFT;
-import static com.javarush.khmelov.storage.ConstantsCommon.RIGHT;
+import static com.javarush.khmelov.constants.ConstantsCommon.LEFT;
+import static com.javarush.khmelov.constants.ConstantsCommon.RIGHT;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

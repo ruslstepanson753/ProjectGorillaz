@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.javarush.khmelov.storage.ConstantsCommon.ERROR_NO_ARGS;
+import static com.javarush.khmelov.constants.ConstantsCommon.ERROR_NO_ARGS;
 
 public interface Command {
 
