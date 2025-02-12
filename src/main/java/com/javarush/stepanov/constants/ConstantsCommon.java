@@ -36,6 +36,7 @@ public class ConstantsCommon {
     public static final String GO_ROULETTE = "/game-roulette";
     public static final String GO_LOGIN_ENTRANCE = "/login-entrance";
     public static final String GO_LOGIN_REGISTRATION = "/login-registration";
+    public static final String GO_STATISTIC = "/statistic";
 
     public static final int QUEST_END_STEP = 6;
     public static final int QUEST_MIN_RESOURCE = 0;

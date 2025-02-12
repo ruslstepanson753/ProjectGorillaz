@@ -16,7 +16,7 @@ import java.io.IOException;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @WebServlet({GO_EMPTY_ADRESS, GO_HOME, GO_START, GO_QUEST, GO_QUIZ,
-        GO_ROULETTE, GO_LOGIN_ENTRANCE, GO_LOGIN_REGISTRATION})
+        GO_ROULETTE, GO_LOGIN_ENTRANCE, GO_LOGIN_REGISTRATION, GO_STATISTIC})
 public class FrontController extends HttpServlet {
 
     private final HttpResolver httpResolver = NanoSpring.find(HttpResolver.class);
