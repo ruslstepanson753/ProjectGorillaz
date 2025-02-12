@@ -12,21 +12,21 @@
         <column name="games_count">3</column>
         <column name="wins_count">2</column>
         <column name="loss_count">1</column>
-        <column name="game_name">Quest</column>
+        <column name="game_name">game-quest</column>
         </insert>
         <insert tableName="games">
             <column name="users_id">1</column>
             <column name="games_count">6</column>
             <column name="wins_count">3</column>
             <column name="loss_count">3</column>
-            <column name="game_name">Roulette</column>
+            <column name="game_name">game-roulette</column>
         </insert>
         <insert tableName="games">
             <column name="users_id">1</column>
             <column name="games_count">10</column>
             <column name="wins_count">9</column>
             <column name="loss_count">1</column>
-            <column name="game_name">Quiz</column>
+            <column name="game_name">game-quiz</column>
         </insert>
 
         <insert tableName="games">
@@ -34,14 +34,14 @@
             <column name="games_count">15</column>
             <column name="wins_count">5</column>
             <column name="loss_count">10</column>
-            <column name="game_name">Quest</column>
+            <column name="game_name">game-quest</column>
         </insert>
         <insert tableName="games">
             <column name="users_id">2</column>
             <column name="games_count">1</column>
             <column name="wins_count">1</column>
             <column name="loss_count">0</column>
-            <column name="game_name">Quiz</column>
+            <column name="game_name">game-quiz</column>
         </insert>
 
         <insert tableName="games">
@@ -49,21 +49,21 @@
             <column name="games_count">3</column>
             <column name="wins_count">2</column>
             <column name="loss_count">1</column>
-            <column name="game_name">Quest</column>
+            <column name="game_name">game-quest</column>
         </insert>
         <insert tableName="games">
             <column name="users_id">3</column>
             <column name="games_count">10</column>
             <column name="wins_count">5</column>
             <column name="loss_count">5</column>
-            <column name="game_name">Roulette</column>
+            <column name="game_name">game-roulette</column>
         </insert>
         <insert tableName="games">
             <column name="users_id">3</column>
             <column name="games_count">13</column>
             <column name="wins_count">3</column>
             <column name="loss_count">10</column>
-            <column name="game_name">Quiz</column>
+            <column name="game_name">game-quiz</column>
         </insert>
 
         <insert tableName="games">
@@ -71,21 +71,21 @@
             <column name="games_count">700</column>
             <column name="wins_count">700</column>
             <column name="loss_count">0</column>
-            <column name="game_name">Quest</column>
+            <column name="game_name">game-quest</column>
         </insert>
         <insert tableName="games">
             <column name="users_id">4</column>
             <column name="games_count">70</column>
             <column name="wins_count">70</column>
             <column name="loss_count">0</column>
-            <column name="game_name">Roulette</column>
+            <column name="game_name">game-roulette</column>
         </insert>
         <insert tableName="games">
             <column name="users_id">4</column>
             <column name="games_count">7</column>
             <column name="wins_count">7</column>
             <column name="loss_count">0</column>
-            <column name="game_name">Quiz</column>
+            <column name="game_name">game-quiz</column>
         </insert>
     </changeSet>
 </databaseChangeLog>

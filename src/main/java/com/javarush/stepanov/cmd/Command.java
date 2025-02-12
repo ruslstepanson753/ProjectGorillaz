@@ -69,20 +69,22 @@ public interface Command {
     }
 
     default void addUserLoss(HttpServletRequest req, UserService userService) {
+        String gameName = getView();
         if (islogged(req)) {
             User user = findUser(req.getSession().getAttribute("login").toString(), userService);
-            user.setGamesCount(user.getGamesCount() + 1);
-            user.setLossCount(user.getLossCount() + 1);
+//            user.setGamesCount(user.getGamesCount() + 1);
+            user.setLossCount(gameName);
             updateUser(user);
             addUserInfoToSession(req, user);
         }
     }
 
     default void addUserWin(HttpServletRequest req, UserService userService) {
+        String gameName = getView();
         if (islogged(req)) {
             User user = findUser(req.getSession().getAttribute("login").toString(), userService);
-            user.setGamesCount(user.getGamesCount() + 1);
-            user.setWinsCount(user.getWinsCount() + 1);
+//            user.setGamesCount(user.getGamesCount() + 1);
+            user.setWinsCount(gameName);
             updateUser(user);
             addUserInfoToSession(req, user);
         }
