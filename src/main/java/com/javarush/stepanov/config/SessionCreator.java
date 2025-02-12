@@ -1,9 +1,6 @@
 package com.javarush.stepanov.config;
 
-import com.javarush.stepanov.entity.QuestInfoEntity;
-import com.javarush.stepanov.entity.QuestMap;
-import com.javarush.stepanov.entity.RouletteMap;
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.*;
 import lombok.SneakyThrows;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,6 +19,7 @@ public class SessionCreator implements AutoCloseable {
         configuration.addAnnotatedClass(QuestInfoEntity.class);
         configuration.addAnnotatedClass(QuestMap.class);
         configuration.addAnnotatedClass(RouletteMap.class);
+        configuration.addAnnotatedClass(Game.class);
         configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
         sessionFactory = configuration.buildSessionFactory();
     }

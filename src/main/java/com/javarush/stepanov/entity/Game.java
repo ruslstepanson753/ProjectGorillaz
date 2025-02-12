@@ -3,24 +3,20 @@ package com.javarush.stepanov.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 @Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class User implements AbstractEntity{
+@Table(name = "games")
+public class Game implements AbstractEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String login;
-
-    private String password;
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private User user;
 
     private int gamesCount;
 
@@ -28,7 +24,6 @@ public class User implements AbstractEntity{
 
     private int lossCount;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    private final Collection<Game> games = new ArrayList<>();
+    private String gameName;
 
 }
