@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="head.jsp" %>
 <body style="overflow-y: auto; margin-bottom: 60px;"> <!-- Добавлена прокрутка и отступ для футера -->
 <div class="container">
@@ -22,36 +23,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">1</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 1</td>
-                    <td style="border: 1px solid black; padding: 10px;">10</td>
-                    <td style="border: 1px solid black; padding: 10px;">8</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">2</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 2</td>
-                    <td style="border: 1px solid black; padding: 10px;">9</td>
-                    <td style="border: 1px solid black; padding: 10px;">7</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">3</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 3</td>
-                    <td style="border: 1px solid black; padding: 10px;">8</td>
-                    <td style="border: 1px solid black; padding: 10px;">6</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">4</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 4</td>
-                    <td style="border: 1px solid black; padding: 10px;">7</td>
-                    <td style="border: 1px solid black; padding: 10px;">5</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">5</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 5</td>
-                    <td style="border: 1px solid black; padding: 10px;">6</td>
-                    <td style="border: 1px solid black; padding: 10px;">4</td>
-                </tr>
+                <c:forEach var="questGamers" items="${sessionScope.questGamers}">
+                    <tr>
+                        <td style="border: 1px solid black; padding: 10px;">${questGamers.id}</td>
+                        <td style="border: 1px solid black; padding: 10px; text-align: left;">${questGamers.user.login}</td>
+                        <td style="border: 1px solid black; padding: 10px;">${questGamers.gamesCount}</td>
+                        <td style="border: 1px solid black; padding: 10px;">${questGamers.winsCount}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
 

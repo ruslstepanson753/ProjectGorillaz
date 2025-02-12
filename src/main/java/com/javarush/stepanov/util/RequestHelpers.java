@@ -11,4 +11,5 @@ public class RequestHelpers {
     public static void createError(HttpServletRequest request, String errorMessage) {
         request.getSession().setAttribute(ERROR_MESSAGE, errorMessage);
     }
+
 }

@@ -48,4 +48,9 @@ public class ConstantsCommon {
     public final static String RED = "RED";
     public final static String BLACK = "BLACK";
     public final static String ZERO = "ZERO";
+
+    public final static String GAME_QUEST_NAME = "game-quest";
+    public final static String GAME_ROULETTE_NAME = "game-roulette";
+    public final static String GAME_QUIZ_NAME = "game-quiz";
+
 }
