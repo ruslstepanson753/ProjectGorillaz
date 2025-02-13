@@ -25,7 +25,7 @@
             <!-- Нижняя часть: кнопка -->
             <div class="button-container1">
                 <form action="start-page" method="post">
-                    <button type="submit" class="btn" style="white-space: pre-wrap;">ОК</button>
+                    <button type="submit" class="btn" style="white-space: pre-wrap;">Вернуться в главное меню</button>
                 </form>
             </div>
         </div>
@@ -118,14 +118,14 @@
     .left-part img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Картинка заполняет весь блок */
+        object-fit: contain; /* Картинка заполняет весь блок */
     }
 
     .right-part {
         flex: 1; /* Правая часть занимает половину ширины */
         display: flex;
         flex-direction: column; /* Разделение на верхнюю и нижнюю части */
-        padding: 20px; /* Отступы внутри блока */
+        padding: 10px; /* Отступы внутри блока */
     }
 
     .top-part {

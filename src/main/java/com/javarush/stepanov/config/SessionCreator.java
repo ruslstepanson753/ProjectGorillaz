@@ -34,26 +34,4 @@ public class SessionCreator implements AutoCloseable {
         sessionFactory.close();
     }
 
-//    public static void main(String[] args) {
-//        SessionCreator sessionCreator = new SessionCreator();
-//        try (sessionCreator){
-//            Session session = sessionCreator.getSession();
-//            Transaction tx = session.beginTransaction();
-//            try {
-//                User user1 = session.find(User.class, 1L);
-//                System.out.println(user1);
-//                User user2 = session.find(User.class, 2L);
-//                System.out.println(user2);
-//                User user3 = session.find(User.class, 3L);
-//                System.out.println(user3);
-//                User user4 = session.find(User.class, 4L);
-//                System.out.println(user4);
-//                tx.commit();
-//            } catch (Exception e){
-//                tx.rollback();
-//            }
-//        }
-//
-//    }
-
 }

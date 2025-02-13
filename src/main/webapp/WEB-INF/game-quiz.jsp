@@ -29,13 +29,25 @@
         </c:when>
         <c:when test="${isDone == true}">
             <form action="start-page" method="post">
-                <button type="submit" class="btn" style="white-space: pre-wrap;">ОК</button>
+                <button type="submit" class="btn" style="white-space: pre-wrap;">Вернуться в главное меню</button>
             </form>
         </c:when>
     </c:choose>
 </div>
 
 <style>
+    .left-part img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Картинка заполняет весь блок */
+    }
+
+    .right-part {
+        flex: 1; /* Правая часть занимает половину ширины */
+        display: flex;
+        flex-direction: column; /* Разделение на верхнюю и нижнюю части */
+        padding: 10px; /* Отступы внутри блока */
+    }
     /* Основные стили */
     body, html {
         margin: 0;

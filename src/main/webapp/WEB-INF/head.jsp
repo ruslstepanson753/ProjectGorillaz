@@ -14,49 +14,52 @@
 
 <!-- Верхняя часть -->
 <c:choose>
-<c:when test="${not empty sessionScope.login}">
-<header class="header">
-    <div class="left-part">
-        <p class="stat">Игр: <span>${sessionScope.gamescount}</span></p>
-        <p class="stat">Побед: <span>${sessionScope.winscount}</span></p>
-        <p class="stat">Поражений: <span>${sessionScope.losscount}</span></p>
-    </div>
-    <div class="right-part">
-        <p class="login"> ${sessionScope.login} к игре готов</p>
-    </div>
-    </div>
-</header>
-</c:when>
-<c:otherwise>
-<header class="header">
-    <div class="left-part">
-        <img src="${sessionScope.IMG_START_HEAD}" alt="Header Image" class="header-image">
-    </div>
-    <div class="right-part">
-        <div class="auth">
-            <!-- Форма для входа -->
-            <form id="authForm" method="post">
-                <input type="text" name="login" placeholder="Логин" class="form-control">
-                <input type="password" name="password" placeholder="Пароль" class="form-control">
+    <c:when test="${not empty sessionScope.login}">
+        <header class="header">
+            <div class="left-part">
+                <p class="stat">Игр: <span>${sessionScope.gamescount}</span></p>
+                <p class="stat">Побед: <span>${sessionScope.winscount}</span></p>
+                <p class="stat">Поражений: <span>${sessionScope.losscount}</span></p>
+            </div>
 
-                <!-- Кнопка для входа -->
-                <button type="submit" onclick="submitForm('login-entrance')" class="btn enter-btn">Войти</button>
+            <div class="right-part">
+                <p class="login"> ${sessionScope.login} к игре готов</p>
+            </div>
+        </header>
+    </c:when>
+    <c:otherwise>
+        <header class="header">
+            <div class="left-part">
+                <img src="${sessionScope.IMG_START_HEAD}" alt="Header Image" class="header-image">
+            </div>
+            <div class="right-part">
+                <div class="auth">
+                    <!-- Форма для входа -->
+                    <form id="authForm" method="post">
+                        <input type="text" name="login" placeholder="Логин" class="form-control">
+                        <input type="password" name="password" placeholder="Пароль" class="form-control">
 
-                <!-- Кнопка для регистрации -->
-                <button type="submit" onclick="submitForm('login-registration')" class="btn">Регистрация</button>
-            </form>
+                        <!-- Кнопка для входа -->
+                        <button type="submit" onclick="submitForm('login-entrance')" class="btn enter-btn">вход</button>
 
-
-        </div>
-    </div>
-</header>
-</c:otherwise>
+                        <!-- Кнопка для регистрации -->
+                        <button type="submit" onclick="submitForm('login-registration')" class="btn">регистрация</button>
+                    </form>
+                </div>
+            </div>
+        </header>
+    </c:otherwise>
 </c:choose>
 
 <c:if test="${not empty sessionScope.errorMessage}">
-<h5 class="mb-1 alert-danger text-white text-center" style="background-color: red;">
-        ${sessionScope.errorMessage}
-</h5>
+    <h5 class="mb-1 alert-danger text-white text-center" style="background-color: red;">
+            ${sessionScope.errorMessage}
+    </h5>
 </c:if>
 
 
+<!-- Подключение JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

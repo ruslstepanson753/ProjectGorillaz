@@ -17,7 +17,7 @@
             <!-- Нижняя часть: кнопка -->
             <div class="button-container1">
                 <form action="start-page" method="post">
-                    <button type="submit" class="btn" style="white-space: pre-wrap;">ОК</button>
+                    <button type="submit" class="btn" style="white-space: pre-wrap;">Вернуться в главное меню</button>
                 </form>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <!-- Нижняя часть: кнопка -->
             <div class="button-container1">
                 <form action="start-page" method="post">
-                    <button type="submit" class="btn" style="white-space: pre-wrap;">ОК</button>
+                    <button type="submit" class="btn" style="white-space: pre-wrap;">Вернуться в главное меню</button>
                 </form>
             </div>
         </div>

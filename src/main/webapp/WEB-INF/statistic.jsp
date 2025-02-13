@@ -6,135 +6,107 @@
     <div class="left-part">
         <!-- Левая часть пустая -->
     </div>
-    <div class="right-part">
-        <!-- Общий заголовок "СТАТИСТИКА" -->
-        <h1 style="text-align: center; font-size: 3em; margin-bottom: 20px;">СТАТИСТИКА</h1>
 
-        <div class="top-part" style="display: flex; flex-direction: column; align-items: center;"> <!-- Центрирование таблиц -->
-            <!-- Первая таблица: Квест -->
-            <h2>Квест</h2>
-            <table style="width: 80%; border-collapse: collapse; border: 1px solid black; margin-bottom: 20px; text-align: center;">
-                <thead>
-                <tr>
-                    <th style="border: 1px solid black; padding: 10px;">Место</th>
-                    <th style="border: 1px solid black; padding: 10px;">Имя</th>
-                    <th style="border: 1px solid black; padding: 10px;">Число игр</th>
-                    <th style="border: 1px solid black; padding: 10px;">Число побед</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="questGamers" items="${sessionScope.questGamers}">
-                    <tr>
-                        <td style="border: 1px solid black; padding: 10px;">${questGamers.id}</td>
-                        <td style="border: 1px solid black; padding: 10px; text-align: left;">${questGamers.user.login}</td>
-                        <td style="border: 1px solid black; padding: 10px;">${questGamers.gamesCount}</td>
-                        <td style="border: 1px solid black; padding: 10px;">${questGamers.winsCount}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+    <!-- Общий заголовок "СТАТИСТИКА" -->
+    <h1 class="rainbow-text">ЗАЛ СЛАВЫ</h1>
 
-            <!-- Вторая таблица: Рулетка -->
-            <h2>Рулетка</h2>
-            <table style="width: 80%; border-collapse: collapse; border: 1px solid black; margin-bottom: 20px; text-align: center;">
-                <thead>
+    <div class="top-part" style="display: flex; flex-direction: column; align-items: center;">
+        <!-- Центрирование таблиц -->
+        <!-- Первая таблица: Квест -->
+        <h2 style="text-align: center; font-size: 1.5em; margin-bottom: 20px;">КВЕСТ</h2>
+        <table style="width: 80%; border-collapse: collapse; border: 1px solid black; margin-bottom: 20px; text-align: center;">
+            <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 10px;">Место</th>
+                <th style="border: 1px solid black; padding: 10px;">Имя</th>
+                <th style="border: 1px solid black; padding: 10px;">Число игр</th>
+                <th style="border: 1px solid black; padding: 10px;">Число побед</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="questGamers" items="${sessionScope.questGamers}" varStatus="loop">
                 <tr>
-                    <th style="border: 1px solid black; padding: 10px;">Место</th>
-                    <th style="border: 1px solid black; padding: 10px;">Имя</th>
-                    <th style="border: 1px solid black; padding: 10px;">Число игр</th>
-                    <th style="border: 1px solid black; padding: 10px;">Число побед</th>
+                    <td style="border: 1px solid black; padding: 10px;">${loop.index + 1}</td>
+                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${questGamers.user.login}</td>
+                    <td style="border: 1px solid black; padding: 10px;">${questGamers.gamesCount}</td>
+                    <td style="border: 1px solid black; padding: 10px;">${questGamers.winsCount}</td>
                 </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">1</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 6</td>
-                    <td style="border: 1px solid black; padding: 10px;">10</td>
-                    <td style="border: 1px solid black; padding: 10px;">8</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">2</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 7</td>
-                    <td style="border: 1px solid black; padding: 10px;">9</td>
-                    <td style="border: 1px solid black; padding: 10px;">7</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">3</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 8</td>
-                    <td style="border: 1px solid black; padding: 10px;">8</td>
-                    <td style="border: 1px solid black; padding: 10px;">6</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">4</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 9</td>
-                    <td style="border: 1px solid black; padding: 10px;">7</td>
-                    <td style="border: 1px solid black; padding: 10px;">5</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">5</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 10</td>
-                    <td style="border: 1px solid black; padding: 10px;">6</td>
-                    <td style="border: 1px solid black; padding: 10px;">4</td>
-                </tr>
-                </tbody>
-            </table>
+            </c:forEach>
+            </tbody>
+        </table>
 
-            <!-- Третья таблица: Квиз -->
-            <h2>Квиз</h2>
-            <table style="width: 80%; border-collapse: collapse; border: 1px solid black; margin-bottom: 20px; text-align: center;">
-                <thead>
+        <!-- Вторая таблица: Рулетка -->
+        <h2 style="text-align: center; font-size: 1.5em; margin-bottom: 20px;">РУЛЕТКА</h2>
+        <table style="width: 80%; border-collapse: collapse; border: 1px solid black; margin-bottom: 20px; text-align: center;">
+            <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 10px;">Место</th>
+                <th style="border: 1px solid black; padding: 10px;">Имя</th>
+                <th style="border: 1px solid black; padding: 10px;">Число игр</th>
+                <th style="border: 1px solid black; padding: 10px;">Число побед</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="rouletteGamers" items="${sessionScope.rouletteGamers}" varStatus="loop">
                 <tr>
-                    <th style="border: 1px solid black; padding: 10px;">Место</th>
-                    <th style="border: 1px solid black; padding: 10px;">Имя</th>
-                    <th style="border: 1px solid black; padding: 10px;">Число игр</th>
-                    <th style="border: 1px solid black; padding: 10px;">Число побед</th>
+                    <td style="border: 1px solid black; padding: 10px;">${loop.index + 1}</td>
+                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${rouletteGamers.user.login}</td>
+                    <td style="border: 1px solid black; padding: 10px;">${rouletteGamers.gamesCount}</td>
+                    <td style="border: 1px solid black; padding: 10px;">${rouletteGamers.winsCount}</td>
                 </tr>
-                </thead>
-                <tbody>
+            </c:forEach>
+            </tbody>
+        </table>
+
+        <!-- Третья таблица: Квиз -->
+        <h2 style="text-align: center; font-size: 1.5em; margin-bottom: 20px;">КВИЗ</h2>
+        <table style="width: 80%; border-collapse: collapse; border: 1px solid black; margin-bottom: 20px; text-align: center;">
+            <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 10px;">Место</th>
+                <th style="border: 1px solid black; padding: 10px;">Имя</th>
+                <th style="border: 1px solid black; padding: 10px;">Число игр</th>
+                <th style="border: 1px solid black; padding: 10px;">Число побед</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="quizGamers" items="${sessionScope.quizGamers}" varStatus="loop">
                 <tr>
-                    <td style="border: 1px solid black; padding: 10px;">1</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 11</td>
-                    <td style="border: 1px solid black; padding: 10px;">10</td>
-                    <td style="border: 1px solid black; padding: 10px;">8</td>
+                    <td style="border: 1px solid black; padding: 10px;">${loop.index + 1}</td>
+                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${quizGamers.user.login}</td>
+                    <td style="border: 1px solid black; padding: 10px;">${quizGamers.gamesCount}</td>
+                    <td style="border: 1px solid black; padding: 10px;">${quizGamers.winsCount}</td>
                 </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">2</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 12</td>
-                    <td style="border: 1px solid black; padding: 10px;">9</td>
-                    <td style="border: 1px solid black; padding: 10px;">7</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">3</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 13</td>
-                    <td style="border: 1px solid black; padding: 10px;">8</td>
-                    <td style="border: 1px solid black; padding: 10px;">6</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">4</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 14</td>
-                    <td style="border: 1px solid black; padding: 10px;">7</td>
-                    <td style="border: 1px solid black; padding: 10px;">5</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid black; padding: 10px;">5</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">Игрок 15</td>
-                    <td style="border: 1px solid black; padding: 10px;">6</td>
-                    <td style="border: 1px solid black; padding: 10px;">4</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="bottom-part">
-            <!-- Одна кнопка -->
-            <div class="buttons" style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                <button class="btn">Кнопка</button>
-            </div>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+    <div class="bottom-part">
+        <!-- Одна кнопка -->
+        <div class="buttons" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <form action="start-page" method="post">
+                <button class="btn">Вернуться в главное меню</button>
+            </form>
+
         </div>
     </div>
+
 </div>
 </body>
 
 <style>
+    .left-part img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Картинка заполняет весь блок */
+    }
+
+    .right-part {
+        flex: 1; /* Правая часть занимает половину ширины */
+        display: flex;
+        flex-direction: column; /* Разделение на верхнюю и нижнюю части */
+        padding: 10px; /* Отступы внутри блока */
+    }
     /* Основные стили */
     .resource span {
         font-size: 2em; /* Увеличенный текст в 2 раза */
@@ -158,8 +130,26 @@
         cursor: pointer;
     }
 
+    /* Анимация для заголовка "СТАТИСТИКА" */
+    .rainbow-text {
+        font-size: 2em;
+        text-align: center;
+        margin-bottom: 20px;
+        background: linear-gradient(90deg, #00f7ff, rgb(255, 255, 255), #44ff00, #454d45, blue, indigo, violet);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbow 5s linear infinite;
+    }
+
+    @keyframes rainbow {
+        0% {
+            background-position: 0% 50%;
+        }
+        100% {
+            background-position: 100% 50%;
+        }
+    }
 </style>
 
 <%@include file="footer.jsp" %>
-
-

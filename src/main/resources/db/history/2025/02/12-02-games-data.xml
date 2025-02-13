@@ -24,8 +24,8 @@
         <insert tableName="games">
             <column name="users_id">1</column>
             <column name="games_count">10</column>
-            <column name="wins_count">9</column>
-            <column name="loss_count">1</column>
+            <column name="wins_count">1</column>
+            <column name="loss_count">9</column>
             <column name="game_name">game-quiz</column>
         </insert>
 

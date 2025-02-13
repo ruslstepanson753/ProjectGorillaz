@@ -9,7 +9,7 @@
 <!-- Нижняя часть -->
 <footer class="footer">
     <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
-        <p style="margin: 0; text-align: center;">Санкт-Петербург 2024г</p>
+        <p style="margin: 0; text-align: center;">Санкт-Петербург 2025г</p>
     </div>
     <c:choose>
         <c:when test="${not empty sessionScope.login}">
