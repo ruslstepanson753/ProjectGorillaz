@@ -4,24 +4,11 @@ import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.service.QuizService;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.javarush.stepanov.constants.ConstantsCommon.FIRST_STEP;
-import static com.javarush.stepanov.constants.ConstantsCommon.NUMBER_OF_QUESTIONS;
-
 @SuppressWarnings("unused")
 public class GameQuiz implements Command {
     UserService userService;
     QuizService quizService;
-    Map<String, String> questionsMap;
-    List<String> questions = new ArrayList<>();
-    Map<String, String> wrongAnswers = new HashMap<>();
-    String question;
-    String answer;
-    int step;
+
 
     public GameQuiz(UserService userService, QuizService quizService) {
         this.userService = userService;
@@ -31,96 +18,45 @@ public class GameQuiz implements Command {
     @Override
     public String doGet(HttpServletRequest req) {
         String paramName = req.getParameter("pickedButton");
+        String usersAnswer = req.getParameter("answer");
+
         if (paramName == null) {
-            startCondition(req);
+            quizService.setStartCondition();
+            fillRequest(req);
         } else {
-            if (step != questionsMap.size()) {
-                getInfo(req);
-                setCondition(req);
+            if (quizService.quizIsNotEnding()) {
+                quizService.setInfo(usersAnswer);
+                fillRequest(req);
             } else {
-                setFinalCondition(req);
+                fillFinalRequest(req,usersAnswer);
+                fillUserInfo(req);
             }
         }
-        step++;
+        quizService.nextStep();
         return getView();
     }
 
-    private void setFinalCondition(HttpServletRequest req) {
-        сheckingCorrectnessAnswer(req);
-        StringBuilder resultText = buildResultText();
-        setFinalAttributes(req, resultText);
-        setUserInfo(req);
-        clearDataCash();
-    }
-
-    private void setUserInfo(HttpServletRequest req) {
-        if (wrongAnswers.size() == 0) {
+    private void fillUserInfo(HttpServletRequest req) {
+        if (quizService.isNullWrongAnswers()) {
             addUserWin(req, userService);
         } else {
             addUserLoss(req, userService);
         }
     }
 
-    private StringBuilder buildResultText() {
-        StringBuilder resultText = new StringBuilder();
-        resultText.append("Верных ответов ");
-        resultText.append(NUMBER_OF_QUESTIONS - wrongAnswers.size());
-        resultText.append(" из  ");
-        resultText.append(questionsMap.size());
-        resultText.append("\n");
-        resultText.append("\n");
-        for (String question : wrongAnswers.keySet()) {
-            resultText.append("На вопрос: ");
-            resultText.append(question);
-            resultText.append("\n");
-            resultText.append("Получен неверный ответ: ");
-            resultText.append(wrongAnswers.get(question));
-            resultText.append("\n");
-            resultText.append("Верный ответ: ");
-            resultText.append(questionsMap.get(question));
-            resultText.append("\n\n");
-        }
-        return resultText;
-    }
-
-    private void setFinalAttributes(HttpServletRequest req, StringBuilder resultText) {
+    private void fillFinalRequest(HttpServletRequest req, String userAnswer) {
+        StringBuilder resultText = quizService.getFinalDescription(userAnswer);
         req.setAttribute("description", resultText.toString());
+        int step = quizService.getStep();
         req.setAttribute("questionNumber", step + 1);
         req.setAttribute("isDone", true);
     }
 
-    private void startCondition(HttpServletRequest req) {
-        step = FIRST_STEP;
-        questionsMap = quizService.getRandomQuestionMap();
-        for (String question : questionsMap.keySet()) {
-            questions.add(question);
-        }
-        question = questions.get(step);
-        setCondition(req);
-    }
-
-    private void getInfo(HttpServletRequest req) {
-        сheckingCorrectnessAnswer(req);
-        question = questions.get(step);
-    }
-
-    private void сheckingCorrectnessAnswer(HttpServletRequest req) {
-        String usersAnswer = req.getParameter("answer");
-        answer = questionsMap.get(question);
-        if (!usersAnswer.equalsIgnoreCase(answer)) {
-            wrongAnswers.put(question, usersAnswer);
-        }
-    }
-
-    private void setCondition(HttpServletRequest req) {
+    private void fillRequest(HttpServletRequest req) {
+        String question = quizService.getQuestion();
+        int step = quizService.getStep();
         req.setAttribute("description", question);
         req.setAttribute("questionNumber", step + 1);
     }
 
-    private void clearDataCash() {
-        questionsMap.clear();
-        questions.clear();
-        wrongAnswers.clear();
-        quizService.clearRandomMap();
-    }
 }

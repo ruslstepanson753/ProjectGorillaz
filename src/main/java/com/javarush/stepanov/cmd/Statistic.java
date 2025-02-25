@@ -23,9 +23,11 @@ public class Statistic implements Command {
         Set<Game> questGamers = statisticService.getGamers(GAME_QUEST_NAME);
         Set<Game> rouletteGamers = statisticService.getGamers(GAME_ROULETTE_NAME);
         Set<Game> quizGamers = statisticService.getGamers(GAME_QUIZ_NAME);
+
         req.getSession().setAttribute("questGamers", questGamers);
         req.getSession().setAttribute("rouletteGamers", rouletteGamers);
         req.getSession().setAttribute("quizGamers", quizGamers);
+
         return getView();
     }
 }

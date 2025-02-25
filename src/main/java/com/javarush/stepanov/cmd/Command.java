@@ -70,7 +70,7 @@ public interface Command {
 
     default void addUserLoss(HttpServletRequest req, UserService userService) {
         String gameName = getView();
-        if (islogged(req)) {
+        if (isLogged(req)) {
             User user = findUser(req.getSession().getAttribute("login").toString(), userService);
 //            user.setGamesCount(user.getGamesCount() + 1);
             user.setLossCount(gameName);
@@ -81,7 +81,7 @@ public interface Command {
 
     default void addUserWin(HttpServletRequest req, UserService userService) {
         String gameName = getView();
-        if (islogged(req)) {
+        if (isLogged(req)) {
             User user = findUser(req.getSession().getAttribute("login").toString(), userService);
 //            user.setGamesCount(user.getGamesCount() + 1);
             user.setWinsCount(gameName);
@@ -95,7 +95,7 @@ public interface Command {
         userRepository.update(user);
     }
 
-    private boolean islogged(HttpServletRequest req) {
+    private boolean isLogged(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
         return session != null && session.getAttribute("login") != null;
     }
