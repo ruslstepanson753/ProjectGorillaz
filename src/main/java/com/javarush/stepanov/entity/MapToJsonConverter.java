@@ -7,9 +7,7 @@ import com.javarush.stepanov.exception.AppException;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.util.Map;
-
-import static com.javarush.stepanov.constants.ConstantsCommon.ERROR_JSON_TO_MAP;
-import static com.javarush.stepanov.constants.ConstantsCommon.ERROR_MAP_TO_JSON;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @Converter(autoApply = true)
 public class MapToJsonConverter implements AttributeConverter<Map<String, Integer>, String> {

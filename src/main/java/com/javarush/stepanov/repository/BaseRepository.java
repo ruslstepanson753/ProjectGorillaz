@@ -12,12 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.hibernate.query.criteria.JpaCriteriaQuery;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @AllArgsConstructor
 public class BaseRepository<Entity extends AbstractEntity> implements Repository<Entity> {
@@ -42,12 +43,7 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
         }
     }
 
-
     @Override
-    /* session->cb->cq->root
-     * c <- filter fields and add cb.equals(root.get(name), value)
-     * cq.select(root).where(predicates);
-     * result <- session.createQuery(cq).list(); */
     public Stream<Entity> find(Entity pattern) {
         Session session = sessionCreator.getSession();
         try (session) {
@@ -72,7 +68,7 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
             List<Entity> list = query.list();
             return list.stream();
         } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new AppException(ERROR_BASEREPOSITORY_FIND,e);
         }
     }
 
@@ -87,7 +83,7 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
                 return entity;
             } catch (Exception e) {
                 tx.rollback();
-                throw new AppException("not found Entity with id " + id, e);
+                throw new AppException(ERROR_BASEREPOSITORY_GET + id, e);
             }
         }
     }
@@ -102,7 +98,7 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
                 return entity;
             } catch (Exception e) {
                 tx.rollback();
-                throw new AppException("not found Entity with id " + id, e);
+                throw new AppException(ERROR_BASEREPOSITORY_GET + id, e);
             }
         }
     }
@@ -117,7 +113,7 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
                 tx.commit();
             } catch (Exception e) {
                 tx.rollback();
-                throw new AppException("error while creating entity", e);
+                throw new AppException(ERROR_BASEREPOSITORY_CREATE, e);
             }
         }
     }
@@ -132,7 +128,7 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
                 tx.commit();
             } catch (Exception e) {
                 tx.rollback();
-                throw new AppException("error while creating entity", e);
+                throw new AppException(ERROR_BASEREPOSITORY_UPDATE, e);
             }
         }
     }
@@ -147,7 +143,7 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
                 tx.commit();
             } catch (Exception e) {
                 tx.rollback();
-                throw new AppException("error while creating entity", e);
+                throw new AppException(ERROR_BASEREPOSITORY_DELETE, e);
             }
         }
     }

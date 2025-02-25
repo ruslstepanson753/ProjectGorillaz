@@ -17,7 +17,6 @@ public class QuestMap implements AbstractEntity {
     @Column(name = "value", length = 256)
     private String value;
 
-
     @Override
     public Long getId() {
         return 0L;

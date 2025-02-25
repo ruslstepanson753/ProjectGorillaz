@@ -3,6 +3,7 @@ package com.javarush.stepanov.cmd;
 import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.service.QuizService;
 import jakarta.servlet.http.HttpServletRequest;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @SuppressWarnings("unused")
 public class GameQuiz implements Command {
@@ -17,8 +18,8 @@ public class GameQuiz implements Command {
 
     @Override
     public String doGet(HttpServletRequest req) {
-        String paramName = req.getParameter("pickedButton");
-        String usersAnswer = req.getParameter("answer");
+        String paramName = req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON);
+        String usersAnswer = req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER);
 
         if (paramName == null) {
             quizService.setStartCondition();
@@ -46,17 +47,17 @@ public class GameQuiz implements Command {
 
     private void fillFinalRequest(HttpServletRequest req, String userAnswer) {
         StringBuilder resultText = quizService.getFinalDescription(userAnswer);
-        req.setAttribute("description", resultText.toString());
+        req.setAttribute(GAME_QUIZ_ATTRIBUTE_DESCRIPTION, resultText.toString());
         int step = quizService.getStep();
-        req.setAttribute("questionNumber", step + 1);
-        req.setAttribute("isDone", true);
+        req.setAttribute(GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER, step + 1);
+        req.setAttribute(GAME_QUIZ_ATTRIBUTE_IS_DONE, true);
     }
 
     private void fillRequest(HttpServletRequest req) {
         String question = quizService.getQuestion();
         int step = quizService.getStep();
-        req.setAttribute("description", question);
-        req.setAttribute("questionNumber", step + 1);
+        req.setAttribute(GAME_QUIZ_ATTRIBUTE_DESCRIPTION, question);
+        req.setAttribute(GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER, step + 1);
     }
 
 }

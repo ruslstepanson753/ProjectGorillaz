@@ -4,16 +4,18 @@ import com.javarush.stepanov.cmd.Command;
 import com.javarush.stepanov.config.NanoSpring;
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
 public class HttpResolver {
 
     public Command resolve(HttpServletRequest request) {
         //   /cmd-example
         try {
             String requestURI = request.getRequestURI();
-            requestURI = requestURI.equals("/") ? "/start-page" : requestURI;
+            requestURI = requestURI.equals(HTTP_RESOLVER_EMPTY_URI) ? GO_START : requestURI;
             String kebabName = requestURI.split("[?#/]")[1];
             String simpleName = convertKebabStyleToCamelCase(kebabName);
-            String fullName = Command.class.getPackageName() + "." + simpleName;
+            String fullName = Command.class.getPackageName() + HTTP_RESOLVER_DOT + simpleName;
             Class<?> aClass = Class.forName(fullName);
             return (Command) NanoSpring.find(aClass);
         } catch (ClassNotFoundException e) {

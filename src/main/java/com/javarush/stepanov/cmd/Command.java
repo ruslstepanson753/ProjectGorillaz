@@ -1,18 +1,14 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.entity.User;
-import com.javarush.stepanov.repository.UserRepository;
 import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
-import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.javarush.stepanov.constants.ConstantsCommon.ERROR_NO_ARGS;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public interface Command {
 
@@ -43,38 +39,20 @@ public interface Command {
     }
 
     default void addUserInfoToSession(HttpServletRequest req, User user) {
-        req.getSession().setAttribute("user", user);
-        req.getSession().setAttribute("login", user.getLogin());
-        req.getSession().setAttribute("gamescount", user.getGamesCount());
-        req.getSession().setAttribute("winscount", user.getWinsCount());
-        req.getSession().setAttribute("losscount", user.getLossCount());
-    }
-
-    default User findUser(String login, UserService userService) {
-        Collection<User> allUsers = userService.getAll();
-        for (User u : allUsers) {
-            if (u.getLogin().equals(login)) {
-                return u;
-            }
-        }
-        return null;
-    }
-
-    default boolean isEmptyArg(HttpServletRequest req, String arg) {
-        if (arg.equals("")) {
-            RequestHelpers.createError(req, ERROR_NO_ARGS);
-            return true;
-        }
-        return false;
+        req.getSession().setAttribute(COMMAND_ATTRIBUTE_USER, user);
+        req.getSession().setAttribute(COMMAND_ATTRIBUTE_LOGIN, user.getLogin());
+        req.getSession().setAttribute(COMMAND_ATTRIBUTE_GAMES_COUNT, user.getGamesCount());
+        req.getSession().setAttribute(COMMAND_ATTRIBUTE_WINS_COUNT, user.getWinsCount());
+        req.getSession().setAttribute(COMMAND_ATTRIBUTE_LOSS_COUNT, user.getLossCount());
     }
 
     default void addUserLoss(HttpServletRequest req, UserService userService) {
         String gameName = getView();
         if (isLogged(req)) {
-            User user = findUser(req.getSession().getAttribute("login").toString(), userService);
-//            user.setGamesCount(user.getGamesCount() + 1);
+            String userName = RequestHelpers.getNameUserFromReq(req);
+            User user = userService.findUser(userName);
             user.setLossCount(gameName);
-            updateUser(user);
+            userService.updateUser(user);
             addUserInfoToSession(req, user);
         }
     }
@@ -82,22 +60,17 @@ public interface Command {
     default void addUserWin(HttpServletRequest req, UserService userService) {
         String gameName = getView();
         if (isLogged(req)) {
-            User user = findUser(req.getSession().getAttribute("login").toString(), userService);
-//            user.setGamesCount(user.getGamesCount() + 1);
+            String userName = RequestHelpers.getNameUserFromReq(req);
+            User user = userService.findUser(userName);
             user.setWinsCount(gameName);
-            updateUser(user);
+            userService.updateUser(user);
             addUserInfoToSession(req, user);
         }
     }
 
-    private static void updateUser(User user) {
-        UserRepository userRepository = NanoSpring.find(UserRepository.class);
-        userRepository.update(user);
-    }
-
     private boolean isLogged(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
-        return session != null && session.getAttribute("login") != null;
+        return ((session != null) && (session.getAttribute("login") != null));
     }
 
 }

@@ -3,8 +3,9 @@ package com.javarush.stepanov.cmd;
 import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.service.QuestService;
 import jakarta.servlet.http.HttpServletRequest;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
-@SuppressWarnings("unused")
+@SuppressWarnings(SUPPRESSWARNINGS_SET_UNUSED)
 public class GameQuest implements Command {
     private final UserService userService;
     private final QuestService questService;
@@ -16,7 +17,7 @@ public class GameQuest implements Command {
 
     @Override
     public String doGet(HttpServletRequest req) {
-        String paramName = req.getParameter("pickedButton");
+        String paramName = req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON);
         if (paramName != null) {
             questService.setCondition(paramName);
         } else {
@@ -25,7 +26,7 @@ public class GameQuest implements Command {
             fillStartRequest(req,startViewInfo);
         }
 
-        if  (questService.isNotEnding()){
+        if  (questService.questIsNotEnding()){
             String[] viewInfo = questService.getViewInfo();
             fillRequest(req,viewInfo);
         }
@@ -43,21 +44,21 @@ public class GameQuest implements Command {
     }
 
     private void fillStartRequest(HttpServletRequest req, String[] startViews) {
-        req.getSession().setAttribute("IMAGE_URL_EVIDENCE",startViews[0] );
-        req.getSession().setAttribute("IMAGE_URL_GOLD", startViews[1]);
-        req.getSession().setAttribute("IMAGE_URL_TIME", startViews[2]);
+        req.getSession().setAttribute(GAME_QUEST_ATTRIBUTE_IMG_EVIDENCE,startViews[0] );
+        req.getSession().setAttribute(GAME_QUEST_ATTRIBUTE_IMG_GOLD, startViews[1]);
+        req.getSession().setAttribute(GAME_QUEST_ATTRIBUTE_IMG_TIME, startViews[2]);
     }
 
     private void fillRequest(HttpServletRequest req, String[] viewInfo) {
-        req.setAttribute("buttonLeft", viewInfo[0]);
-        req.setAttribute("buttonRight", viewInfo[1]);
-        req.setAttribute("result",  viewInfo[2]);
-        req.setAttribute("resultRight",  viewInfo[3]);
-        req.setAttribute("description",  viewInfo[4]);
-        req.setAttribute("time", viewInfo[5]);
-        req.setAttribute("evidence", viewInfo[6]);
-        req.setAttribute("gold",  viewInfo[7]);
-        req.setAttribute("imageUrl",  viewInfo[8]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_BUTTON_LEFT, viewInfo[0]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_BUTTON_RIGHT, viewInfo[1]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_RESULT,  viewInfo[2]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_RESULT_RIGHT,  viewInfo[3]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_DESCRIPTION,  viewInfo[4]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_TIME, viewInfo[5]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_EVIDENCE, viewInfo[6]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_GOLD,  viewInfo[7]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_IMG_URL,  viewInfo[8]);
     }
 
     private void goToWin(HttpServletRequest req, String[] winViewInfo) {
@@ -66,9 +67,9 @@ public class GameQuest implements Command {
     }
 
     private void fillWinRequest(HttpServletRequest req, String [] winViewInfo) {
-        req.setAttribute("description", winViewInfo[0]);
-        req.setAttribute("imageUrl",winViewInfo[1]);
-        req.setAttribute("isWin", true);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_DESCRIPTION, winViewInfo[0]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_IMG_URL,winViewInfo[1]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_IS_WIN, true);
     }
 
     private void goToLoss(HttpServletRequest req,String[] lossViewInfo) {
@@ -77,10 +78,10 @@ public class GameQuest implements Command {
     }
 
     private void fillLossRequest(HttpServletRequest req, String[] lossViewInfo) {
-        req.setAttribute("lossСause", lossViewInfo[0]);
-        req.setAttribute("description", lossViewInfo[1]);
-        req.setAttribute("imageUrl", lossViewInfo[2]);
-        req.setAttribute("isLoss", true);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_LOSS_CAUSE, lossViewInfo[0]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_DESCRIPTION, lossViewInfo[1]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_IMG_URL, lossViewInfo[2]);
+        req.setAttribute(GAME_QUEST_ATTRIBUTE_IS_LOSS, true);
     }
 
 }

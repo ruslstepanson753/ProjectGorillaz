@@ -3,12 +3,10 @@ package com.javarush.stepanov.service;
 import com.javarush.stepanov.entity.RouletteMap;
 import com.javarush.stepanov.repository.RouletteMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public class RouletteService {
@@ -34,11 +32,11 @@ public class RouletteService {
     public String getResultOfRotation() {
         int randomNumber = random.nextInt(37);
         if (randomNumber < 18) {
-            return RED;
+            return ROLETTESERVICE_RED;
         } else if (randomNumber < 36) {
-            return BLACK;
+            return ROLETTESERVICE_BLACK;
         } else {
-            return ZERO;
+            return ROLETTESERVICE_ZERO;
         }
     }
 
@@ -46,28 +44,28 @@ public class RouletteService {
         String[] finishInfo = new String[3];
 
         rouletteColor = getResultOfRotation();
-        String resultImgColor = "IMAGE_URL_" + rouletteColor;
+        String resultImgColor = ROLETTESERVICE_IMAGE_URL_ + rouletteColor;
         finishInfo[0] = getImgViewFromMap(resultImgColor);
 
-        String resulColor = "RESULT_COLOR_" + rouletteColor;
+        String resulColor = ROLETTESERVICE_RESULT_COLOR_ + rouletteColor;
         finishInfo[1] = rouletteMap.get(resulColor);
 
 
         finishInfo[2] =
                 (pickedColor.equals(rouletteColor))
-                        ? rouletteMap.get("RESULT_WIN")
-                        : rouletteMap.get("RESULT_LOSS");
+                        ? rouletteMap.get(ROLETTESERVICE_MAP_RESULT_WIN)
+                        : rouletteMap.get(ROLETTESERVICE_MAP_RESULT_LOSS);
         return finishInfo;
 
     }
 
     public String[] getStartInfo() {
         String[] startInfo = new String[5];
-        startInfo[0] = rouletteMap.get("START_DESCRIPTION");
-        startInfo[1] = rouletteMap.get("RED_BUTTON_DESCRIPTION");
-        startInfo[2] = rouletteMap.get("BLACK_BUTTON_DESCRIPTION");
-        startInfo[3] = rouletteMap.get("ZERO_BUTTON_DESCRIPTION");
-        startInfo[4] = getImgViewFromMap("IMAGE_URL_START");
+        startInfo[0] = rouletteMap.get(ROLETTESERVICE_MAP_START_DESCRIPTION);
+        startInfo[1] = rouletteMap.get(ROLETTESERVICE_MAP_RED_BUTTON_DESCRIPTION);
+        startInfo[2] = rouletteMap.get(ROLETTESERVICE_MAP_BLACK_BUTTON_DESCRIPTION);
+        startInfo[3] = rouletteMap.get(ROLETTESERVICE_MAP_ZERO_BUTTON_DESCRIPTION);
+        startInfo[4] = getImgViewFromMap(ROLETTESERVICE_MAP_IMAGE_URL_START);
         return startInfo;
     }
 

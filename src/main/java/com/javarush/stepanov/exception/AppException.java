@@ -1,10 +1,11 @@
 package com.javarush.stepanov.exception;
 
+import static com.javarush.stepanov.constants.ConstantsCommon.ERROR_MESSAGE;
+
 @SuppressWarnings("unused")
 public class AppException extends RuntimeException {
 
-    public AppException() {
-    }
+    public AppException() { super(ERROR_MESSAGE); }
 
     public AppException(String message) {
         super(message);

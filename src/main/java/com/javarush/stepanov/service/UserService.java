@@ -6,6 +6,8 @@ import com.javarush.stepanov.repository.UserRepository;
 import java.util.Collection;
 import java.util.Optional;
 
+import static com.javarush.stepanov.constants.ConstantsCommon.USERSERVICE_EMPTY_LINE;
+
 public class UserService {
 
     private final UserRepository userRepository;
@@ -14,8 +16,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void create(User user) {
+    public User createUser(String login, String password) {
+        User user = User.builder()
+                .login(login)
+                .password(password)
+                .build();
         userRepository.create(user);
+        return user;
     }
 
     public Collection<User> getAll() {
@@ -45,5 +52,25 @@ public class UserService {
         }
         return false;
     }
+
+    public User findUser(String login) {
+        Collection<User> allUsers = getAll();
+        for (User u : allUsers) {
+            if (u.getLogin().equals(login)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void updateUser(User user) {
+        userRepository.update(user);
+    }
+
+    public boolean loginOrPasswordIsEmpty(String login, String password) {
+        return ((login.equals(USERSERVICE_EMPTY_LINE)) || (password.equals(USERSERVICE_EMPTY_LINE)));
+    }
+
+
 
 }

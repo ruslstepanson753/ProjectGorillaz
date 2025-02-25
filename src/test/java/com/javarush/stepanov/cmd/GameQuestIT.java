@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.javarush.stepanov.constants.ConstantsCommon.LEFT;
-import static com.javarush.stepanov.constants.ConstantsCommon.RIGHT;
+import static com.javarush.stepanov.constants.ConstantsCommon.QUEST_SERVICE_BUTTON_LEFT;
+import static com.javarush.stepanov.constants.ConstantsCommon.QUEST_SERVICE_BUTTON_RIGHT;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,7 +37,7 @@ class GameQuestIT extends AbstractTestClass {
     @DisplayName("when did wrong step then loss")
     void whenDidWrongStepThenLoss() {
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(RIGHT);
+        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
         verify(req).setAttribute(eq("isLoss"), eq(true));
     }
@@ -46,15 +46,15 @@ class GameQuestIT extends AbstractTestClass {
     @DisplayName("when did right steps then win")
     void whenDidRightStepsThenWin() {
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(LEFT);
+        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(RIGHT);
+        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(RIGHT);
+        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(RIGHT);
+        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(LEFT);
+        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
         gameQuest.doGet(req);
 
         verify(req).setAttribute(eq("isWin"), eq(true));

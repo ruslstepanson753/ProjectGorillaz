@@ -4,23 +4,24 @@ import liquibase.Scope;
 import liquibase.command.CommandScope;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import lombok.extern.slf4j.Slf4j;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @Slf4j
 public class LiqubaseInit {
     public void init() {
-        log.info("Running Liquibase...");
+        log.info(LIQUBASE_INIT_START_INFO);
         try {
             Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
-                CommandScope update = new CommandScope("update");
-                update.addArgumentValue("changelogFile", "db/changelog.xml");
-                update.addArgumentValue("url", "jdbc:postgresql://localhost:5432/game");
-                update.addArgumentValue("username", "postgres");
-                update.addArgumentValue("password", "postgres");
+                CommandScope update = new CommandScope(LIQUBASE_COMMAND_COPE_UPDATE);
+                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_CHANGE_LOG, LIQUBASE_URL_CHANGELOG_XML);
+                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_URL, DB_URL);
+                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_USERNAME, DB_USERNAME);
+                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_PASSWORD, DB_PASSWORD);
                 update.execute();
             });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        log.info("Running Liquibase...DONE");
+        log.info(LIQUBASE_INIT_END_INFO);
     }
 }

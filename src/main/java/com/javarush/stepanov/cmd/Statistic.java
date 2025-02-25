@@ -1,14 +1,9 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.entity.Game;
-import com.javarush.stepanov.repository.GameRepository;
-import com.javarush.stepanov.service.RouletteService;
 import com.javarush.stepanov.service.StatisticService;
 import jakarta.servlet.http.HttpServletRequest;
-
 import java.util.Set;
-
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public class Statistic implements Command {
@@ -24,9 +19,9 @@ public class Statistic implements Command {
         Set<Game> rouletteGamers = statisticService.getGamers(GAME_ROULETTE_NAME);
         Set<Game> quizGamers = statisticService.getGamers(GAME_QUIZ_NAME);
 
-        req.getSession().setAttribute("questGamers", questGamers);
-        req.getSession().setAttribute("rouletteGamers", rouletteGamers);
-        req.getSession().setAttribute("quizGamers", quizGamers);
+        req.getSession().setAttribute(STATISTIC_ATTRIBUTE_QUEST_GAMERS, questGamers);
+        req.getSession().setAttribute(STATISTIC_ATTRIBUTE_ROULETTE_GAMERS, rouletteGamers);
+        req.getSession().setAttribute(STATISTIC_ATTRIBUTE_QUIZ_GAMERS, quizGamers);
 
         return getView();
     }

@@ -10,9 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
-
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @WebServlet({GO_EMPTY_ADRESS, GO_HOME, GO_START, GO_QUEST, GO_QUIZ,
@@ -22,7 +20,7 @@ public class FrontController extends HttpServlet {
     private final HttpResolver httpResolver = NanoSpring.find(HttpResolver.class);
 
     private static String getJsp(String view) {
-        return "/WEB-INF/" + view + ".jsp";
+        return FRONT_CONTROLLER_WEB_INF_VIEW + view + FRONT_CONTROLLER_JSP_EXTENSION;
     }
 
     @Override

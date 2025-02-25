@@ -1,7 +1,7 @@
 package com.javarush.stepanov.config;
 
+import com.javarush.stepanov.exception.AppException;
 import lombok.SneakyThrows;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -11,16 +11,13 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
 import java.util.stream.Stream;
+import java.util.*;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public class NanoSpring {
 
     private static final Map<Class<?>, Object> beans = new HashMap<>();
-    public static final String CLASSES = "classes";
-    public static final String EXT = ".class";
-    public static final String DOT = ".";
-    public static final String EMPTY = "";
 
     @SuppressWarnings("unchecked")
     @SneakyThrows
@@ -49,7 +46,7 @@ public class NanoSpring {
 
     @SneakyThrows
     private static void init() {
-        URL resource = NanoSpring.class.getResource("NanoSpring.class");
+        URL resource = NanoSpring.class.getResource(NANO_SPRING_CLASS_NAME);
         URI uri = Objects.requireNonNull(resource).toURI();
         Path appRoot = Path.of(uri).getParent().getParent();
         scanPackages(appRoot);
@@ -58,24 +55,24 @@ public class NanoSpring {
     public static void scanPackages(Path appPackage, String... excludes) {
         try (Stream<Path> walk = Files.walk(appPackage)) {           //в app root
             List<String> names = walk.map(Path::toString)           //рекурсия по
-                    .filter(o -> o.endsWith(EXT))                  //всем классам
+                    .filter(o -> o.endsWith(NANO_SPRING_CLASS_EXTENSION))                  //всем классам
                     .filter(o -> Arrays.stream(excludes)          //кроме
                             .noneMatch(o::contains))             //запрещенных
                     .map(s -> s.substring(getStartClassName(s)))//".../classes/"
-                    .map(s -> s.replace(EXT, EMPTY))           //и ".class" удалим
-                    .map(s -> s.replace(File.separator, DOT)) //имена через точки
+                    .map(s -> s.replace(NANO_SPRING_CLASS_EXTENSION, NANO_SPRING_EMPTY))           //и ".class" удалим
+                    .map(s -> s.replace(File.separator, NANO_SPRING_DOT)) //имена через точки
                     .toList();                               //соберем как строки
             for (String name : names) {                     //которые переведем
                 beanDefinitions.add(Class.forName(name));  //в классы
             }                                             //готово
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new AppException(ERROR_NANOSPRING_IN_SCAN_PACKAGES,e);
         }
     }
 
     private static int getStartClassName(String s) {
-        return s.contains(CLASSES)
-                ? s.indexOf(NanoSpring.CLASSES) + NanoSpring.CLASSES.length() + 1
+        return s.contains(NANO_SPRING_CLASSES_NAME)
+                ? s.indexOf(NANO_SPRING_CLASSES_NAME) + NANO_SPRING_CLASSES_NAME.length() + 1
                 : 1;
     }
 
@@ -90,7 +87,7 @@ public class NanoSpring {
                 return beanDefinition;
             }
         }
-        throw new RuntimeException("Not found impl for %s (type=%s)".formatted(aClass, type));
+        throw new AppException(ERROR_NANOSPRING_IN_FINDIMPLIMENT.formatted(aClass, type));
     }
 
     public static boolean checkGenerics(Type type, Class<?> impl) {
@@ -110,8 +107,8 @@ public class NanoSpring {
         return !typeName.contains("<")
                 ? List.of()
                 : Arrays.stream(typeName
-                        .replaceFirst(".+<", EMPTY)
-                        .replace(">", EMPTY)
+                        .replaceFirst(".+<", NANO_SPRING_EMPTY)
+                        .replace(">", NANO_SPRING_EMPTY)
                         .split(","))
                 .map(NanoSpring::getaClassOrNull)
                 .toList();

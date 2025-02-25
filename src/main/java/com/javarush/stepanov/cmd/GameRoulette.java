@@ -2,9 +2,8 @@ package com.javarush.stepanov.cmd;
 
 import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.service.RouletteService;
-import com.javarush.stepanov.util.UrlHelper;
 import jakarta.servlet.http.HttpServletRequest;
-
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @SuppressWarnings("unused")
 public class GameRoulette implements Command {
@@ -19,7 +18,7 @@ public class GameRoulette implements Command {
     @Override
     public String doGet(HttpServletRequest req) {
 
-        String pickedColor = req.getParameter("pickedButton");
+        String pickedColor = req.getParameter(GAME_ROULETTE_ATTRIBUTE_PICKED_BUTTON);
         if (pickedColor == null) {
             String[] startInfo = rouletteService.getStartInfo();
             fillStartRequest(req, startInfo);
@@ -32,18 +31,18 @@ public class GameRoulette implements Command {
     }
 
     private void fillStartRequest(HttpServletRequest req, String[] startInfo) {
-        req.setAttribute("START_DESCRIPTION", startInfo[0]);
-        req.setAttribute("RED_BUTTON_DESCRIPTION", startInfo[1]);
-        req.setAttribute("BLACK_BUTTON_DESCRIPTION", startInfo[2]);
-        req.setAttribute("ZERO_BUTTON_DESCRIPTION", startInfo[3]);
-        req.setAttribute("IMAGE_URL_START", startInfo[4]);
+        req.setAttribute(GAME_ROULETTE_MAP_START_DESCRIPTION, startInfo[0]);
+        req.setAttribute(GAME_ROULETTE_MAP_RED_BUTTON_DESCRIPTION, startInfo[1]);
+        req.setAttribute(GAME_ROULETTE_MAP_BLACK_BUTTON_DESCRIPTION, startInfo[2]);
+        req.setAttribute(GAME_ROULETTE_MAP_ZERO_BUTTON_DESCRIPTION, startInfo[3]);
+        req.setAttribute(GAME_ROULETTE_IMAGE_URL_START, startInfo[4]);
     }
 
     private void fillFinishRequest(HttpServletRequest req, String[] finishInfo, String pickedColor) {
-        req.setAttribute("imageUrl", finishInfo[0]);
-        req.setAttribute("resultColor", finishInfo[1]);
-        req.setAttribute("winLossDescription", finishInfo[2]);
-        req.setAttribute("isDone", true);
+        req.setAttribute(GAME_ATTRIBUTE_IMAGE_URL, finishInfo[0]);
+        req.setAttribute(GAME_ATTRIBUTE_RESULT_COLOR, finishInfo[1]);
+        req.setAttribute(GAME_ATTRIBUTE_WIN_LOSS_DESCRIPTION, finishInfo[2]);
+        req.setAttribute(GAME_ATTRIBUTE_IS_DONE, true);
         if (rouletteService.isWin(pickedColor)) {
             addUserWin(req, userService);
         } else {

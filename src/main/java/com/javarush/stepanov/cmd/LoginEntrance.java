@@ -4,14 +4,10 @@ import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.util.RequestHelpers;
 import jakarta.servlet.http.HttpServletRequest;
-
-import static com.javarush.stepanov.constants.ConstantsCommon.ERROR_PASSWORD_OR_LOGIN_INCORRECT;
-import static com.javarush.stepanov.constants.ConstantsCommon.GO_START;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public class LoginEntrance implements Command {
     private final UserService userService;
-    String enteredLogin;
-    String enteredPassword;
 
     public LoginEntrance(UserService userService) {
         this.userService = userService;
@@ -19,24 +15,18 @@ public class LoginEntrance implements Command {
 
     @Override
     public String doPost(HttpServletRequest req) {
-        if (validTest(req)) {
-            User user = findUser(enteredLogin, userService);
+        String enteredLogin = req.getParameter(LOGIN_ATTRIBUTE_LOGIN);
+        String enteredPassword = req.getParameter(LOGIN_ATTRIBUTE_PASSWORD);
+
+        if ((userService.loginOrPasswordIsIncorrect(enteredLogin, enteredPassword))) {
+            RequestHelpers.createError(req, ERROR_PASSWORD_OR_LOGIN_INCORRECT);
+        } else if (userService.loginOrPasswordIsEmpty(enteredLogin, enteredPassword)) {
+            RequestHelpers.createError(req, ERROR_NO_ARGS);
+        } else {
+            User user = userService.findUser(enteredLogin);
             addUserInfoToSession(req, user);
         }
         return GO_START;
     }
-
-    private boolean validTest(HttpServletRequest req) {
-        enteredLogin = req.getParameter("login");
-        enteredPassword = req.getParameter("password");
-        if (isEmptyArg(req, enteredLogin)) return false;
-        if (isEmptyArg(req, enteredPassword)) return false;
-        if (userService.loginOrPasswordIsIncorrect(enteredLogin, enteredPassword)) {
-            RequestHelpers.createError(req, ERROR_PASSWORD_OR_LOGIN_INCORRECT);
-            return false;
-        }
-        return true;
-    }
-
 
 }
