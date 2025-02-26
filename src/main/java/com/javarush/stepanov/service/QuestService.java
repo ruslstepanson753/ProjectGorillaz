@@ -8,6 +8,8 @@ import com.javarush.stepanov.util.UrlHelper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
+
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public class QuestService {
@@ -130,18 +132,16 @@ public class QuestService {
     }
 
     private String getLossCause() {
-        String lossСause;
-        if (time == QUEST_MIN_RESOURCE) {
-            lossСause = questMap.get(QUEST_SERVICE_MAP_CAUSE_TEXT_TIME_LOSS);
-        } else if (gold == QUEST_MIN_RESOURCE) {
-            lossСause = questMap.get(QUEST_SERVICE_MAP_CAUSE_TEXT_GOLD_LOSS);
-        } else if (evidence == QUEST_MIN_RESOURCE) {
-            lossСause = questMap.get(QUEST_SERVICE_MAP_CAUSE_TEXT_EVIDENCE_LOSS);
-        } else if (step == QUEST_LOSS_STEP && pickedButton.equals(QUEST_SERVICE_BUTTON_RIGHT)) {
-            lossСause = questMap.get(QUEST_SERVICE_MAP_CAUSE_TEXT_WRONG_STEP_LOSS);
-        } else {
-            lossСause = questMap.get(QUEST_SERVICE_MAP_CAUSE_TEXT_UNKNOWN_LOSS);
-        }
-        return lossСause;
+        String key =  Stream.of(
+                        Map.entry(time == QUEST_MIN_RESOURCE, QUEST_SERVICE_MAP_CAUSE_TEXT_TIME_LOSS),
+                        Map.entry(gold == QUEST_MIN_RESOURCE, QUEST_SERVICE_MAP_CAUSE_TEXT_GOLD_LOSS),
+                        Map.entry(evidence == QUEST_MIN_RESOURCE, QUEST_SERVICE_MAP_CAUSE_TEXT_EVIDENCE_LOSS),
+                        Map.entry(step == QUEST_LOSS_STEP && pickedButton.equals(QUEST_SERVICE_BUTTON_RIGHT), QUEST_SERVICE_MAP_CAUSE_TEXT_WRONG_STEP_LOSS)
+                )
+                .filter(Map.Entry::getKey)
+                .findFirst()
+                .map(Map.Entry::getValue)
+                .orElse(questMap.get(QUEST_SERVICE_MAP_CAUSE_TEXT_UNKNOWN_LOSS));
+        return questMap.get(key);
     }
 }

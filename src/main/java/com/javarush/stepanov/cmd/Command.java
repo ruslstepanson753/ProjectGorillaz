@@ -39,7 +39,7 @@ public interface Command {
     }
 
     default void addUserInfoToSession(HttpServletRequest req, User user) {
-        req.getSession().setAttribute(COMMAND_ATTRIBUTE_USER, user);
+        req.getSession().setAttribute(ATTRIBUTE_USER, user);
         req.getSession().setAttribute(COMMAND_ATTRIBUTE_LOGIN, user.getLogin());
         req.getSession().setAttribute(COMMAND_ATTRIBUTE_GAMES_COUNT, user.getGamesCount());
         req.getSession().setAttribute(COMMAND_ATTRIBUTE_WINS_COUNT, user.getWinsCount());

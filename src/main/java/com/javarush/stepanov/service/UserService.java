@@ -2,13 +2,11 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.UserRepository;
-
 import java.util.Collection;
 import java.util.Optional;
+import static com.javarush.stepanov.constants.ConstantsCommon.EMPTY_LINE;
 
-import static com.javarush.stepanov.constants.ConstantsCommon.USERSERVICE_EMPTY_LINE;
-
-public class UserService {
+public class UserService implements Validable,Autorizationable{
 
     private final UserRepository userRepository;
 
@@ -33,26 +31,6 @@ public class UserService {
         return Optional.ofNullable(userRepository.get(id));
     }
 
-    public boolean loginOrPasswordIsIncorrect(String login, String password) {
-        Collection<User> users = getAll();
-        for (User user : users) {
-            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isExistLogin(String login) {
-        Collection<User> users = getAll();
-        for (User user : users) {
-            if (user.getLogin().equals(login)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public User findUser(String login) {
         Collection<User> allUsers = getAll();
         for (User u : allUsers) {
@@ -67,10 +45,31 @@ public class UserService {
         userRepository.update(user);
     }
 
+    @Override
     public boolean loginOrPasswordIsEmpty(String login, String password) {
-        return ((login.equals(USERSERVICE_EMPTY_LINE)) || (password.equals(USERSERVICE_EMPTY_LINE)));
+        return ((login.equals(EMPTY_LINE)) || (password.equals(EMPTY_LINE)));
     }
 
+    @Override
+    public boolean loginOrPasswordIsIncorrect(String login, String password) {
+        Collection<User> users = getAll();
+        for (User user : users) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    @Override
+    public boolean isExistLogin(String login) {
+        Collection<User> users = getAll();
+        for (User user : users) {
+            if (user.getLogin().equals(login)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

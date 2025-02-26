@@ -3,10 +3,12 @@ package com.javarush.stepanov.service;
 import com.javarush.stepanov.entity.RouletteMap;
 import com.javarush.stepanov.repository.RouletteMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public class RouletteService {
@@ -44,17 +46,17 @@ public class RouletteService {
         String[] finishInfo = new String[3];
 
         rouletteColor = getResultOfRotation();
-        String resultImgColor = ROLETTESERVICE_IMAGE_URL_ + rouletteColor;
+        String resultImgColor = ROLETTESERVICE_MAP_IMAGE_URL_ + rouletteColor;
         finishInfo[0] = getImgViewFromMap(resultImgColor);
 
         String resulColor = ROLETTESERVICE_RESULT_COLOR_ + rouletteColor;
         finishInfo[1] = rouletteMap.get(resulColor);
 
-
         finishInfo[2] =
                 (pickedColor.equals(rouletteColor))
                         ? rouletteMap.get(ROLETTESERVICE_MAP_RESULT_WIN)
                         : rouletteMap.get(ROLETTESERVICE_MAP_RESULT_LOSS);
+
         return finishInfo;
 
     }

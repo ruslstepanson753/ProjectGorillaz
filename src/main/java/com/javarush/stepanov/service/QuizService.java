@@ -11,12 +11,12 @@ import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public class QuizService {
     private final Map<String, String> allQuestionMap = new LinkedHashMap<>();
-    Map<String, String> questionsMap = new LinkedHashMap<>();
-    List<String> questionsList = new ArrayList<>();
-    Map<String, String> wrongAnswers = new HashMap<>();
-    String question;
-    String answer;
-    int step;
+    private Map<String, String> questionsMap = new LinkedHashMap<>();
+    private List<String> questionsList = new ArrayList<>();
+    private Map<String, String> wrongAnswers = new HashMap<>();
+    private String question;
+    private String answer;
+    private int step;
 
     public QuizService() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(QUIZSERVICE_TEXT_FILE_NAME);
@@ -54,10 +54,6 @@ public class QuizService {
 
     public void clearRandomMap() {
         questionsMap.clear();
-    }
-
-    public Map<String, String> getRandomMapForTest() {
-        return questionsMap;
     }
 
     public String getQuestion() {
@@ -125,5 +121,17 @@ public class QuizService {
 
     public boolean isNullWrongAnswers() {
         return (wrongAnswers.size() == 0);
+    }
+
+    public Map<String, String> getWrongAnswersMapForTest() {
+        return wrongAnswers;
+    }
+
+    public Map<String, String> getQuestionsMapForTest() {
+       return questionsMap;
+    }
+
+    public List<String> getQuestionsListForTest() {
+        return questionsList;
     }
 }

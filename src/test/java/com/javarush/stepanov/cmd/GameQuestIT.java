@@ -8,14 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.javarush.stepanov.constants.ConstantsCommon.QUEST_SERVICE_BUTTON_LEFT;
-import static com.javarush.stepanov.constants.ConstantsCommon.QUEST_SERVICE_BUTTON_RIGHT;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class GameQuestIT extends AbstractTestClass {
     private GameQuest gameQuest;
-
 
     @BeforeEach
     void init() {
@@ -27,38 +24,35 @@ class GameQuestIT extends AbstractTestClass {
     void whenStartThenInitVariable() {
         String actualRedirect = gameQuest.doGet(req);
         Assertions.assertEquals(actualRedirect, "game-quest");
-        verify(req).setAttribute(eq("buttonLeft"), eq("Принять вызов"));
-        verify(req).setAttribute(eq("buttonRight"), eq("Игнорировать вызов"));
-        verify(req).setAttribute(eq("result"), eq(null));
-        verify(req).setAttribute(eq("time"), eq(4));
+        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_BUTTON_LEFT), eq("Принять вызов"));
+        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_BUTTON_RIGHT), eq("Игнорировать вызов"));
+        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_RESULT), eq(null));
+        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_TIME), eq("4"));
     }
 
     @Test
     @DisplayName("when did wrong step then loss")
     void whenDidWrongStepThenLoss() {
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        verify(req).setAttribute(eq("isLoss"), eq(true));
+        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_IS_LOSS), eq(true));
     }
 
     @Test
     @DisplayName("when did right steps then win")
     void whenDidRightStepsThenWin() {
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
+        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter("pickedButton")).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
+        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
         gameQuest.doGet(req);
-
-        verify(req).setAttribute(eq("isWin"), eq(true));
-
+        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_IS_WIN), eq(true));
     }
-
 }

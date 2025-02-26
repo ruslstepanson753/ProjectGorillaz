@@ -1,86 +1,88 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.service.UserService;
+import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.service.QuizService;
-import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class GameQuizIT {
+class GameQuizIT extends AbstractTestClass{
 
     private GameQuiz gameQuiz;
-    private UserService userService;
-    private QuizService quizService;
-    private HttpServletRequest httpServletRequest;
 
     @BeforeEach
     void setUp() {
-        userService = mock(UserService.class);
-        quizService = mock(QuizService.class);
-        httpServletRequest = mock(HttpServletRequest.class);
-
-        gameQuiz = new GameQuiz(userService, quizService);
-
-        // Мокаем данные для квиза
-        Map<String, String> mockQuestions = new LinkedHashMap<>();
-        mockQuestions.put("What is 2 + 2?", "4");
-        mockQuestions.put("What is the capital of France?", "Paris");
-
-        when(quizService.getRandomQuestionMap()).thenReturn(mockQuestions);
+        gameQuiz = NanoSpring.find(GameQuiz.class);
     }
 
     @Test
-    void testStartCondition() {
-        when(httpServletRequest.getParameter("pickedButton")).thenReturn(null);
-
-        String view = gameQuiz.doGet(httpServletRequest);
-
-        // Проверяем вызовы методов и состояния
-        assertEquals("game-quiz", view); // Имя view, соответствующее классу
-        verify(quizService, times(1)).getRandomQuestionMap();
-        verify(httpServletRequest, times(1)).setAttribute("description", "What is 2 + 2?");
-        verify(httpServletRequest, times(1)).setAttribute("questionNumber", 1);
+    @DisplayName("when start then init variable")
+    void whenStartThenInitVariable() {
+        String actualRedirect = gameQuiz.doGet(req);
+        Assertions.assertEquals(actualRedirect, "game-quiz");
+        verify(req).setAttribute(eq(GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER), eq(1));
     }
 
     @Test
-    void testCorrectAnswer() {
-        when(httpServletRequest.getParameter("pickedButton")).thenReturn(null);
-        gameQuiz.doGet(httpServletRequest); // Инициализирует questionsMap
+    @DisplayName("when wrong answer then add wrong answer to wrongAnswersMap")
+    void whenDidWrongStepThenLoss() {
+        QuizService quizService = NanoSpring.find(QuizService.class);
+        gameQuiz.doGet(req);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("1");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn("1");
+        gameQuiz.doGet(req);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("2");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn("2");
+        gameQuiz.doGet(req);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("3");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn("3");
+        gameQuiz.doGet(req);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("4");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn("4");
+        gameQuiz.doGet(req);
 
-        when(httpServletRequest.getParameter("pickedButton")).thenReturn("next");
-        when(httpServletRequest.getParameter("answer")).thenReturn("4");
+        Map<String,String> wrongAnswers = quizService.getWrongAnswersMapForTest();
+        assertEquals(wrongAnswers.size(), 4);
+        assertEquals(quizService.isNullWrongAnswers(), false);
 
-        String view = gameQuiz.doGet(httpServletRequest);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("5");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn("5");
+        gameQuiz.doGet(req);
 
-        assertEquals("game-quiz", view);
-        verify(httpServletRequest, times(1)).setAttribute("description", "What is the capital of France?");
-        verify(httpServletRequest, times(1)).setAttribute("questionNumber", 2);
+        verify(req).setAttribute(eq(GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER), eq(5));
+        verify(req).setAttribute(eq(GAME_QUIZ_ATTRIBUTE_IS_DONE), eq(true));
+
     }
-
 
     @Test
-    void testIncorrectAnswer() {
-        when(httpServletRequest.getParameter("pickedButton")).thenReturn(null);
-        gameQuiz.doGet(httpServletRequest); // Инициализирует questionsMap
-        when(httpServletRequest.getParameter("pickedButton")).thenReturn("next");
-        when(httpServletRequest.getParameter("answer")).thenReturn("5");
+    @DisplayName("when wrong answers no then no answer in wrongAnswersMap")
+    void whenDidNotWrongStepThenWin() {
+        QuizService quizService = NanoSpring.find(QuizService.class);
+        Map<String,String> trueAnswersMap = quizService.getQuestionsMapForTest();
+        List<String> questionsForTest = quizService.getQuestionsListForTest();
 
-        // Инициализация состояния
-        gameQuiz.doGet(httpServletRequest);
+        gameQuiz.doGet(req);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("1");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(0)));
+        gameQuiz.doGet(req);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("2");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(1)));
+        gameQuiz.doGet(req);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("3");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(2)));
+        gameQuiz.doGet(req);
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON)).thenReturn("4");
+        when(req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(3)));
+        gameQuiz.doGet(req);
 
-        String view = gameQuiz.doGet(httpServletRequest);
-
-        // Проверяем следующий шаг и обработку неправильного ответа
-        assertEquals("game-quiz", view);
-        verify(httpServletRequest, times(1)).setAttribute("description", "What is the capital of France?");
-        verify(httpServletRequest, times(1)).setAttribute("questionNumber", 2);
+        assertEquals(quizService.isNullWrongAnswers(), true);
     }
-
-
 }

@@ -1,37 +1,32 @@
 package com.javarush.stepanov.constants;
 
+import lombok.experimental.UtilityClass;
 import java.io.File;
 
+@UtilityClass
 public class ConstantsCommon {
 
     public static final String SUPPRESSWARNINGS_SET_UNUSED = "unused";
 
     public static final String ERROR_MESSAGE = "errorMessage";
-
     public static final String ERROR_NANOSPRING_IN_FINDIMPLIMENT = "Not found impl for %s (type=%s)";
     public static final String ERROR_NANOSPRING_IN_SCAN_PACKAGES = "Error in scan packages in Nanospring";
-
     public static final String ERROR_NO_ARGS = "login or password is empty";
     public static final String ERROR_USER_EXIST = "such user already exists";
     public static final String ERROR_PASSWORD_OR_LOGIN_INCORRECT = "login or password is incorrect";
-
     public static final String ERROR_MAP_TO_JSON = "Ошибка при преобразовании Map в JSON";
     public static final String ERROR_JSON_TO_MAP = "Ошибка при преобразовании JSON в Map";
-
     public static final String ERROR_BASEREPOSITORY_FIND = "error in Baserepository in metod Find";
     public static final String ERROR_BASEREPOSITORY_GET = "not found Entity with id ";
     public static final String ERROR_BASEREPOSITORY_CREATE = "error while creating entity";
     public static final String ERROR_BASEREPOSITORY_UPDATE = "error while updating entity";
     public static final String ERROR_BASEREPOSITORY_DELETE = "error while deleting entity";
-
     public static final String ERROR_QUIZSERVICE_READ_FILE = "error read file in Quizservice";
-
     public static final String ERROR_CLEANER_REQ_NAME_GET = "GET";
-
-    public static final String IMG_PATH = "images" + File.separator;
 
     public static final String REQUESTHELPERS_ATTRIBUTE_LOGIN = "login" ;
 
+    public static final String IMG_PATH = "images" + File.separator;
     public static final String IMG_START_QUEST = IMG_PATH + "start_quest.jpg";
     public static final String IMG_START_ROULETTE = IMG_PATH + "start_roulette.jpg";
     public static final String IMG_START_QUIZ = IMG_PATH + "start_quiz.jpg";
@@ -49,7 +44,6 @@ public class ConstantsCommon {
     public static final String GO_LOGIN_ENTRANCE = "/login-entrance";
     public static final String GO_LOGIN_REGISTRATION = "/login-registration";
     public static final String GO_STATISTIC = "/statistic";
-
 
     public static final int QUEST_END_STEP = 6;
     public static final int QUEST_MIN_RESOURCE = 0;
@@ -76,16 +70,16 @@ public class ConstantsCommon {
     public final static String ROLETTESERVICE_MAP_BLACK_BUTTON_DESCRIPTION = "BLACK_BUTTON_DESCRIPTION";
     public final static String ROLETTESERVICE_MAP_ZERO_BUTTON_DESCRIPTION = "ZERO_BUTTON_DESCRIPTION";
     public final static String ROLETTESERVICE_MAP_IMAGE_URL_START = "IMAGE_URL_START";
-    public final static String ROLETTESERVICE_IMAGE_URL_ = "IMAGE_URL_";
+    public final static String ROLETTESERVICE_MAP_IMAGE_URL_ = "IMAGE_URL_";
     public final static String ROLETTESERVICE_RESULT_COLOR_ = "RESULT_COLOR_";
 
-    public final static String USERSERVICE_EMPTY_LINE = "";
+    public final static String EMPTY_LINE = "";
 
     public final static String GAME_QUEST_NAME = "game-quest";
     public final static String GAME_ROULETTE_NAME = "game-roulette";
     public final static String GAME_QUIZ_NAME = "game-quiz";
 
-    public final static String COMMAND_ATTRIBUTE_USER = "user";
+    public final static String ATTRIBUTE_USER = "user";
     public final static String COMMAND_ATTRIBUTE_LOGIN = "login";
     public final static String COMMAND_ATTRIBUTE_GAMES_COUNT = "gamescount";
     public final static String COMMAND_ATTRIBUTE_WINS_COUNT = "winscount";
@@ -120,6 +114,7 @@ public class ConstantsCommon {
     public final static String GAME_ROULETTE_MAP_BLACK_BUTTON_DESCRIPTION = "BLACK_BUTTON_DESCRIPTION";
     public final static String GAME_ROULETTE_MAP_ZERO_BUTTON_DESCRIPTION = "ZERO_BUTTON_DESCRIPTION";
     public final static String GAME_ROULETTE_IMAGE_URL_START = "IMAGE_URL_START";
+
     public final static String GAME_ATTRIBUTE_IMAGE_URL = "imageUrl";
     public final static String GAME_ATTRIBUTE_RESULT_COLOR = "resultColor";
     public final static String GAME_ATTRIBUTE_WIN_LOSS_DESCRIPTION = "winLossDescription";
@@ -175,7 +170,4 @@ public class ConstantsCommon {
     public static final String QUEST_SERVICE_MAP_CAUSE_TEXT_EVIDENCE_LOSS = "CAUSE_TEXT_EVIDENCE_LOSS";
     public static final String QUEST_SERVICE_MAP_CAUSE_TEXT_WRONG_STEP_LOSS = "CAUSE_TEXT_WRONG_STEP_LOSS";
     public static final String QUEST_SERVICE_MAP_CAUSE_TEXT_UNKNOWN_LOSS = "CAUSE_TEXT_UNKNOWN_LOSS";
-
-
-
 }
