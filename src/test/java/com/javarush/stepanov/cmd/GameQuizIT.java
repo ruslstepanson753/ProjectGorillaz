@@ -1,5 +1,6 @@
 package com.javarush.stepanov.cmd;
 
+import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.service.QuizService;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +15,7 @@ import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class GameQuizIT extends AbstractTestClass{
+class GameQuizIT extends BaseIT {
 
     private GameQuiz gameQuiz;
 

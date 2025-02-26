@@ -1,5 +1,6 @@
 package com.javarush.stepanov.cmd;
 
+import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.UserRepository;
@@ -15,7 +16,7 @@ import java.util.List;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.mockito.Mockito.*;
 
-class LoginRegistrationIT extends AbstractTestClass {
+class LoginRegistrationIT extends BaseIT {
 
     private LoginRegistration loginReg;
 

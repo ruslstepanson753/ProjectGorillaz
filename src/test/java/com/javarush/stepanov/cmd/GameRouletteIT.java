@@ -1,5 +1,6 @@
 package com.javarush.stepanov.cmd;
 
+import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.repository.RouletteMapRepository;
 import com.javarush.stepanov.service.RouletteService;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.mockito.Mockito.*;
 
-class GameRouletteIT extends AbstractTestClass{
+class GameRouletteIT extends BaseIT {
 
     GameRoulette gameRoulette;
 

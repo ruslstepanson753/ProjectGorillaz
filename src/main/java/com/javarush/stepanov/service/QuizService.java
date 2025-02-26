@@ -84,7 +84,6 @@ public class QuizService {
     private void clearDataCash() {
         questionsMap.clear();
         questionsList.clear();
-        wrongAnswers.clear();
         clearRandomMap();
     }
 
@@ -121,7 +120,9 @@ public class QuizService {
     }
 
     public boolean isNullWrongAnswers() {
-        return (wrongAnswers.size() == 0);
+        boolean result = (wrongAnswers.size() == 0);
+        wrongAnswers.clear();
+        return result;
     }
 
     public Map<String, String> getWrongAnswersMapForTest() {

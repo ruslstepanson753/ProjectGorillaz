@@ -1,5 +1,6 @@
 package com.javarush.stepanov.cmd;
 
+import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.entity.User;
 import org.junit.jupiter.api.Assertions;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.mockito.Mockito.*;
 
-class LoginEntranceIT extends AbstractTestClass {
+class LoginEntranceIT extends BaseIT {
 
     private LoginEntrance loginEntr;
 

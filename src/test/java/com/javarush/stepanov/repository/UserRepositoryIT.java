@@ -27,7 +27,7 @@ class UserRepositoryIT extends ContainerIT {
 
     @Test
     void find() {
-        User pattern = User.builder().login("newLogin").build();
+        User pattern = User.builder().login("Ivanov").build();
         var userStream = userRepository.find(pattern);
         Assertions.assertEquals(admin, userStream.findFirst().orElseThrow());
     }

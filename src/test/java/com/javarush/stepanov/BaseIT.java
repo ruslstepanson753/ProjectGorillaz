@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class BaseIT extends ContainerIT {
-    protected final HttpServletRequest request;
+    protected final HttpServletRequest req;
     protected final HttpServletResponse response;
     protected final HttpSession session;
     protected final Config config;
@@ -32,10 +32,10 @@ public class BaseIT extends ContainerIT {
         servletContext = mock(ServletContext.class);
         when(servletConfig.getServletContext()).thenReturn(servletContext);
         //current op
-        request = mock(HttpServletRequest.class);
+        req = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
-        when(request.getSession()).thenReturn(session);
+        when(req.getSession()).thenReturn(session);
         //test data
         testAdmin = User.builder()
                 .id(1L)
