@@ -1,10 +1,16 @@
 package com.javarush.stepanov.config;
 
+import com.javarush.stepanov.entity.QuestInfoEntity;
+import com.javarush.stepanov.repository.QuestInfoEntityRepository;
 import liquibase.Scope;
 import liquibase.command.CommandScope;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Collection;
+import java.util.List;
+
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @Slf4j
@@ -27,6 +33,13 @@ public class LiqubaseInit {
                 String password = properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_PASSWORD);
                 update.addArgumentValue("password", password);
                 update.execute();
+
+                QuestInfoEntityRepository questInfoEntityRepository = NanoSpring.find(QuestInfoEntityRepository.class);
+
+                Collection<QuestInfoEntity> questInfoEntitys = questInfoEntityRepository.getAll();
+                for (QuestInfoEntity questInfoEntity : questInfoEntitys) {
+                    System.out.println(questInfoEntity.toString());
+                }
             });
         } catch (Exception e) {
             throw new RuntimeException(e);
