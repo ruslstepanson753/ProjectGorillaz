@@ -3,25 +3,34 @@ package com.javarush.stepanov.config;
 import liquibase.Scope;
 import liquibase.command.CommandScope;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @Slf4j
+@AllArgsConstructor
 public class LiqubaseInit {
-    public void init() {
-        log.info(LIQUBASE_INIT_START_INFO);
+    private final ApplicationProperties properties;
+
+    public static final String CLASSPATH_DB_CHANGELOG_XML = "db/changelog.xml";
+
+    public void start() {
+        System.out.println("Running Liquibase...");
         try {
             Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
-                CommandScope update = new CommandScope(LIQUBASE_COMMAND_COPE_UPDATE);
-                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_CHANGE_LOG, LIQUBASE_URL_CHANGELOG_XML);
-                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_URL, DB_URL);
-                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_USERNAME, DB_USERNAME);
-                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_PASSWORD, DB_PASSWORD);
+                CommandScope update = new CommandScope("update");
+                update.addArgumentValue("changelogFile", "db/changelog.xml");
+                String url = properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_URL);
+                update.addArgumentValue("url", url);
+                String username = properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_USERNAME);
+                update.addArgumentValue("username", username);
+                String password = properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_PASSWORD);
+                update.addArgumentValue("password", password);
                 update.execute();
             });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        log.info(LIQUBASE_INIT_END_INFO);
+        System.out.println("Running Liquibase...DONE");
     }
 }

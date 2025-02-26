@@ -2,9 +2,10 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.entity.Game;
 import com.javarush.stepanov.repository.GameRepository;
+import jakarta.transaction.Transactional;
+
 import java.util.*;
 import java.util.stream.Collectors;
-
 public class StatisticService {
     GameRepository gameRepository;
     public StatisticService(GameRepository gameRepository) {

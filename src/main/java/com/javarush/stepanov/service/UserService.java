@@ -2,10 +2,11 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.UserRepository;
+import jakarta.transaction.Transactional;
+
 import java.util.Collection;
 import java.util.Optional;
 import static com.javarush.stepanov.constants.ConstantsCommon.EMPTY_LINE;
-
 public class UserService implements Validable,Autorizationable{
 
     private final UserRepository userRepository;
@@ -14,6 +15,7 @@ public class UserService implements Validable,Autorizationable{
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public User createUser(String login, String password) {
         User user = User.builder()
                 .login(login)
@@ -23,14 +25,17 @@ public class UserService implements Validable,Autorizationable{
         return user;
     }
 
+    @Transactional
     public Collection<User> getAll() {
         return userRepository.getAll();
     }
 
+    @Transactional
     public Optional<User> get(long id) {
         return Optional.ofNullable(userRepository.get(id));
     }
 
+    @Transactional
     public User findUser(String login) {
         Collection<User> allUsers = getAll();
         for (User u : allUsers) {
@@ -41,6 +46,7 @@ public class UserService implements Validable,Autorizationable{
         return null;
     }
 
+    @Transactional
     public void updateUser(User user) {
         userRepository.update(user);
     }

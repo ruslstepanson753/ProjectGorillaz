@@ -1,6 +1,8 @@
 package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.exception.AppException;
+import jakarta.transaction.Transactional;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +10,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
-
 public class QuizService {
     private final Map<String, String> allQuestionMap = new LinkedHashMap<>();
     private Map<String, String> questionsMap = new LinkedHashMap<>();
