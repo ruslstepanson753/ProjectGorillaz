@@ -4,8 +4,11 @@ import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.repository.GameRepository;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Hibernate;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -79,6 +82,19 @@ public class User implements AbstractEntity {
         gameRepository.create(game);
         games.add(game);
         return game;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 42;
     }
 }
 
