@@ -26,7 +26,7 @@ public class User implements AbstractEntity {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private final Collection<Game> games = new ArrayList<>();
 
     public int getGamesCount() {
