@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.mockito.Mockito.*;
@@ -35,7 +33,7 @@ class GameQuestIT extends BaseIT {
     @DisplayName("when did wrong step then loss")
     void whenDidWrongStepThenLoss() {
         gameQuest.doGet(req);
-        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
         verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_IS_LOSS), eq(true));
     }
@@ -44,15 +42,15 @@ class GameQuestIT extends BaseIT {
     @DisplayName("when did right steps then win")
     void whenDidRightStepsThenWin() {
         gameQuest.doGet(req);
-        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
         gameQuest.doGet(req);
-        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter(GAME_QUEST_ATTRIBUTE_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
         gameQuest.doGet(req);
         verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_IS_WIN), eq(true));
     }

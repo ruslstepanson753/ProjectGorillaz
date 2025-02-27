@@ -2,20 +2,24 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.entity.QuestInfoEntity;
 import com.javarush.stepanov.entity.QuestMap;
+import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.QuestInfoEntityRepository;
 import com.javarush.stepanov.repository.QuestMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
-import jakarta.transaction.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
+import static com.javarush.stepanov.constants.ConstantsCommon.GAME_QUEST_ATTRIBUTE_RESULT_LEFT;
+
 public class QuestService {
     private final QuestMapRepository questMapRepository;
     private final QuestInfoEntityRepository questInfoEntityRepository;
+    private final UserService userService;
     private final List<QuestInfoEntity> questList;
     private final Map<String, String> questMap;
     private QuestInfoEntity conditionEntity;
@@ -25,107 +29,138 @@ public class QuestService {
     private String pickedButton = QUEST_SERVICE_BUTTON_LEFT;
     private int step;
 
-    public QuestService(QuestMapRepository questMapRepository, QuestInfoEntityRepository questInfoEntityRepository) {
+    public QuestService(QuestMapRepository questMapRepository, QuestInfoEntityRepository questInfoEntityRepository, UserService userService) {
         this.questMapRepository = questMapRepository;
         this.questInfoEntityRepository = questInfoEntityRepository;
+        this.userService = userService;
         questList = getQuestList();
         questMap = getQuestMap();
     }
 
-    public List<QuestInfoEntity> getQuestList() {
-        return (List<QuestInfoEntity>)questInfoEntityRepository.getAll();
+    public Map<String, Object> processAttributes(String pickedButton, User user) {
+        if (pickedButton != null) {
+            this.pickedButton = pickedButton;
+        }
+        Map<String, Object> attributesToView = new HashMap<>();
+
+        if (pickedButton != null) {
+            setCondition();
+        } else {
+            setStartCondition();
+        }
+
+        if (questIsNotEnding()) {
+            fillViewAttributes(attributesToView);
+        }
+
+        step++;
+
+        if (lossCheck()) {
+            setLossInfo(attributesToView, user);
+        } else if (winCheck()) {
+            setWinInfo(attributesToView, user);
+        }
+
+        return attributesToView;
     }
 
-    public Map<String, String> getQuestMap() {
-        Map<String,String> map = new HashMap<String,String>();
-        List<QuestMap> questMapList = (List<QuestMap>)questMapRepository.getAll();
-        questMapList.forEach(questMap -> {
-            map.put(questMap.getKey(), questMap.getValue());
-        });
-        return map;
-    }
-
-    public String[] getWinViewInfo() {
-        String[] winViewInfo = new String[2];
-        winViewInfo[0] = questMap.get(QUEST_SERVICE_MAP_DESCRIPTION_TEXT_WIN);
-        winViewInfo[1] =  getImgViewFromMap(QUEST_SERVICE_MAP_IMAGE_URL_WIN);
-        return winViewInfo;
-    }
-
-    public String[] getLossViewInfo() {
-        String[] lossViewInfo = new String[3];
-        lossViewInfo[0] = getLossCause();
-        lossViewInfo[1] = questMap.get(QUEST_SERVICE_MAP_DESCRIPTION_TEXT_LOSS);
-        lossViewInfo[2] = getImgViewFromMap(QUEST_SERVICE_MAP_IMAGE_URL_LOSS);
-        return lossViewInfo;
-    }
-
-    public String[] getViewInfo() {
-        String[] viewInfo = new String[9];
-        viewInfo[0] = conditionEntity.getButtonLeftText();
-        viewInfo[1] = conditionEntity.getButtonRightText();
-        viewInfo[2] = (pickedButton.equals(QUEST_SERVICE_BUTTON_LEFT))
-                ? conditionEntity.getResultLeftText()
-                : conditionEntity.getResultRightText();
-        viewInfo[3] = conditionEntity.getResultRightText();
-        viewInfo[4] =  conditionEntity.getDescription();
-        viewInfo[5] =  time.toString();
-        viewInfo[6] =  evidence.toString();
-        viewInfo[7] =  gold.toString();
-        viewInfo[8] =  getImgViewFromCondition();
-        return viewInfo;
-    }
-
-    public boolean questIsNotEnding(){
-        return (step < questList.size());
-    }
-
-    public void setStartCondition() {
+    private void setStartCondition() {
         step = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_STEP));
         time = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_TIME));
         evidence = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_EVIDENCE));
         gold = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_GOLD));
         conditionEntity = questList.get(step);
-
     }
 
-    public String[] getStartViewInfo(){
-        String[] startViews = new String[3];
-        startViews[0] = getImgViewFromMap(QUEST_SERVICE_MAP_IMAGE_URL_EVIDENCE);
-        startViews[1] = getImgViewFromMap(QUEST_SERVICE_MAP_IMAGE_URL_GOLD);
-        startViews[2] = getImgViewFromMap(QUEST_SERVICE_MAP_IMAGE_URL_TIME);
-        return startViews;
-    }
-
-    private String getImgViewFromMap(String imgKey){
-        String nameFile =  questMap.get(imgKey);
-        return UrlHelper.createUrlFromFileName(nameFile);
-    }
-
-    private String getImgViewFromCondition(){
-        String nameFile =  conditionEntity.getImageUrl();
-        return UrlHelper.createUrlFromFileName(nameFile);
-    }
-
-    public void setCondition(String pickedButton) {
+    private void setCondition() {
         if (step < questList.size()) {
             conditionEntity = questList.get(step);
         }
         time += conditionEntity.getDeltaTime(pickedButton);
         evidence += conditionEntity.getDeltaEvidence(pickedButton);
         gold += conditionEntity.getDeltaGold(pickedButton);
-        this.pickedButton = pickedButton;
     }
 
-    public void goNextStep() {
-        step++;
+    private void fillViewAttributes(Map<String, Object> attributesToView) {
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_BUTTON_LEFT, conditionEntity.getButtonLeftText());
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_BUTTON_RIGHT, conditionEntity.getButtonRightText());
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_RESULT_LEFT, conditionEntity.getResultLeftText());
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_RESULT_RIGHT, conditionEntity.getResultRightText());
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_DESCRIPTION, conditionEntity.getDescription());
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_TIME, time);
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_EVIDENCE, evidence);
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_GOLD, gold);
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_IMG_URL, getImgViewFromCondition());
+        String result = ((pickedButton.equals(QUEST_SERVICE_BUTTON_LEFT))
+                ? conditionEntity.getResultLeftText()
+                : conditionEntity.getResultRightText());
+        putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_RESULT, result);
+        List.of(ATTR_IMG_EVIDENCE, ATTR_IMG_GOLD, ATTR_IMG_TIME)
+                .forEach(attr -> attributesToView.put(attr, getImgViewFromMap(attr)));
     }
 
-    public boolean winCheck() {
+    private void putParametrToMapIfNotNull(Map<String, Object> attributesToView, String key, Object value) {
+        if (value != null) {
+            attributesToView.put(key, value);
+        }
+    }
+
+
+    private void setLossInfo(Map<String, Object> attributesToView, User user) {
+        Map.ofEntries(
+                Map.entry(GAME_QUEST_ATTRIBUTE_LOSS_CAUSE, getLossCause()),
+                Map.entry(GAME_QUEST_ATTRIBUTE_DESCRIPTION, questMap.get(QUEST_SERVICE_MAP_DESCRIPTION_TEXT_LOSS)),
+                Map.entry(GAME_QUEST_ATTRIBUTE_IMG_URL, getImgViewFromMap(QUEST_SERVICE_MAP_IMAGE_URL_LOSS)),
+                Map.entry(GAME_QUEST_ATTRIBUTE_IS_LOSS, true)
+        ).forEach(attributesToView::put);
+        if (user!=null){
+            userService.addUserLoss(user, GAME_QUEST_NAME);
+        }
+    }
+
+    private void setWinInfo(Map<String, Object> attributesToView, User user) {
+        Map.ofEntries(
+                Map.entry(GAME_QUEST_ATTRIBUTE_DESCRIPTION, questMap.get(QUEST_SERVICE_MAP_DESCRIPTION_TEXT_WIN)),
+                Map.entry(GAME_QUEST_ATTRIBUTE_IMG_URL, getImgViewFromMap(QUEST_SERVICE_MAP_IMAGE_URL_WIN)),
+                Map.entry(GAME_QUEST_ATTRIBUTE_IS_WIN, true)
+        ).forEach(attributesToView::put);
+        if (user!=null){
+            userService.addUserWin(user, GAME_QUEST_NAME);
+        }
+    }
+
+    private List<QuestInfoEntity> getQuestList() {
+        return (List<QuestInfoEntity>) questInfoEntityRepository.getAll();
+    }
+
+    private Map<String, String> getQuestMap() {
+        Map<String, String> map = new HashMap<String, String>();
+        List<QuestMap> questMapList = (List<QuestMap>) questMapRepository.getAll();
+        questMapList.forEach(questMap -> {
+            map.put(questMap.getKey(), questMap.getValue());
+        });
+        return map;
+    }
+
+    private boolean questIsNotEnding() {
+        return (step < questList.size());
+    }
+
+    private String getImgViewFromMap(String imgKey) {
+        String nameFile = questMap.get(imgKey);
+        return UrlHelper.createUrlFromFileName(nameFile);
+    }
+
+    private String getImgViewFromCondition() {
+        String nameFile = conditionEntity.getImageUrl();
+        return UrlHelper.createUrlFromFileName(nameFile);
+    }
+
+    private boolean winCheck() {
         return step == QUEST_END_STEP;
     }
 
-    public boolean lossCheck() {
+    private boolean lossCheck() {
         return (time <= QUEST_MIN_RESOURCE)
                 || (evidence <= QUEST_MIN_RESOURCE)
                 || (gold <= QUEST_MIN_RESOURCE)
@@ -133,7 +168,7 @@ public class QuestService {
     }
 
     private String getLossCause() {
-        String key =  Stream.of(
+        String key = Stream.of(
                         Map.entry(time == QUEST_MIN_RESOURCE, QUEST_SERVICE_MAP_CAUSE_TEXT_TIME_LOSS),
                         Map.entry(gold == QUEST_MIN_RESOURCE, QUEST_SERVICE_MAP_CAUSE_TEXT_GOLD_LOSS),
                         Map.entry(evidence == QUEST_MIN_RESOURCE, QUEST_SERVICE_MAP_CAUSE_TEXT_EVIDENCE_LOSS),

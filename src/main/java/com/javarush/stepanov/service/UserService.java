@@ -2,13 +2,18 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.UserRepository;
+import com.javarush.stepanov.util.ReqHelp;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.ATTRIBUTE_LOGIN;
 import static com.javarush.stepanov.constants.ConstantsCommon.EMPTY_LINE;
+
 @Transactional
-public class UserService implements Validable,Autorizationable{
+public class UserService implements Validable, Autorizationable {
 
     private final UserRepository userRepository;
 
@@ -73,6 +78,16 @@ public class UserService implements Validable,Autorizationable{
             }
         }
         return false;
+    }
+
+    public void addUserLoss(User user, String gameName) {
+        user.setLossCount(gameName);
+        updateUser(user);
+    }
+
+    public void addUserWin(User user, String gameName) {
+        user.setWinsCount(gameName);
+        updateUser(user);
     }
 
 }

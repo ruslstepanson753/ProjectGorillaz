@@ -29,7 +29,7 @@ class LoginEntranceIT extends BaseIT {
         String actualRedirect = loginEntr.doPost(req);
         Assertions.assertEquals(actualRedirect, GO_START);
 
-        verify(session).setAttribute(eq(ATTRIBUTE_USER), any(User.class));
+        verify(session).setAttribute(eq(ATTR_USER), any(User.class));
     }
 
     @Test
@@ -40,7 +40,7 @@ class LoginEntranceIT extends BaseIT {
 
         loginEntr.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTRIBUTE_USER), any(User.class));
+        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
 
         Assertions.assertEquals(eq(ERROR_NO_ARGS), session.getAttribute(ERROR_MESSAGE));
     }
@@ -53,7 +53,7 @@ class LoginEntranceIT extends BaseIT {
 
         loginEntr.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTRIBUTE_USER), any(User.class));
+        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
 
         Assertions.assertEquals(eq(ERROR_PASSWORD_OR_LOGIN_INCORRECT), session.getAttribute(ERROR_MESSAGE));
     }

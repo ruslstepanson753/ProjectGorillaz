@@ -23,8 +23,9 @@ public class ConstantsCommon {
     public static final String ERROR_BASEREPOSITORY_DELETE = "error while deleting entity";
     public static final String ERROR_QUIZSERVICE_READ_FILE = "error read file in Quizservice";
     public static final String ERROR_CLEANER_REQ_NAME_GET = "GET";
+    public static final String ERROR_REQ_SET_ATR = "error when attr set to Req";
 
-    public static final String REQUESTHELPERS_ATTRIBUTE_LOGIN = "login" ;
+    public static final String ATTRIBUTE_LOGIN = "login" ;
 
     public static final String IMG_PATH = "images" + File.separator;
     public static final String IMG_START_QUEST = IMG_PATH + "start_quest.jpg";
@@ -79,19 +80,20 @@ public class ConstantsCommon {
     public final static String GAME_ROULETTE_NAME = "game-roulette";
     public final static String GAME_QUIZ_NAME = "game-quiz";
 
-    public final static String ATTRIBUTE_USER = "user";
-    public final static String COMMAND_ATTRIBUTE_LOGIN = "login";
-    public final static String COMMAND_ATTRIBUTE_GAMES_COUNT = "gamescount";
-    public final static String COMMAND_ATTRIBUTE_WINS_COUNT = "winscount";
-    public final static String COMMAND_ATTRIBUTE_LOSS_COUNT = "losscount";
+    public final static String ATTR_USER = "user";
+    public final static String ATTR_LOGIN = "login";
+    public final static String ATTR_GAMES_COUNT = "gamescount";
+    public final static String ATTR_WINS_COUNT = "winscount";
+    public final static String ATTR_LOSS_COUNT = "losscount";
 
-    public final static String GAME_QUEST_ATTRIBUTE_IMG_EVIDENCE = "IMAGE_URL_EVIDENCE";
-    public final static String GAME_QUEST_ATTRIBUTE_IMG_GOLD = "IMAGE_URL_GOLD";
-    public final static String GAME_QUEST_ATTRIBUTE_IMG_TIME = "IMAGE_URL_TIME";
+    public final static String ATTR_IMG_EVIDENCE = "IMAGE_URL_EVIDENCE";
+    public final static String ATTR_IMG_GOLD = "IMAGE_URL_GOLD";
+    public final static String ATTR_IMG_TIME = "IMAGE_URL_TIME";
     public final static String GAME_QUEST_ATTRIBUTE_BUTTON_LEFT = "buttonLeft";
     public final static String GAME_QUEST_ATTRIBUTE_BUTTON_RIGHT = "buttonRight";
     public final static String GAME_QUEST_ATTRIBUTE_RESULT = "result";
     public final static String GAME_QUEST_ATTRIBUTE_RESULT_RIGHT = "resultRight";
+    public final static String GAME_QUEST_ATTRIBUTE_RESULT_LEFT = "resultLeft";
     public final static String GAME_QUEST_ATTRIBUTE_DESCRIPTION = "description";
     public final static String GAME_QUEST_ATTRIBUTE_TIME = "time";
     public final static String GAME_QUEST_ATTRIBUTE_EVIDENCE = "evidence";
@@ -100,7 +102,7 @@ public class ConstantsCommon {
     public final static String GAME_QUEST_ATTRIBUTE_IS_WIN = "isWin";
     public final static String GAME_QUEST_ATTRIBUTE_IS_LOSS = "isLoss";
     public final static String GAME_QUEST_ATTRIBUTE_LOSS_CAUSE = "lossСause";
-    public final static String GAME_QUEST_ATTRIBUTE_PICKED_BUTTON = "pickedButton";
+    public final static String ATTR_PICKED_BUTTON = "pickedButton";
 
     public final static String GAME_QUIZ_ATTRIBUTE_PICKED_BUTTON = "pickedButton";
     public final static String GAME_QUIZ_ATTRIBUTE_ANSWER = "answer";
@@ -162,7 +164,6 @@ public class ConstantsCommon {
     public static final String QUEST_SERVICE_MAP_START_TIME = "START_TIME";
     public static final String QUEST_SERVICE_MAP_START_EVIDENCE = "START_EVIDENCE";
     public static final String QUEST_SERVICE_MAP_START_GOLD = "START_GOLD";
-    public static final String QUEST_SERVICE_MAP_IMAGE_URL_EVIDENCE = "IMAGE_URL_EVIDENCE";
     public static final String QUEST_SERVICE_MAP_IMAGE_URL_GOLD = "IMAGE_URL_GOLD";
     public static final String QUEST_SERVICE_MAP_IMAGE_URL_TIME = "IMAGE_URL_TIME";
     public static final String QUEST_SERVICE_MAP_CAUSE_TEXT_TIME_LOSS = "CAUSE_TEXT_TIME_LOSS";

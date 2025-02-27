@@ -2,7 +2,7 @@ package com.javarush.stepanov.cmd;
 
 import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.service.UserService;
-import com.javarush.stepanov.util.RequestHelpers;
+import com.javarush.stepanov.util.ReqHelp;
 import jakarta.servlet.http.HttpServletRequest;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
@@ -19,9 +19,9 @@ public class LoginEntrance implements Command {
         String enteredPassword = req.getParameter(LOGIN_ATTRIBUTE_PASSWORD);
 
         if ((userService.loginOrPasswordIsIncorrect(enteredLogin, enteredPassword))) {
-            RequestHelpers.createError(req, ERROR_PASSWORD_OR_LOGIN_INCORRECT);
+            ReqHelp.createErrorToView(req, ERROR_PASSWORD_OR_LOGIN_INCORRECT);
         } else if (userService.loginOrPasswordIsEmpty(enteredLogin, enteredPassword)) {
-            RequestHelpers.createError(req, ERROR_NO_ARGS);
+            ReqHelp.createErrorToView(req, ERROR_NO_ARGS);
         } else {
             User user = userService.findUser(enteredLogin);
             addUserInfoToSession(req, user);

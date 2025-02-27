@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
@@ -34,7 +32,7 @@ class LoginRegistrationIT extends BaseIT {
         String actualRedirect = loginReg.doPost(req);
         Assertions.assertEquals(actualRedirect, GO_START);
 
-        verify(session).setAttribute(eq(ATTRIBUTE_USER), any(User.class));
+        verify(session).setAttribute(eq(ATTR_USER), any(User.class));
 
         deleteLastUser();
     }
@@ -54,7 +52,7 @@ class LoginRegistrationIT extends BaseIT {
 
         loginReg.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTRIBUTE_USER), any(User.class));
+        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
 
         Assertions.assertEquals(eq(ERROR_NO_ARGS), session.getAttribute(ERROR_MESSAGE));
     }
@@ -67,7 +65,7 @@ class LoginRegistrationIT extends BaseIT {
 
         String actualRedirect = loginReg.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTRIBUTE_USER), any(User.class));
+        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
 
         Assertions.assertEquals(eq(ERROR_USER_EXIST), session.getAttribute(ERROR_MESSAGE));
     }

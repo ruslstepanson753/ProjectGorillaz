@@ -81,19 +81,19 @@
                         <!-- Время -->
 
                         <div class="resource">
-                            <img src="${sessionScope.IMAGE_URL_TIME}" alt="Время">
+                            <img src="${IMAGE_URL_TIME}" alt="Время">
                             <span>${time}</span>
                         </div>
 
                         <!-- Деньги -->
                         <div class="resource">
-                            <img src="${sessionScope.IMAGE_URL_EVIDENCE}" alt="Улики">
+                            <img src="${IMAGE_URL_EVIDENCE}" alt="Улики">
                             <span>${evidence}</span>
                         </div>
 
                         <!-- Улики -->
                         <div class="resource">
-                            <img src="${sessionScope.IMAGE_URL_GOLD}" alt="Деньги">
+                            <img src="${IMAGE_URL_GOLD}" alt="Деньги">
                             <span>${gold}</span>
                         </div>
                     </div>
