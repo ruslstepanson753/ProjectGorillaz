@@ -75,4 +75,6 @@ public interface Command {
         return ((session != null) && (session.getAttribute("login") != null));
     }
 
+
+
 }

@@ -10,16 +10,14 @@ import com.javarush.stepanov.util.UrlHelper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static com.javarush.stepanov.constants.ConstantsCommon.GAME_QUEST_ATTRIBUTE_RESULT_LEFT;
 
-public class QuestService {
+public class QuestService extends GameService {
     private final QuestMapRepository questMapRepository;
     private final QuestInfoEntityRepository questInfoEntityRepository;
-    private final UserService userService;
     private final List<QuestInfoEntity> questList;
     private final Map<String, String> questMap;
     private QuestInfoEntity conditionEntity;
@@ -30,13 +28,14 @@ public class QuestService {
     private int step;
 
     public QuestService(QuestMapRepository questMapRepository, QuestInfoEntityRepository questInfoEntityRepository, UserService userService) {
+        super(userService);
         this.questMapRepository = questMapRepository;
         this.questInfoEntityRepository = questInfoEntityRepository;
-        this.userService = userService;
         questList = getQuestList();
         questMap = getQuestMap();
     }
 
+    @Override
     public Map<String, Object> processAttributes(String pickedButton, User user) {
         if (pickedButton != null) {
             this.pickedButton = pickedButton;
@@ -64,24 +63,8 @@ public class QuestService {
         return attributesToView;
     }
 
-    private void setStartCondition() {
-        step = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_STEP));
-        time = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_TIME));
-        evidence = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_EVIDENCE));
-        gold = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_GOLD));
-        conditionEntity = questList.get(step);
-    }
-
-    private void setCondition() {
-        if (step < questList.size()) {
-            conditionEntity = questList.get(step);
-        }
-        time += conditionEntity.getDeltaTime(pickedButton);
-        evidence += conditionEntity.getDeltaEvidence(pickedButton);
-        gold += conditionEntity.getDeltaGold(pickedButton);
-    }
-
-    private void fillViewAttributes(Map<String, Object> attributesToView) {
+    @Override
+     void fillViewAttributes(Map<String, Object> attributesToView) {
         putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_BUTTON_LEFT, conditionEntity.getButtonLeftText());
         putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_BUTTON_RIGHT, conditionEntity.getButtonRightText());
         putParametrToMapIfNotNull(attributesToView, GAME_QUEST_ATTRIBUTE_RESULT_LEFT, conditionEntity.getResultLeftText());
@@ -99,12 +82,22 @@ public class QuestService {
                 .forEach(attr -> attributesToView.put(attr, getImgViewFromMap(attr)));
     }
 
-    private void putParametrToMapIfNotNull(Map<String, Object> attributesToView, String key, Object value) {
-        if (value != null) {
-            attributesToView.put(key, value);
-        }
+    private void setStartCondition() {
+        step = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_STEP));
+        time = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_TIME));
+        evidence = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_EVIDENCE));
+        gold = Integer.parseInt(questMap.get(QUEST_SERVICE_MAP_START_GOLD));
+        conditionEntity = questList.get(step);
     }
 
+    private void setCondition() {
+        if (step < questList.size()) {
+            conditionEntity = questList.get(step);
+        }
+        time += conditionEntity.getDeltaTime(pickedButton);
+        evidence += conditionEntity.getDeltaEvidence(pickedButton);
+        gold += conditionEntity.getDeltaGold(pickedButton);
+    }
 
     private void setLossInfo(Map<String, Object> attributesToView, User user) {
         Map.ofEntries(

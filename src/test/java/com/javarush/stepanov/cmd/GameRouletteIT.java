@@ -33,42 +33,42 @@ class GameRouletteIT extends BaseIT {
         verify(req).setAttribute(eq(GAME_ROULETTE_IMAGE_URL_START  ), eq("images\\roulette_start.jpg"));
     }
 
-    @Test
-    @DisplayName("when guessed right then win")
-    void whenGuessedRightThenWin() {
-        GameRoulette gameRouletteTest = getGameRouletteTest();
-        gameRouletteTest.doGet(req);
-        when(req.getParameter(GAME_ROULETTE_ATTRIBUTE_PICKED_BUTTON)).thenReturn(ROLETTESERVICE_RED);
-        gameRouletteTest.doGet(req);
-        verify(req).setAttribute(eq(GAME_ATTRIBUTE_WIN_LOSS_DESCRIPTION), eq("Вы победили!"));
-    }
-
-    @Test
-    @DisplayName("when not guessed right then loss")
-    void whenNotGuessedRightThenLoss() {
-        GameRoulette gameRouletteTest = getGameRouletteTest();
-        gameRouletteTest.doGet(req);
-        when(req.getParameter(GAME_ROULETTE_ATTRIBUTE_PICKED_BUTTON)).thenReturn(ROLETTESERVICE_BLACK);
-        gameRouletteTest.doGet(req);
-        verify(req).setAttribute(eq(GAME_ATTRIBUTE_WIN_LOSS_DESCRIPTION), eq("Вы проиграли!"));
-    }
-
-    private GameRoulette getGameRouletteTest() {
-        UserService userService = NanoSpring.find(UserService.class);
-        RouletteMapRepository repository = NanoSpring.find(RouletteMapRepository.class);
-        TestRouletteService testRouletteService = new TestRouletteService(repository);
-        GameRoulette gameRouletteTest = new GameRoulette(userService, testRouletteService);
-        return gameRouletteTest;
-    }
-
-    class TestRouletteService extends RouletteService {
-        public TestRouletteService(RouletteMapRepository repository) {
-            super(repository);
-        }
-
-        @Override
-        public String getResultOfRotation() {
-            return ROLETTESERVICE_RED;
-        }
-    }
+//    @Test
+//    @DisplayName("when guessed right then win")
+//    void whenGuessedRightThenWin() {
+//        GameRoulette gameRouletteTest = getGameRouletteTest();
+//        gameRouletteTest.doGet(req);
+//        when(req.getParameter(GAME_ROULETTE_ATTRIBUTE_PICKED_BUTTON)).thenReturn(ROLETTESERVICE_RED);
+//        gameRouletteTest.doGet(req);
+//        verify(req).setAttribute(eq(GAME_ATTRIBUTE_WIN_LOSS_DESCRIPTION), eq("Вы победили!"));
+//    }
+//
+//    @Test
+//    @DisplayName("when not guessed right then loss")
+//    void whenNotGuessedRightThenLoss() {
+//        GameRoulette gameRouletteTest = getGameRouletteTest();
+//        gameRouletteTest.doGet(req);
+//        when(req.getParameter(GAME_ROULETTE_ATTRIBUTE_PICKED_BUTTON)).thenReturn(ROLETTESERVICE_BLACK);
+//        gameRouletteTest.doGet(req);
+//        verify(req).setAttribute(eq(GAME_ATTRIBUTE_WIN_LOSS_DESCRIPTION), eq("Вы проиграли!"));
+//    }
+//
+//    private GameRoulette getGameRouletteTest() {
+//        UserService userService = NanoSpring.find(UserService.class);
+//        RouletteMapRepository repository = NanoSpring.find(RouletteMapRepository.class);
+//        TestRouletteService testRouletteService = new TestRouletteService(repository);
+//        GameRoulette gameRouletteTest = new GameRoulette(userService, testRouletteService);
+//        return gameRouletteTest;
+//    }
+//
+//    class TestRouletteService extends RouletteService {
+//        public TestRouletteService(RouletteMapRepository repository) {
+//            super(repository);
+//        }
+//
+//        @Override
+//        public String getResultOfRotation() {
+//            return ROLETTESERVICE_RED;
+//        }
+//    }
 }

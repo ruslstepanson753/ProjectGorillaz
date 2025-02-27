@@ -22,7 +22,7 @@ public class GameQuest implements Command {
     @Override
     public String doGet(HttpServletRequest req) {
         User user = ReqHelp.getAttrFromSession(req, ATTR_USER);
-        String pickedButton = req.getParameter("pickedButton");
+        String pickedButton = req.getParameter(ATTR_PICKED_BUTTON);
 
         Map <String,Object> attributesToView = questService.processAttributes(pickedButton,user);
 

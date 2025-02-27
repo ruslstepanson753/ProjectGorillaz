@@ -1,6 +1,7 @@
 package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.entity.RouletteMap;
+import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.RouletteMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
 import jakarta.transaction.Transactional;
@@ -11,13 +12,14 @@ import java.util.Map;
 import java.util.Random;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
-public class RouletteService {
+public class RouletteService extends GameService {
     private final RouletteMapRepository rouletteMapRepository;
     private final Random random = new Random();
     private final Map<String, String> rouletteMap;
     private String rouletteColor;
 
-    public RouletteService(RouletteMapRepository rouletteMapRepository) {
+    public RouletteService(RouletteMapRepository rouletteMapRepository,UserService userService) {
+        super(userService);
         this.rouletteMapRepository = rouletteMapRepository;
         this.rouletteMap = getRoulletteMap();
     }
@@ -80,4 +82,13 @@ public class RouletteService {
         return (pickedColor.equals(rouletteColor));
     }
 
+    @Override
+    Map<String, Object> processAttributes(String userAnswer, User user) {
+        return Map.of();
+    }
+
+    @Override
+    void fillViewAttributes(Map<String, Object> attributesToView) {
+
+    }
 }

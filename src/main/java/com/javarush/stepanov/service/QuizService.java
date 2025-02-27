@@ -1,7 +1,8 @@
 package com.javarush.stepanov.service;
 
+import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.exception.AppException;
-import jakarta.transaction.Transactional;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +10,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
-public class QuizService {
+
+public class QuizService extends GameService {
     private final Map<String, String> allQuestionMap = new LinkedHashMap<>();
     private Map<String, String> questionsMap = new LinkedHashMap<>();
     private List<String> questionsList = new ArrayList<>();
@@ -19,7 +22,8 @@ public class QuizService {
     private String answer;
     private int step;
 
-    public QuizService() {
+    public QuizService(UserService userService) {
+        super(userService);
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(QUIZSERVICE_TEXT_FILE_NAME);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             while (bufferedReader.ready()) {
@@ -34,7 +38,25 @@ public class QuizService {
         }
     }
 
-    public void setStartCondition() {
+    @Override
+    public Map<String, Object> processAttributes(String userAnswer, User user) {
+        Map<String, Object> attributesToView = new HashMap<>();
+
+        if (userAnswer != null) {
+            if (!quizIsNotEnding()) {
+                setCondition(userAnswer);
+                fillViewAttributes(attributesToView);
+            } else {
+                fillFinalViewAttributes(attributesToView,userAnswer,user);
+            }
+        } else {
+            setStartCondition();
+        }
+        step++;
+        return attributesToView;
+    }
+
+    private void setStartCondition() {
         step = QUIZSERVICE_FIRST_STEP;
         questionsMap = getRandomQuestionMap();
         for (String question : questionsMap.keySet()) {
@@ -43,7 +65,34 @@ public class QuizService {
         question = questionsList.get(step);
     }
 
-    public Map<String, String> getRandomQuestionMap() {
+    private void setCondition(String usersAnswer) {
+        сheckingCorrectnessAnswer(usersAnswer);
+        question = questionsList.get(step);
+    }
+
+    @Override
+     void fillViewAttributes(Map<String, Object> attributesToView) {
+        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_DESCRIPTION,question);
+        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);
+    }
+
+    private void fillFinalViewAttributes(Map<String, Object> attributesToView, String userAnswer, User user) {
+        StringBuilder resultText = getFinalDescription(userAnswer);
+        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_DESCRIPTION,resultText.toString());
+        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);
+        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_IS_DONE,true);
+        if(user!=null){
+            if (isNullWrongAnswers()) {
+                userService.addUserWin(user, GAME_QUIZ_NAME);
+            } else {
+                userService.addUserLoss(user, GAME_QUIZ_NAME);
+            }
+        }
+        clearDataCash();
+
+    }
+
+    private Map<String, String> getRandomQuestionMap() {
         List<String> keys = new ArrayList<>(allQuestionMap.keySet());
         Collections.shuffle(keys);
         for (int i = 0; i < QUIZSERVICE_NUMBER_OF_QUESTIONS; i++) {
@@ -53,25 +102,12 @@ public class QuizService {
         return questionsMap;
     }
 
-    public void clearRandomMap() {
+    private void clearRandomMap() {
         questionsMap.clear();
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public int getStep() {
-        return step;
-    }
-
-    public boolean quizIsNotEnding() {
+    private boolean quizIsNotEnding() {
         return (step != questionsMap.size());
-    }
-
-    public void setInfo(String usersAnswer) {
-        сheckingCorrectnessAnswer(usersAnswer);
-        question = questionsList.get(step);
     }
 
     private void сheckingCorrectnessAnswer(String usersAnswer) {
@@ -84,10 +120,17 @@ public class QuizService {
     private void clearDataCash() {
         questionsMap.clear();
         questionsList.clear();
+        wrongAnswers.clear();
         clearRandomMap();
     }
 
-    public StringBuilder buildResultText() {
+    private StringBuilder getFinalDescription(String userAnswer) {
+        сheckingCorrectnessAnswer(userAnswer);
+        StringBuilder resultText = buildResultText();
+        return resultText;
+    }
+
+    private StringBuilder buildResultText() {
         StringBuilder resultText = new StringBuilder();
         resultText.append(QUIZSERVICE_TRUE_ANSWERS);
         resultText.append(QUIZSERVICE_NUMBER_OF_QUESTIONS - wrongAnswers.size());
@@ -108,32 +151,10 @@ public class QuizService {
         return resultText;
     }
 
-    public StringBuilder getFinalDescription(String userAnswer) {
-        сheckingCorrectnessAnswer(userAnswer);
-        StringBuilder resultText = buildResultText();
-        clearDataCash();
-        return resultText;
-    }
-
-    public void nextStep() {
-        step++;
-    }
-
-    public boolean isNullWrongAnswers() {
+    private boolean isNullWrongAnswers() {
         boolean result = (wrongAnswers.size() == 0);
         wrongAnswers.clear();
         return result;
     }
 
-    public Map<String, String> getWrongAnswersMapForTest() {
-        return wrongAnswers;
-    }
-
-    public Map<String, String> getQuestionsMapForTest() {
-       return questionsMap;
-    }
-
-    public List<String> getQuestionsListForTest() {
-        return questionsList;
-    }
 }
