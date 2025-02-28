@@ -48,33 +48,4 @@ public interface Command {
         }
     }
 
-    default void addUserLoss(HttpServletRequest req, UserService userService) {
-        String gameName = getView();
-        if (isLogged(req)) {
-            String userName = ReqHelp.getAttrFromSession(req,ATTRIBUTE_LOGIN);
-            User user = userService.findUser(userName);
-            user.setLossCount(gameName);
-            userService.updateUser(user);
-
-        }
-    }
-
-    default void addUserWin(HttpServletRequest req, UserService userService) {
-        String gameName = getView();
-        if (isLogged(req)) {
-            String userName = ReqHelp.getAttrFromSession(req,ATTRIBUTE_LOGIN);
-            User user = userService.findUser(userName);
-            user.setWinsCount(gameName);
-            userService.updateUser(user);
-            addUserInfoToSession(req, user);
-        }
-    }
-
-    default boolean isLogged(HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
-        return ((session != null) && (session.getAttribute("login") != null));
-    }
-
-
-
 }

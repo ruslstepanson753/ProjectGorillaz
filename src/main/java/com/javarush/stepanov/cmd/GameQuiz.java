@@ -12,12 +12,10 @@ import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @SuppressWarnings("unused")
 public class GameQuiz implements Command {
-    UserService userService;
     QuizService quizService;
 
 
     public GameQuiz(UserService userService, QuizService quizService) {
-        this.userService = userService;
         this.quizService = quizService;
     }
 
@@ -33,5 +31,4 @@ public class GameQuiz implements Command {
 
         return getView();
     }
-
 }
