@@ -23,8 +23,8 @@ class LoginEntranceIT extends BaseIT {
     @Test
     @DisplayName("when log then return to start with  user in session")
     void whenLogThenReturnToStartWithNeUserInSession() {
-        when(req.getParameter(LOGIN_ATTRIBUTE_LOGIN)).thenReturn("Khmelov");
-        when(req.getParameter(LOGIN_ATTRIBUTE_PASSWORD)).thenReturn("admin");
+        when(req.getParameter(ATTR_LOGIN)).thenReturn("Khmelov");
+        when(req.getParameter(ATTR_PASSWORD)).thenReturn("admin");
 
         String actualRedirect = loginEntr.doPost(req);
         Assertions.assertEquals(actualRedirect, GO_START);
@@ -35,8 +35,8 @@ class LoginEntranceIT extends BaseIT {
     @Test
     @DisplayName("when empty field then exception")
     void whenEmptyFieldThenException() {
-        when(req.getParameter(LOGIN_ATTRIBUTE_LOGIN)).thenReturn("");
-        when(req.getParameter(LOGIN_ATTRIBUTE_PASSWORD)).thenReturn("123");
+        when(req.getParameter(ATTR_LOGIN)).thenReturn("");
+        when(req.getParameter(ATTR_PASSWORD)).thenReturn("123");
 
         loginEntr.doPost(req);
 
@@ -48,8 +48,8 @@ class LoginEntranceIT extends BaseIT {
     @Test
     @DisplayName("when invalid data then error msg")
     void whenInvalidDataThenErrorMsg() {
-        when(req.getParameter(LOGIN_ATTRIBUTE_LOGIN)).thenReturn("Khmelov");
-        when(req.getParameter(LOGIN_ATTRIBUTE_PASSWORD)).thenReturn("123");
+        when(req.getParameter(ATTR_LOGIN)).thenReturn("Khmelov");
+        when(req.getParameter(ATTR_PASSWORD)).thenReturn("123");
 
         loginEntr.doPost(req);
 
