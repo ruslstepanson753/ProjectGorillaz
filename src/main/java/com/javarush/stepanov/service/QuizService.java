@@ -43,15 +43,16 @@ public class QuizService extends GameService {
         Map<String, Object> attributesToView = new HashMap<>();
 
         if (userAnswer != null) {
-            if (!quizIsNotEnding()) {
+            if (quizIsNotEnding()) {
                 setCondition(userAnswer);
-                fillViewAttributes(attributesToView);
             } else {
                 fillFinalViewAttributes(attributesToView,userAnswer,user);
+                return attributesToView;
             }
         } else {
             setStartCondition();
         }
+        fillViewAttributes(attributesToView);
         step++;
         return attributesToView;
     }

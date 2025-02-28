@@ -49,6 +49,4 @@ public class GameRoulette implements Command {
             addUserLoss(req, userService);
         }
     }
-
-
 }

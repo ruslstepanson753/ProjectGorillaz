@@ -24,19 +24,14 @@ public class GameQuiz implements Command {
     @Override
     public String doGet(HttpServletRequest req) {
         User user = ReqHelp.getAttrFromSession(req, ATTR_USER);
-        String pickedButton = req.getParameter(ATTR_PICKED_BUTTON);
+        String userAnswer = req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER);
 
-        Map<String,Object> attributesToView = quizService.processAttributes(pickedButton,user);
+        Map<String,Object> attributesToView = quizService.processAttributes(userAnswer,user);
 
         attributesToView.forEach(req::setAttribute);
         addUserInfoToSession(req, user);
 
         return getView();
-
-
-
     }
-
-
 
 }
