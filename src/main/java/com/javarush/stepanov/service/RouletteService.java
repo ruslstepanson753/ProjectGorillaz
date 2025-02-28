@@ -1,10 +1,10 @@
 package com.javarush.stepanov.service;
 
+import com.javarush.stepanov.constants.ConstantsCommon;
 import com.javarush.stepanov.entity.RouletteMap;
 import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.RouletteMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,33 +47,33 @@ public class RouletteService extends GameService {
 
     @Override
     void fillViewAttributes(Map<String, Object> attributesToView) {
-        List.of(ROLETTESERVICE_MAP_START_DESCRIPTION,
-                        ROLETTESERVICE_MAP_RED_BUTTON_DESCRIPTION,
-                        ROLETTESERVICE_MAP_BLACK_BUTTON_DESCRIPTION,
-                        ROLETTESERVICE_MAP_ZERO_BUTTON_DESCRIPTION,
-                        ROLETTESERVICE_MAP_IMAGE_URL_START)
+        List.of(KEY_START_DESCRIPTION,
+                        KEY_RED_BUTTON_DESCRIPTION,
+                        ConstantsCommon.KEY_BLACK_BUTTON_DESCRIPTION,
+                        ConstantsCommon.ROULET_ZERO_BUTTON_DESCRIPTION,
+                        ConstantsCommon.KEY_IMAGE_URL_START)
                 .forEach(attr -> attributesToView.put(attr, rouletteMap.get(attr)));
 
-        putParametrToMapIfNotNull(attributesToView, ROLETTESERVICE_MAP_IMAGE_URL_START, getImgViewFromMap(ROLETTESERVICE_MAP_IMAGE_URL_START));
+        putParametrToMapIfNotNull(attributesToView, ConstantsCommon.KEY_IMAGE_URL_START, getImgViewFromMap(ConstantsCommon.KEY_IMAGE_URL_START));
     }
 
     private void fillFinishViewAttributes(Map<String, Object> attributesToView, String userAnswer, User user) {
         String rouletteColor = getResultOfRotation();
-        String resultImgColorKey = ROLETTESERVICE_MAP_IMAGE_URL_ + rouletteColor;
+        String resultImgColorKey = ROULET_MAP_IMAGE_URL_ + rouletteColor;
         String resultImgColor = getImgViewFromMap(resultImgColorKey);
-        putParametrToMapIfNotNull(attributesToView, GAME_ATTRIBUTE_IMAGE_URL, resultImgColor);
+        putParametrToMapIfNotNull(attributesToView, ATTR_IMG_URL, resultImgColor);
 
-        String resulColor = ROLETTESERVICE_RESULT_COLOR_ + rouletteColor;
+        String resulColor = ROULET_RESULT_COLOR_ + rouletteColor;
         String resultColorView = rouletteMap.get(resulColor);
-        putParametrToMapIfNotNull(attributesToView, GAME_ATTRIBUTE_RESULT_COLOR,resultColorView);
+        putParametrToMapIfNotNull(attributesToView, ATTR_RESULT_COLOR,resultColorView);
 
         String resultInfo =
                 (userAnswer.equals(rouletteColor))
-                        ? rouletteMap.get(ROLETTESERVICE_MAP_RESULT_WIN)
-                        : rouletteMap.get(ROLETTESERVICE_MAP_RESULT_LOSS);
-        putParametrToMapIfNotNull(attributesToView, GAME_ATTRIBUTE_WIN_LOSS_DESCRIPTION, resultInfo);
+                        ? rouletteMap.get(ROULET_MAP_RESULT_WIN)
+                        : rouletteMap.get(ROULET_MAP_RESULT_LOSS);
+        putParametrToMapIfNotNull(attributesToView, ATTR_WIN_LOSS_DESCRIPTION, resultInfo);
 
-        putParametrToMapIfNotNull(attributesToView, GAME_ATTRIBUTE_IS_DONE, true);
+        putParametrToMapIfNotNull(attributesToView, ConstantsCommon.ATTR_IS_DONE, true);
 
         if (user != null) {
             if (isWin(userAnswer,rouletteColor)) {
@@ -87,11 +87,11 @@ public class RouletteService extends GameService {
     public String getResultOfRotation() {
         int randomNumber = random.nextInt(37);
         if (randomNumber < 18) {
-            return ROLETTESERVICE_RED;
+            return ROULET_RED;
         } else if (randomNumber < 36) {
-            return ROLETTESERVICE_BLACK;
+            return ROULET_BLACK;
         } else {
-            return ROLETTESERVICE_ZERO;
+            return ROULET_ZERO;
         }
     }
 

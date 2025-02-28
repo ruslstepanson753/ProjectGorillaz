@@ -2,14 +2,10 @@ package com.javarush.stepanov.cmd;
 
 import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
-import com.javarush.stepanov.service.QuizService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +25,7 @@ class GameQuizIT extends BaseIT {
     void whenStartThenInitVariable() {
         String actualRedirect = gameQuiz.doGet(req);
         Assertions.assertEquals(actualRedirect, "game-quiz");
-        verify(req).setAttribute(eq(GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER), eq(1));
+        verify(req).setAttribute(eq(QUIZ_ATTRIBUTE_QUESTION_NUMBER), eq(1));
     }
 
 //    @Test

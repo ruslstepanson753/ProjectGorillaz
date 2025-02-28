@@ -2,9 +2,7 @@ package com.javarush.stepanov.cmd;
 
 import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
-import com.javarush.stepanov.repository.RouletteMapRepository;
-import com.javarush.stepanov.service.RouletteService;
-import com.javarush.stepanov.service.UserService;
+import com.javarush.stepanov.constants.ConstantsCommon;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,11 +24,11 @@ class GameRouletteIT extends BaseIT {
     void whenStartThenInitVariable() {
         String actualRedirect = gameRoulette.doGet(req);
         Assertions.assertEquals(actualRedirect, GAME_ROULETTE_NAME);
-        verify(req).setAttribute(eq(GAME_ROULETTE_MAP_START_DESCRIPTION ), eq("Добро пожаловать в Питерское казино. Делайте ставку!"));
-        verify(req).setAttribute(eq(GAME_ROULETTE_MAP_RED_BUTTON_DESCRIPTION  ), eq("Ставлю на красное"));
-        verify(req).setAttribute(eq(GAME_ROULETTE_MAP_BLACK_BUTTON_DESCRIPTION  ), eq("Ставлю на чёрное"));
-        verify(req).setAttribute(eq(GAME_ROULETTE_MAP_ZERO_BUTTON_DESCRIPTION  ), eq("Ставлю на зеро"));
-        verify(req).setAttribute(eq(GAME_ROULETTE_IMAGE_URL_START  ), eq("images\\roulette_start.jpg"));
+        verify(req).setAttribute(eq(ConstantsCommon.KEY_START_DESCRIPTION), eq("Добро пожаловать в Питерское казино. Делайте ставку!"));
+        verify(req).setAttribute(eq(ConstantsCommon.KEY_RED_BUTTON_DESCRIPTION), eq("Ставлю на красное"));
+        verify(req).setAttribute(eq(KEY_BLACK_BUTTON_DESCRIPTION), eq("Ставлю на чёрное"));
+        verify(req).setAttribute(eq(ROULET_ZERO_BUTTON_DESCRIPTION), eq("Ставлю на зеро"));
+        verify(req).setAttribute(eq(KEY_IMAGE_URL_START), eq("images\\roulette_start.jpg"));
     }
 
 //    @Test

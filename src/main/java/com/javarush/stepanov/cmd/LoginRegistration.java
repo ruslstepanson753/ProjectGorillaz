@@ -15,8 +15,8 @@ public class LoginRegistration implements Command {
 
     @Override
     public String doPost(HttpServletRequest req) {
-        String enteredLogin = req.getParameter(LOGIN_ATTRIBUTE_LOGIN);
-        String enteredPassword = req.getParameter(LOGIN_ATTRIBUTE_PASSWORD);
+        String enteredLogin = req.getParameter(ATTR_LOGIN);
+        String enteredPassword = req.getParameter(ATTR_PASSWORD);
 
         if ((userService.isExistLogin(enteredLogin))) {
             ReqHelp.createErrorToView(req, ERROR_USER_EXIST);

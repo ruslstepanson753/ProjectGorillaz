@@ -22,7 +22,7 @@ public class GameRoulette implements Command {
     public String doGet(HttpServletRequest req) {
 
         User user = ReqHelp.getAttrFromSession(req, ATTR_USER);
-        String userAnswer = req.getParameter(GAME_ROULETTE_ATTRIBUTE_PICKED_BUTTON);
+        String userAnswer = req.getParameter(ATTR_PICKED_BUTTON);
 
         Map<String,Object> attributesToView = rouletteService.processAttributes(userAnswer,user);
 

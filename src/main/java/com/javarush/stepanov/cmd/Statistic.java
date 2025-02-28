@@ -3,6 +3,8 @@ package com.javarush.stepanov.cmd;
 import com.javarush.stepanov.entity.Game;
 import com.javarush.stepanov.service.StatisticService;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 import java.util.Set;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
@@ -15,13 +17,13 @@ public class Statistic implements Command {
 
     @Override
     public String doGet(HttpServletRequest req) {
-        Set<Game> questGamers = statisticService.getGamers(GAME_QUEST_NAME);
-        Set<Game> rouletteGamers = statisticService.getGamers(GAME_ROULETTE_NAME);
-        Set<Game> quizGamers = statisticService.getGamers(GAME_QUIZ_NAME);
+        Map<String, Set<Game>> gameStats = Map.of(
+                STATISTIC_ATTRIBUTE_QUEST_GAMERS, statisticService.getGamers(GAME_QUEST_NAME),
+                STATISTIC_ATTRIBUTE_ROULETTE_GAMERS, statisticService.getGamers(GAME_ROULETTE_NAME),
+                STATISTIC_ATTRIBUTE_QUIZ_GAMERS, statisticService.getGamers(GAME_QUIZ_NAME)
+        );
 
-        req.getSession().setAttribute(STATISTIC_ATTRIBUTE_QUEST_GAMERS, questGamers);
-        req.getSession().setAttribute(STATISTIC_ATTRIBUTE_ROULETTE_GAMERS, rouletteGamers);
-        req.getSession().setAttribute(STATISTIC_ATTRIBUTE_QUIZ_GAMERS, quizGamers);
+        gameStats.forEach(req.getSession()::setAttribute);
 
         return getView();
     }

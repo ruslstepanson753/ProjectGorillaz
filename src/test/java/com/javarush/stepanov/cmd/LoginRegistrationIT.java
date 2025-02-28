@@ -26,8 +26,8 @@ class LoginRegistrationIT extends BaseIT {
     @Test
     @DisplayName("when registr then return to start with new user in session")
     void whenRegistrThenReturnToStartWithNewUserInSession() {
-        when(req.getParameter(LOGIN_ATTRIBUTE_LOGIN)).thenReturn("Ivanov9");
-        when(req.getParameter(LOGIN_ATTRIBUTE_PASSWORD)).thenReturn("124");
+        when(req.getParameter(ATTR_LOGIN)).thenReturn("Ivanov9");
+        when(req.getParameter(ATTR_PASSWORD)).thenReturn("124");
 
         String actualRedirect = loginReg.doPost(req);
         Assertions.assertEquals(actualRedirect, GO_START);
@@ -47,8 +47,8 @@ class LoginRegistrationIT extends BaseIT {
     @Test
     @DisplayName("when empty field then exception")
     void whenEmptyFieldThenException() {
-        when(req.getParameter(LOGIN_ATTRIBUTE_LOGIN)).thenReturn("");
-        when(req.getParameter(LOGIN_ATTRIBUTE_PASSWORD)).thenReturn("123");
+        when(req.getParameter(ATTR_LOGIN)).thenReturn("");
+        when(req.getParameter(ATTR_PASSWORD)).thenReturn("123");
 
         loginReg.doPost(req);
 
@@ -60,8 +60,8 @@ class LoginRegistrationIT extends BaseIT {
     @Test
     @DisplayName("when user is exists then error msg")
     void whenUserIsExistsThenErrorMsg() {
-        when(req.getParameter(LOGIN_ATTRIBUTE_LOGIN)).thenReturn("Khmelov");
-        when(req.getParameter(LOGIN_ATTRIBUTE_PASSWORD)).thenReturn("123");
+        when(req.getParameter(ATTR_LOGIN)).thenReturn("Khmelov");
+        when(req.getParameter(ATTR_PASSWORD)).thenReturn("123");
 
         String actualRedirect = loginReg.doPost(req);
 
