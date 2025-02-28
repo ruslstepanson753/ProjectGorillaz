@@ -23,35 +23,35 @@ class GameQuestIT extends BaseIT {
     void whenStartThenInitVariable() {
         String actualRedirect = gameQuest.doGet(req);
         Assertions.assertEquals(actualRedirect, "game-quest");
-        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_BUTTON_LEFT), eq("Принять вызов"));
-        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_BUTTON_RIGHT), eq("Игнорировать вызов"));
-        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_RESULT), eq(null));
-        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_TIME), eq("4"));
+        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_BUTTON_LEFT), eq("Принять вызов"));
+        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_BUTTON_RIGHT), eq("Игнорировать вызов"));
+        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_RESULT), eq(null));
+        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_TIME), eq("4"));
     }
 
     @Test
     @DisplayName("when did wrong step then loss")
     void whenDidWrongStepThenLoss() {
         gameQuest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_IS_LOSS), eq(true));
+        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_IS_LOSS), eq(true));
     }
 
     @Test
     @DisplayName("when did right steps then win")
     void whenDidRightStepsThenWin() {
         gameQuest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_BUTTON_LEFT);
         gameQuest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_RIGHT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_BUTTON_RIGHT);
         gameQuest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_SERVICE_BUTTON_LEFT);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn(QUEST_BUTTON_LEFT);
         gameQuest.doGet(req);
-        verify(req).setAttribute(eq(GAME_QUEST_ATTRIBUTE_IS_WIN), eq(true));
+        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_IS_WIN), eq(true));
     }
 }

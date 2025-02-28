@@ -2,14 +2,11 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.UserRepository;
-import com.javarush.stepanov.util.ReqHelp;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import static com.javarush.stepanov.constants.ConstantsCommon.ATTRIBUTE_LOGIN;
 import static com.javarush.stepanov.constants.ConstantsCommon.EMPTY_LINE;
 
 @Transactional

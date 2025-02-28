@@ -22,7 +22,7 @@ public class GameQuiz implements Command {
     @Override
     public String doGet(HttpServletRequest req) {
         User user = ReqHelp.getAttrFromSession(req, ATTR_USER);
-        String userAnswer = req.getParameter(GAME_QUIZ_ATTRIBUTE_ANSWER);
+        String userAnswer = req.getParameter(QUIZ_ATTRIBUTE_ANSWER);
 
         Map<String,Object> attributesToView = quizService.processAttributes(userAnswer,user);
 

@@ -5,10 +5,7 @@ import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.service.QuestService;
 import com.javarush.stepanov.util.ReqHelp;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.HashMap;
 import java.util.Map;
-
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @SuppressWarnings(SUPPRESSWARNINGS_SET_UNUSED)

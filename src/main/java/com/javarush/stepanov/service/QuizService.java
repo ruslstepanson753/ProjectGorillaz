@@ -1,8 +1,8 @@
 package com.javarush.stepanov.service;
 
+import com.javarush.stepanov.constants.ConstantsCommon;
 import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.exception.AppException;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class QuizService extends GameService {
 
     public QuizService(UserService userService) {
         super(userService);
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(QUIZSERVICE_TEXT_FILE_NAME);
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(QUIZ_TEXT_FILE_NAME);
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             while (bufferedReader.ready()) {
                 String line = bufferedReader.readLine();
@@ -58,7 +58,7 @@ public class QuizService extends GameService {
     }
 
     private void setStartCondition() {
-        step = QUIZSERVICE_FIRST_STEP;
+        step = QUIZ_FIRST_STEP;
         questionsMap = getRandomQuestionMap();
         for (String question : questionsMap.keySet()) {
             questionsList.add(question);
@@ -73,15 +73,15 @@ public class QuizService extends GameService {
 
     @Override
      void fillViewAttributes(Map<String, Object> attributesToView) {
-        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_DESCRIPTION,question);
-        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);
+        putParametrToMapIfNotNull(attributesToView, ConstantsCommon.ATTR_DESCRIPTION,question);
+        putParametrToMapIfNotNull(attributesToView, QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);
     }
 
     private void fillFinalViewAttributes(Map<String, Object> attributesToView, String userAnswer, User user) {
         StringBuilder resultText = getFinalDescription(userAnswer);
-        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_DESCRIPTION,resultText.toString());
-        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);
-        putParametrToMapIfNotNull(attributesToView, GAME_QUIZ_ATTRIBUTE_IS_DONE,true);
+        putParametrToMapIfNotNull(attributesToView, ConstantsCommon.ATTR_DESCRIPTION,resultText.toString());
+        putParametrToMapIfNotNull(attributesToView, QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);
+        putParametrToMapIfNotNull(attributesToView, ATTR_IS_DONE,true);
         if(user!=null){
             if (isNullWrongAnswers()) {
                 userService.addUserWin(user, GAME_QUIZ_NAME);
@@ -96,7 +96,7 @@ public class QuizService extends GameService {
     private Map<String, String> getRandomQuestionMap() {
         List<String> keys = new ArrayList<>(allQuestionMap.keySet());
         Collections.shuffle(keys);
-        for (int i = 0; i < QUIZSERVICE_NUMBER_OF_QUESTIONS; i++) {
+        for (int i = 0; i < QUIZ_NUMBER_OF_QUESTIONS; i++) {
             String key = keys.get(i);
             questionsMap.put(key, allQuestionMap.get(key));
         }
@@ -133,21 +133,21 @@ public class QuizService extends GameService {
 
     private StringBuilder buildResultText() {
         StringBuilder resultText = new StringBuilder();
-        resultText.append(QUIZSERVICE_TRUE_ANSWERS);
-        resultText.append(QUIZSERVICE_NUMBER_OF_QUESTIONS - wrongAnswers.size());
-        resultText.append(QUIZSERVICE_OF_);
+        resultText.append(QUIZ_TRUE_ANSWERS);
+        resultText.append(QUIZ_NUMBER_OF_QUESTIONS - wrongAnswers.size());
+        resultText.append(QUIZ_OF_);
         resultText.append(questionsList.size());
-        resultText.append(QUIZSERVICE_DOUBLE_NEXT_LINE);
+        resultText.append(DOUBLE_NEXT_LINE);
         for (String question : wrongAnswers.keySet()) {
-            resultText.append(QUIZSERVICE_FOR_ANSWER);
+            resultText.append(QUIZ_FOR_ANSWER);
             resultText.append(question);
-            resultText.append(QUIZSERVICE_NEXT_LINE);
-            resultText.append(QUIZSERVICE_ENTERED_WRONG_ANSWER);
+            resultText.append(NEXT_LINE);
+            resultText.append(QUIZ_ENTERED_WRONG_ANSWER);
             resultText.append(wrongAnswers.get(question));
-            resultText.append(QUIZSERVICE_NEXT_LINE);
-            resultText.append(QUIZSERVICE_TRUE_ANSWER);
+            resultText.append(NEXT_LINE);
+            resultText.append(QUIZ_TRUE_ANSWER);
             resultText.append(questionsMap.get(question));
-            resultText.append(QUIZSERVICE_DOUBLE_NEXT_LINE);
+            resultText.append(DOUBLE_NEXT_LINE);
         }
         return resultText;
     }

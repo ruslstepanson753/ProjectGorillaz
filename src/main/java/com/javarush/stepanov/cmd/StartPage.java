@@ -1,16 +1,17 @@
 package com.javarush.stepanov.cmd;
 
+import com.javarush.stepanov.util.ReqHelp;
 import jakarta.servlet.http.HttpServletRequest;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @SuppressWarnings("unused")
 public class StartPage implements Command {
     private static void addConstatnsToSession(HttpServletRequest request) {
-        request.getSession().setAttribute("IMG_START_HEAD", IMG_START_HEAD);
-        request.getSession().setAttribute("IMG_START_QUEST", IMG_START_QUEST);
-        request.getSession().setAttribute("IMG_START_ROULETTE", IMG_START_ROULETTE);
-        request.getSession().setAttribute("IMG_START_QUIZ", IMG_START_QUIZ);
-        request.getSession().setAttribute("AUDIO_START_FOOTER", AUDIO_START_FOOTER);
+        ReqHelp.setAttrSession(request, "IMG_START_HEAD", IMG_START_HEAD);
+        ReqHelp.setAttrSession(request, "IMG_START_QUEST", IMG_START_QUEST);
+        ReqHelp.setAttrSession(request, "IMG_START_ROULETTE", IMG_START_ROULETTE);
+        ReqHelp.setAttrSession(request, "IMG_START_QUIZ", IMG_START_QUIZ);
+        ReqHelp.setAttrSession(request, "AUDIO_START_FOOTER", AUDIO_START_FOOTER);
     }
 
     public String doGet(HttpServletRequest request) {
