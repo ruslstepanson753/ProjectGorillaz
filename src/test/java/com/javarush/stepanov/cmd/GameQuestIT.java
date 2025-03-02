@@ -25,8 +25,8 @@ class GameQuestIT extends BaseIT {
         Assertions.assertEquals(actualRedirect, "game-quest");
         verify(req).setAttribute(eq(QUEST_ATTRIBUTE_BUTTON_LEFT), eq("Принять вызов"));
         verify(req).setAttribute(eq(QUEST_ATTRIBUTE_BUTTON_RIGHT), eq("Игнорировать вызов"));
-        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_RESULT), eq(null));
-        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_TIME), eq("4"));
+        verify(req).setAttribute(eq(ATTR_IMG_EVIDENCE), eq("images\\quest_evidence.jpg"));
+        verify(req).setAttribute(eq(QUEST_ATTRIBUTE_TIME), eq(4));
     }
 
     @Test

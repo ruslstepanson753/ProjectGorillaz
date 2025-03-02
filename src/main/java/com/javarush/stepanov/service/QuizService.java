@@ -154,7 +154,6 @@ public class QuizService extends GameService {
 
     protected boolean isNullWrongAnswers() {
         boolean result = (wrongAnswers.size() == 0);
-        wrongAnswers.clear();
         return result;
     }
 

@@ -36,8 +36,10 @@ class GameQuizIT extends BaseIT {
     @Test
     @DisplayName("when wrong answer then add wrong answer to wrongAnswersMap")
     void whenDidWrongStepThenLoss() {
-        QuizServiceTest quizServiceTest = NanoSpring.find(QuizServiceTest.class);
-        GameQuiz gameQuizTest=returnGameQuizTest();
+        UserService userService = NanoSpring.find(UserService.class);
+        QuizServiceTest quizServiceTest = new QuizServiceTest(userService);
+        GameQuiz gameQuizTest = new GameQuiz(userService, quizServiceTest);
+
         gameQuizTest.doGet(req);
         when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("1");
         when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("1");
@@ -58,7 +60,7 @@ class GameQuizIT extends BaseIT {
 
         when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("5");
         when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("5");
-        gameQuiz.doGet(req);
+        gameQuizTest.doGet(req);
 
         verify(req).setAttribute(eq(QUIZ_ATTRIBUTE_QUESTION_NUMBER), eq(5));
         verify(req).setAttribute(eq(ATTR_IS_DONE), eq(true));
@@ -68,34 +70,31 @@ class GameQuizIT extends BaseIT {
     @Test
     @DisplayName("when wrong answers no then no answer in wrongAnswersMap")
     void whenDidNotWrongStepThenWin() {
-        QuizServiceTest quizServiceTest = NanoSpring.find(QuizServiceTest.class);
-        GameQuiz gameQuizTest=returnGameQuizTest();
+        UserService userService = NanoSpring.find(UserService.class);
+        QuizServiceTest quizServiceTest = new QuizServiceTest(userService);
+        GameQuiz gameQuizTest = new GameQuiz(userService, quizServiceTest);
+
+        gameQuizTest.doGet(req);
         Map<String,String> trueAnswersMap = quizServiceTest.getQuestionsMapForTest();
         List<String> questionsForTest = quizServiceTest.getQuestionsListForTest();
 
-        gameQuiz.doGet(req);
         when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("1");
         when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(0)));
-        gameQuiz.doGet(req);
+        gameQuizTest.doGet(req);
         when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("2");
         when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(1)));
-        gameQuiz.doGet(req);
+        gameQuizTest.doGet(req);
         when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("3");
         when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(2)));
-        gameQuiz.doGet(req);
+        gameQuizTest.doGet(req);
         when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("4");
         when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(3)));
-        gameQuiz.doGet(req);
+        gameQuizTest.doGet(req);
+        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("5");
+        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(4)));
+
 
         assertEquals(quizServiceTest.isNullWrongAnswers(), true);
-    }
-
-
-    public GameQuiz returnGameQuizTest(){
-        QuizServiceTest quizServiceTest = NanoSpring.find(QuizServiceTest.class);
-        UserService userService = NanoSpring.find(UserService.class);
-        GameQuiz gameQuizTest = new GameQuiz(userService, quizServiceTest);
-        return gameQuizTest;
     }
 
 }
@@ -120,7 +119,6 @@ class QuizServiceTest extends QuizService {
 
     public boolean isNullWrongAnswers() {
         boolean result = (wrongAnswers.size() == 0);
-        wrongAnswers.clear();
         return result;
     }
 

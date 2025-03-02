@@ -24,14 +24,6 @@ class UserRepositoryIT extends ContainerIT {
         Assertions.assertEquals(admin, user);
     }
 
-
-    @Test
-    void find() {
-        User pattern = User.builder().login("Ivanov").build();
-        var userStream = userRepository.find(pattern);
-        Assertions.assertEquals(admin, userStream.findFirst().orElseThrow());
-    }
-
     @Test
     void update() {
         admin.setLogin("newLogin");

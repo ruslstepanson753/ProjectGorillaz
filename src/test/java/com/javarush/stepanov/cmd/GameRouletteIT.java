@@ -4,6 +4,7 @@ import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.constants.ConstantsCommon;
 import com.javarush.stepanov.repository.RouletteMapRepository;
+import com.javarush.stepanov.repository.UserRepository;
 import com.javarush.stepanov.service.RouletteService;
 import com.javarush.stepanov.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -57,14 +58,14 @@ class GameRouletteIT extends BaseIT {
     private GameRoulette getGameRouletteTest() {
         UserService userService = NanoSpring.find(UserService.class);
         RouletteMapRepository repository = NanoSpring.find(RouletteMapRepository.class);
-        TestRouletteService testRouletteService = new TestRouletteService(repository);
+        TestRouletteService testRouletteService = new TestRouletteService(repository, userService);
         GameRoulette gameRouletteTest = new GameRoulette(userService, testRouletteService);
         return gameRouletteTest;
     }
 
     class TestRouletteService extends RouletteService {
-        public TestRouletteService(RouletteMapRepository repository) {
-            super(repository);
+        public TestRouletteService(RouletteMapRepository rouletteMapRepository,UserService userService) {
+            super(rouletteMapRepository, userService);
         }
 
         @Override
