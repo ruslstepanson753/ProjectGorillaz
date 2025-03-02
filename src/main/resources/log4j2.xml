@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration xmlns="http://logging.apache.org/log4j/2.0/config"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://logging.apache.org/log4j/2.0/config
+               xsi:schemaLocation="http://logging.apache.org/2.0/config
                https://raw.githubusercontent.com/apache/logging-log4j2/master/log4j-core/src/main/resources/Log4j-config.xsd"
                strict="true"
                status="WARN"
                monitorInterval="30">
+
     <Properties>
-        <Property name="SPRING"
-                  value="%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}.%M(%F:%L): %msg%n%throwable"/>
+        <Property name="LOG_PATTERN">
+            %highlight{%-5level}{FATAL=red, ERROR=bright_red, WARN=yellow, INFO=green, DEBUG=blue, TRACE=magenta} %msg%n%throwable
+        </Property>
     </Properties>
+
     <Appenders>
+        <Console name="LiquibaseConsole" target="SYSTEM_OUT">
+            <PatternLayout disableAnsi="false">
+                <Pattern>%highlight{%-5level}{FATAL=bright_magenta, ERROR=bright_red, WARN=yellow, INFO=bright_magenta, DEBUG=blue, TRACE=bright_magenta} %msg%n%throwable</Pattern>
+            </PatternLayout>
+        </Console>
+        <Console name="HibernateConsole" target="SYSTEM_OUT">
+            <PatternLayout disableAnsi="false">
+                <Pattern>%highlight{%-5level}{INFO=bright_blue, WARN=yellow, ERROR=bright_red} %msg%n%throwable</Pattern>
+            </PatternLayout>
+        </Console>
         <Console name="SpringConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="${sys:SPRING}"/>
+            <PatternLayout disableAnsi="false">
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
         </Console>
     </Appenders>
+
     <Loggers>
+        <!-- Логгер для Liquibase с фиолетовым цветом -->
+        <Logger name="liquibase" level="info" additivity="false">
+            <AppenderRef ref="LiquibaseConsole"/>
+        </Logger>
+        <Logger name="org.hibernate" level="info" additivity="false">
+            <AppenderRef ref="HibernateConsole"/>
+        </Logger>
+        <!-- Корневой логгер для остальных логов -->
         <Root level="info">
             <AppenderRef ref="SpringConsole"/>
         </Root>

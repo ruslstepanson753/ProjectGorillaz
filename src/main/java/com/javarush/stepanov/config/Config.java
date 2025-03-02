@@ -10,14 +10,9 @@ import lombok.AllArgsConstructor;
 @Transactional
 public class Config {
 
-    private final UserService userService;
-//    private final QuestService questService;
     private final LiqubaseInit liqubaseInit;
 
     public void fillEmptyRepository() {
         liqubaseInit.start();
-//        if (questService.getQuestList().isEmpty()) {
-//            User admin = userService.get(1L).orElseThrow();
-//        }
     }
 }
