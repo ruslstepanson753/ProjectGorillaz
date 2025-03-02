@@ -3,6 +3,7 @@ package com.javarush.stepanov.config;
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.implementation.bind.annotation.*;
@@ -21,8 +22,10 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
 
+@Slf4j
 @UtilityClass
 public class NanoSpring {
 
@@ -31,10 +34,13 @@ public class NanoSpring {
     public static final String EXT = ".class";
     public static final String DOT = ".";
     public static final String EMPTY = "";
+    private static final String BRIGHT_PINK = "\u001B[95m";
+    private static final String RESET = "\u001B[0m";
 
     @SuppressWarnings("unchecked")
     @SneakyThrows
     public <T> T find(Class<T> type) {
+
         if (beanDefinitions.isEmpty()) {
             init(); //1.add abstraction<?>
         }
@@ -54,6 +60,7 @@ public class NanoSpring {
                     : constructor.newInstance(parameters);
             beans.put(type, newInstance);
         }
+        log.info(BRIGHT_PINK+type.getName().toString()+LOG_INFO_NANOSPRING_FINDED+RESET);
         return (T) beans.get(type);
     }
 
@@ -62,10 +69,12 @@ public class NanoSpring {
 
     @SneakyThrows
     private void init() {
+        log.info(BRIGHT_PINK+LOG_INFO_NANOSPRING_BEGIN+RESET);
         URL resource = NanoSpring.class.getResource("NanoSpring.class");
         URI uri = Objects.requireNonNull(resource).toURI();
         Path appRoot = Path.of(uri).getParent().getParent();
         scanPackages(appRoot, "Controller", "Servlet", "Filter");
+        log.info(BRIGHT_PINK+LOG_INFO_NANOSPRING_END+RESET);
     }
 
     public void scanPackages(Path appPackage, String... excludes) {

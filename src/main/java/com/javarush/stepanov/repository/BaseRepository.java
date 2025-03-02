@@ -2,24 +2,19 @@ package com.javarush.stepanov.repository;
 
 import com.javarush.stepanov.config.SessionCreator;
 import com.javarush.stepanov.entity.AbstractEntity;
-import com.javarush.stepanov.exception.AppException;
+import com.javarush.stepanov.entity.User;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.hibernate.query.criteria.JpaCriteriaQuery;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
-import static com.javarush.stepanov.constants.ConstantsCommon.*;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Stream;
 
 @AllArgsConstructor
 public class BaseRepository<Entity extends AbstractEntity> implements Repository<Entity> {
@@ -80,6 +75,10 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
     @Override
     public Entity get(long id) {
         Session session = sessionCreator.getSession();
+        if (entityClass.equals(User.class)) {
+            EntityGraph<?> entityGraph = session.getEntityGraph(User.GRAPH_USER_GAMES_FETCH);
+            return (Entity) session.find(User.class, id, Map.of("javax.persistence.fetchgraph", entityGraph));
+        }
         return session.find(entityClass, id);
     }
 

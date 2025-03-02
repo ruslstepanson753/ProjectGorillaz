@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
-import java.util.List;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
@@ -20,8 +19,11 @@ public class LiqubaseInit {
 
     public static final String CLASSPATH_DB_CHANGELOG_XML = "db/changelog.xml";
 
+    private static final String PURPLE = "\u001B[35m";
+    private static final String RESET = "\u001B[0m";
+
     public void start() {
-        System.out.println("Running Liquibase...");
+        log.info(PURPLE + LOG_INFO_LIQUBESE_RUN + RESET);
         try {
             Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
                 CommandScope update = new CommandScope("update");
@@ -34,16 +36,11 @@ public class LiqubaseInit {
                 update.addArgumentValue("password", password);
                 update.execute();
 
-                QuestInfoEntityRepository questInfoEntityRepository = NanoSpring.find(QuestInfoEntityRepository.class);
-
-                Collection<QuestInfoEntity> questInfoEntitys = questInfoEntityRepository.getAll();
-                for (QuestInfoEntity questInfoEntity : questInfoEntitys) {
-                    System.out.println(questInfoEntity.toString());
-                }
             });
         } catch (Exception e) {
+            log.error(PURPLE + "Ошибка Liquibase: " + e.getMessage() + RESET);
             throw new RuntimeException(e);
         }
-        System.out.println("Running Liquibase...DONE");
+        log.info(PURPLE + LOG_INFO_LIQUBESE_DONE + RESET);
     }
 }

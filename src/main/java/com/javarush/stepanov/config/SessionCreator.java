@@ -2,6 +2,7 @@ package com.javarush.stepanov.config;
 
 import com.javarush.stepanov.entity.*;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
@@ -10,11 +11,17 @@ import org.hibernate.cfg.Configuration;
 import java.io.Closeable;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+
+@Slf4j
 public class SessionCreator implements Closeable {
 
     private final SessionFactory sessionFactory;
     private final ThreadLocal<AtomicInteger> levelBox = new ThreadLocal<>();
     private final ThreadLocal<Session> sessionBox = new ThreadLocal<>();
+    private static final String BROWN = "\u001B[38;5;94m";
+    private static final String RESET = "\u001B[0m";
 
     @SneakyThrows
     public SessionCreator(ApplicationProperties applicationProperties) {
@@ -35,6 +42,7 @@ public class SessionCreator implements Closeable {
                 : sessionBox.get();
     }
 
+
     public void beginTransactional() {
         if (levelBox.get() == null) {
             levelBox.set(new AtomicInteger(0));
@@ -45,13 +53,13 @@ public class SessionCreator implements Closeable {
             sessionBox.set(session);
             session.beginTransaction();
         }
-        log(level.get(), "begin level: ");
+        log(level.get(), LOG_INFO_LIQUBESE_BEGIN_LEVEL);
     }
 
     public void endTransactional() {
         AtomicInteger level = levelBox.get();
         Session session = sessionBox.get();
-        log(level.get(), "end level: ");
+        log(level.get(), LOG_INFO_LIQUBESE_END_LEVEL);
         if (level.decrementAndGet() == 0) {
             try {
                 session.getTransaction().commit();
@@ -64,8 +72,7 @@ public class SessionCreator implements Closeable {
 
     private void log(int level, String message) {
         String simpleName = Thread.currentThread().getStackTrace()[4].toString();
-        System.out.println("\t".repeat(level) + message + level + " from " + simpleName);
-        System.out.flush();
+       log.info(BROWN+"\t".repeat(level) + message + level + LOG_INFO_LIQUBESE_FROM + simpleName+RESET);
     }
 
     public void close() {

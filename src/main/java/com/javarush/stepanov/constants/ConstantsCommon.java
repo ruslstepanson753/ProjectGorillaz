@@ -6,6 +6,15 @@ import java.io.File;
 @UtilityClass
 public class ConstantsCommon {
 
+    public static final String LOG_INFO_LIQUBESE_RUN = "Running Liquibase...";
+    public static final String LOG_INFO_LIQUBESE_DONE = "Running Liquibase...DONE";
+    public static final String LOG_INFO_LIQUBESE_FROM = " from ";
+    public static final String LOG_INFO_LIQUBESE_END_LEVEL = " end level: ";
+    public static final String LOG_INFO_LIQUBESE_BEGIN_LEVEL = "begin level: ";
+    public static final String LOG_INFO_NANOSPRING_BEGIN = "nanospring init begin: ";
+    public static final String LOG_INFO_NANOSPRING_END =  "nanospring init end: ";
+    public static final String LOG_INFO_NANOSPRING_FINDED =  " was finded by Nanospring";
+
     public static final String SUPPRESSWARNINGS_SET_UNUSED = "unused";
 
     public static final String ERROR_MESSAGE = "errorMessage";
