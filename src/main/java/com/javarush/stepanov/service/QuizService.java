@@ -15,9 +15,9 @@ import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 public class QuizService extends GameService {
     private final Map<String, String> allQuestionMap = new LinkedHashMap<>();
-    private Map<String, String> questionsMap = new LinkedHashMap<>();
-    private List<String> questionsList = new ArrayList<>();
-    private Map<String, String> wrongAnswers = new HashMap<>();
+    protected Map<String, String> questionsMap = new LinkedHashMap<>();
+    protected List<String> questionsList = new ArrayList<>();
+    protected Map<String, String> wrongAnswers = new HashMap<>();
     private String question;
     private String answer;
     private int step;
@@ -152,7 +152,7 @@ public class QuizService extends GameService {
         return resultText;
     }
 
-    private boolean isNullWrongAnswers() {
+    protected boolean isNullWrongAnswers() {
         boolean result = (wrongAnswers.size() == 0);
         wrongAnswers.clear();
         return result;

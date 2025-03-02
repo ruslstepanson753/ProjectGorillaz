@@ -17,14 +17,14 @@ import java.util.*;
 import java.util.stream.Stream;
 
 @AllArgsConstructor
-public class BaseRepository<Entity extends AbstractEntity> implements Repository<Entity> {
+public class BaseRepository<E extends AbstractEntity> implements Repository<E> {
 
     private final SessionCreator sessionCreator;
 
-    private final Class<Entity> entityClass;
+    private final Class<E> entityClass;
 
     @Override
-    public Collection<Entity> getAll() {
+    public Collection<E> getAll() {
         Session session = sessionCreator.getSession();
         return session.createQuery("SELECT e FROM %s e".formatted(entityClass.getName()), entityClass).list();
     }
@@ -35,12 +35,12 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
      * c <- filter fields and add cb.equals(root.get(name), value)
      * cq.select(root).where(predicates);
      * result <- session.createQuery(cq).list(); */
-    public Stream<Entity> find(Entity pattern) {
+    public Stream<E> find(E pattern) {
         try {
             Session session = sessionCreator.getSession();
             HibernateCriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            JpaCriteriaQuery<Entity> criteriaQuery = criteriaBuilder.createQuery(entityClass);
-            Root<Entity> root = criteriaQuery.from(entityClass);
+            JpaCriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+            Root<E> root = criteriaQuery.from(entityClass);
             Field[] fields = pattern.getClass().getDeclaredFields();
             List<Predicate> predicates = new ArrayList<>();
             for (Field field : fields) {
@@ -55,8 +55,8 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
             }
             criteriaQuery.select(root);
             criteriaQuery.where(predicates.toArray(new Predicate[0]));
-            Query<Entity> query = session.createQuery(criteriaQuery);
-            List<Entity> list = query.list();
+            Query<E> query = session.createQuery(criteriaQuery);
+            List<E> list = query.list();
             return list.stream();
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
@@ -73,29 +73,29 @@ public class BaseRepository<Entity extends AbstractEntity> implements Repository
     }
 
     @Override
-    public Entity get(long id) {
+    public E get(long id) {
         Session session = sessionCreator.getSession();
         if (entityClass.equals(User.class)) {
             EntityGraph<?> entityGraph = session.getEntityGraph(User.GRAPH_USER_GAMES_FETCH);
-            return (Entity) session.find(User.class, id, Map.of("javax.persistence.fetchgraph", entityGraph));
+            return (E) session.find(User.class, id, Map.of("javax.persistence.fetchgraph", entityGraph));
         }
         return session.find(entityClass, id);
     }
 
     @Override
-    public void create(Entity entity) {
+    public void create(E entity) {
         Session session = sessionCreator.getSession();
         session.persist(entity);
     }
 
     @Override
-    public void update(Entity entity) {
+    public void update(E entity) {
         Session session = sessionCreator.getSession();
         session.merge(entity);
     }
 
     @Override
-    public void delete(Entity entity) {
+    public void delete(E entity) {
         Session session = sessionCreator.getSession();
         session.remove(entity);
     }

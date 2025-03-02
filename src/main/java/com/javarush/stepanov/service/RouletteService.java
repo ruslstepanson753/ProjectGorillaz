@@ -18,7 +18,7 @@ public class RouletteService extends GameService {
     private final Random random = new Random();
     private final Map<String, String> rouletteMap;
 
-    public RouletteService(RouletteMapRepository rouletteMapRepository, UserService userService) {
+    public RouletteService(RouletteMapRepository rouletteMapRepository) {
         super(userService);
         this.rouletteMapRepository = rouletteMapRepository;
         this.rouletteMap = getRoulletteMap();
