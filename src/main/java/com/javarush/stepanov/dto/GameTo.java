@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class GameTo {
     Long id;
-    UserTo user;
+    Long userId;
     int gamesCount;
     int winsCount;
     int lossCount;

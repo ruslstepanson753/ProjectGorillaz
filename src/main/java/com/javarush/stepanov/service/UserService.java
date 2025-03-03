@@ -2,12 +2,14 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.exception.AppException;
 import com.javarush.stepanov.mapping.Dto;
 import com.javarush.stepanov.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.EMPTY_LINE;
@@ -19,20 +21,27 @@ public class UserService implements Validable, Autorizationable {
     private final UserRepository userRepository;
 
     public UserTo createUser(String login, String password) {
-        User user = User.builder()
-                .login(login)
-                .password(password)
-                .build();
-        userRepository.create(user);
-        return dto.from(user);
+        User loginPattern = User.builder().login(login).password(password).build();
+            userRepository.create(loginPattern);
+        return dto.from(loginPattern);
+    }
+
+    public void updateUser(UserTo userTo) {
+        User user = dto.from(userTo);
+        User userInDb = userRepository.get(userTo.getId());
+        userInDb.setLogin(userTo.getLogin());
+        userInDb.setPassword(userTo.getPassword());
+        userRepository.update(userInDb);
     }
 
     public Collection<UserTo> getAll() {
-        return userRepository
+        List<User> list = userRepository
                 .getAll()
                 .stream()
-                .map(dto::from)
                 .toList();
+        List<UserTo> list2= list.stream().map(dto::from).toList();
+        return list2;
+
     }
 
     public Optional<UserTo> get(long id) {
@@ -49,8 +58,8 @@ public class UserService implements Validable, Autorizationable {
                 .build();
         return userRepository
                 .find(patternUser)
-                .findAny()
-                .map(dto::from);
+                .map(dto::from)
+                .findAny();
     }
 
     public UserTo findUser(String login) {
@@ -63,11 +72,6 @@ public class UserService implements Validable, Autorizationable {
         return null;
     }
 
-    public void updateUser(UserTo userTo) {
-        User user = dto.from(userTo);
-        userRepository.update(user);
-    }
-
     @Override
     public boolean loginOrPasswordIsEmpty(String login, String password) {
         return ((login.equals(EMPTY_LINE)) || (password.equals(EMPTY_LINE)));
@@ -75,7 +79,7 @@ public class UserService implements Validable, Autorizationable {
 
     @Override
     public boolean loginOrPasswordIsIncorrect(String login, String password) {
-        Collection<com.javarush.stepanov.dto.UserTo> users = getAll();
+        Collection<UserTo> users = getAll();
         for (com.javarush.stepanov.dto.UserTo userTo : users) {
             if (userTo.getLogin().equals(login) && userTo.getPassword().equals(password)) {
                 return false;
@@ -86,7 +90,7 @@ public class UserService implements Validable, Autorizationable {
 
     @Override
     public boolean isExistLogin(String login) {
-        Collection<com.javarush.stepanov.dto.UserTo> usersTo = getAll();
+        Collection<UserTo> usersTo = getAll();
         for (com.javarush.stepanov.dto.UserTo userTo : usersTo) {
             if (userTo.getLogin().equals(login)) {
                 return true;

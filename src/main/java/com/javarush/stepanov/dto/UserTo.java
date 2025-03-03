@@ -15,6 +15,7 @@ public class UserTo {
      Collection<GameTo> games = new ArrayList<>();
 
      public int getGamesCount() {
+          if(games == null) return 0;
           int gamesCount = 0;
           for (GameTo g : games) {
                gamesCount += g.getGamesCount();
@@ -23,6 +24,7 @@ public class UserTo {
      }
 
      public int getWinsCount() {
+          if(games == null) return 0;
           int winsTotalCount = 0;
           for (GameTo g : games) {
                winsTotalCount += g.getWinsCount();
@@ -31,6 +33,7 @@ public class UserTo {
      }
 
      public int getLossCount() {
+          if(games == null) return 0;
           int lossTotalCount = 0;
           for (GameTo g : games) {
                lossTotalCount += g.getLossCount();
