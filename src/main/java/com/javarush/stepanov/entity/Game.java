@@ -27,4 +27,8 @@ public class Game implements AbstractEntity{
 
     private String gameName;
 
+// in 1 thread after 3 updates throws OptimisticLockException,reason unknown
+//    @Version
+//    Long version;
+
 }

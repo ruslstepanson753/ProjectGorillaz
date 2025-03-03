@@ -16,6 +16,7 @@
         <column name="wins_count" type="BIGINT"/>
         <column name="loss_count" type="BIGINT"/>
         <column name="game_name" type="VARCHAR(64)"/>
+        <column name="version" type="BIGINT" defaultValue="1"/>
     </createTable>
 </changeSet>
     <changeSet id="2025-02-12-01-add-games-fk" author="stepanov">
