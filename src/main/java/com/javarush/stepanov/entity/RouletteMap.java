@@ -27,7 +27,6 @@ public class RouletteMap implements AbstractEntity {
 
     @Override
     public void setId(Long id) {
-
     }
 
 }

@@ -24,7 +24,7 @@ public class RouletteService extends GameService {
         this.rouletteMap = getRoulletteMap();
     }
 
-    public Map<String, String> getRoulletteMap() {
+    private Map<String, String> getRoulletteMap() {
         Map<String, String> map = new HashMap<String, String>();
         List<RouletteMap> rouletteMapList = (List<RouletteMap>) rouletteMapRepository.getAll();
         rouletteMapList.forEach(questMap -> {
@@ -46,7 +46,7 @@ public class RouletteService extends GameService {
     }
 
     @Override
-    void fillViewAttributes(Map<String, Object> attributesToView) {
+    protected void fillViewAttributes(Map<String, Object> attributesToView) {
         List.of(KEY_START_DESCRIPTION,
                         KEY_RED_BUTTON_DESCRIPTION,
                         ConstantsCommon.KEY_BLACK_BUTTON_DESCRIPTION,
@@ -84,7 +84,7 @@ public class RouletteService extends GameService {
         }
     }
 
-    public String getResultOfRotation() {
+    protected String getResultOfRotation() {
         int randomNumber = random.nextInt(37);
         if (randomNumber < 18) {
             return ROULET_RED;
@@ -100,7 +100,7 @@ public class RouletteService extends GameService {
         return UrlHelper.createUrlFromFileName(nameFile);
     }
 
-    public boolean isWin(String pickedColor, String rouletteColor) {
+    private boolean isWin(String pickedColor, String rouletteColor) {
         return (pickedColor.equals(rouletteColor));
     }
 }

@@ -1,8 +1,5 @@
 package com.javarush.stepanov.entity;
 
-/**
- * Parent any entity. Use as parent in wildcard
- */
 public interface AbstractEntity {
 
     Long getId();

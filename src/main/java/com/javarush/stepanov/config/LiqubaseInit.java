@@ -17,7 +17,7 @@ import static com.javarush.stepanov.constants.ConstantsCommon.*;
 public class LiqubaseInit {
     private final ApplicationProperties properties;
 
-    public static final String CLASSPATH_DB_CHANGELOG_XML = "db/changelog.xml";
+    public static final String CLASSPATH_DB_CHANGELOG_XML = LIQUBASE_URL_CHANGELOG_XML;
 
     private static final String PURPLE = "\u001B[35m";
     private static final String RESET = "\u001B[0m";
@@ -26,19 +26,19 @@ public class LiqubaseInit {
         log.info(PURPLE + LOG_INFO_LIQUBESE_RUN + RESET);
         try {
             Scope.child(Scope.Attr.resourceAccessor, new ClassLoaderResourceAccessor(), () -> {
-                CommandScope update = new CommandScope("update");
-                update.addArgumentValue("changelogFile", "db/changelog.xml");
+                CommandScope update = new CommandScope(LIQUBASE_COMMAND_COPE_UPDATE);
+                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_CHANGE_LOG, LIQUBASE_URL_CHANGELOG_XML);
                 String url = properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_URL);
-                update.addArgumentValue("url", url);
+                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_URL, url);
                 String username = properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_USERNAME);
-                update.addArgumentValue("username", username);
+                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_USERNAME, username);
                 String password = properties.getProperty(ApplicationProperties.HIBERNATE_CONNECTION_PASSWORD);
-                update.addArgumentValue("password", password);
+                update.addArgumentValue(LIQUBASE_COMMAND_UPDATE_ARGNAME_PASSWORD, password);
                 update.execute();
 
             });
         } catch (Exception e) {
-            log.error(PURPLE + "Ошибка Liquibase: " + e.getMessage() + RESET);
+            log.error(PURPLE + ERROR_LIQUBASE + e.getMessage() + RESET);
             throw new RuntimeException(e);
         }
         log.info(PURPLE + LOG_INFO_LIQUBESE_DONE + RESET);

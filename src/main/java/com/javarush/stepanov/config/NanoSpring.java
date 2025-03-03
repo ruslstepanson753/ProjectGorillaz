@@ -1,5 +1,6 @@
 package com.javarush.stepanov.config;
 
+import com.javarush.stepanov.exception.AppException;
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -30,10 +31,10 @@ import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
 public class NanoSpring {
 
     private static final Map<Class<?>, Object> beans = new HashMap<>();
-    public static final String CLASSES = File.separator + "classes" + File.separator;
-    public static final String EXT = ".class";
-    public static final String DOT = ".";
-    public static final String EMPTY = "";
+    public static final String CLASSES = File.separator + NANO_SPRING_CLASSES_NAME + File.separator;
+    public static final String EXT = NANO_SPRING_CLASS_EXTENSION;
+    public static final String DOT = NANO_SPRING_DOT;
+    public static final String EMPTY = NANO_SPRING_EMPTY;
     private static final String BRIGHT_PINK = "\u001B[95m";
     private static final String RESET = "\u001B[0m";
 
@@ -42,7 +43,7 @@ public class NanoSpring {
     public <T> T find(Class<T> type) {
 
         if (beanDefinitions.isEmpty()) {
-            init(); //1.add abstraction<?>
+            init();
         }
         Object component = beans.get(type);
         if (component == null) {
@@ -54,7 +55,6 @@ public class NanoSpring {
                 Class<?> impl = findImpl(parameterTypes[i], genericParameterTypes[i]); //3.
                 parameters[i] = find(impl);
             }
-            //Object newInstance = constructor.newInstance(parameters);
             Object newInstance = checkTransactional(type)
                     ? constructProxyInstance(type, parameterTypes, parameters)
                     : constructor.newInstance(parameters);
@@ -64,13 +64,12 @@ public class NanoSpring {
         return (T) beans.get(type);
     }
 
-    //********************* add support abstraction<?>  ************************
     private final List<Class<?>> beanDefinitions = new ArrayList<>();
 
     @SneakyThrows
     private void init() {
         log.info(BRIGHT_PINK+LOG_INFO_NANOSPRING_BEGIN+RESET);
-        URL resource = NanoSpring.class.getResource("NanoSpring.class");
+        URL resource = NanoSpring.class.getResource(NANO_SPRING_CLASS_NAME);
         URI uri = Objects.requireNonNull(resource).toURI();
         Path appRoot = Path.of(uri).getParent().getParent();
         scanPackages(appRoot, "Controller", "Servlet", "Filter");
@@ -91,7 +90,7 @@ public class NanoSpring {
                 beanDefinitions.add(Class.forName(name));  //в классы
             }                                             //готово
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new AppException(ERROR_NANOSPRING_IN_SCAN_PACKAGES,e);
         }
     }
 
@@ -110,7 +109,7 @@ public class NanoSpring {
                 return beanDefinition;
             }
         }
-        throw new RuntimeException("Not found impl for %s (type=%s)".formatted(aClass, type));
+        throw new RuntimeException(ERROR_NANOSPRING_IN_FINDIMPLIMENT);
     }
 
     private boolean checkGenerics(Type type, Class<?> impl) {
@@ -145,12 +144,7 @@ public class NanoSpring {
         }
     }
 
-    //********************* add proxy (for @Transactional)  ************************
-
     private <T> boolean checkTransactional(Class<T> type) {
-        //тут вообще-то довольно грубо сделано,
-        //надо бы лучше в динамике проверять каждый метод если класс не отмечен
-        //и запускать прокси только в нужных местах.
         return type.isAnnotationPresent(Transactional.class)
                 || Arrays.stream(type.getMethods())
                 .anyMatch(method -> method.isAnnotationPresent(Transactional.class));
@@ -169,7 +163,6 @@ public class NanoSpring {
         Constructor<?> constructor = proxy.getConstructor(parameterTypes);
         return constructor.newInstance(parameters);
     }
-
 
     public class Interceptor {
         @RuntimeType

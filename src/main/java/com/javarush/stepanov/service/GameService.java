@@ -5,8 +5,7 @@ import com.javarush.stepanov.entity.User;
 import java.util.Map;
 
 public abstract class GameService {
-
-    UserService userService;
+    protected UserService userService;
 
     GameService(UserService userService) {
         this.userService = userService;
@@ -16,11 +15,10 @@ public abstract class GameService {
 
     abstract void fillViewAttributes(Map<String, Object> attributesToView);
 
-    void putParametrToMapIfNotNull(Map<String, Object> attributesToView, String key, Object value) {
+    protected void putParametrToMapIfNotNull(Map<String, Object> attributesToView, String key, Object value) {
         if (value != null) {
             attributesToView.put(key, value);
         }
     }
-
 
 }

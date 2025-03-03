@@ -3,6 +3,7 @@ package com.javarush.stepanov.repository;
 import com.javarush.stepanov.config.SessionCreator;
 import com.javarush.stepanov.entity.AbstractEntity;
 import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.exception.AppException;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
@@ -15,6 +16,8 @@ import org.hibernate.query.criteria.JpaCriteriaQuery;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Stream;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
 @AllArgsConstructor
 public class BaseRepository<E extends AbstractEntity> implements Repository<E> {
@@ -29,12 +32,7 @@ public class BaseRepository<E extends AbstractEntity> implements Repository<E> {
         return session.createQuery("SELECT e FROM %s e".formatted(entityClass.getName()), entityClass).list();
     }
 
-
     @Override
-    /* session->cb->cq->root
-     * c <- filter fields and add cb.equals(root.get(name), value)
-     * cq.select(root).where(predicates);
-     * result <- session.createQuery(cq).list(); */
     public Stream<E> find(E pattern) {
         try {
             Session session = sessionCreator.getSession();
@@ -59,7 +57,7 @@ public class BaseRepository<E extends AbstractEntity> implements Repository<E> {
             List<E> list = query.list();
             return list.stream();
         } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new AppException(ERROR_BASEREPOSITORY_FIND,e);
         }
     }
 

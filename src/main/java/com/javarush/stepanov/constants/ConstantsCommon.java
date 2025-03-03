@@ -15,7 +15,7 @@ public class ConstantsCommon {
     public static final String LOG_INFO_NANOSPRING_END =  "nanospring init end: ";
     public static final String LOG_INFO_NANOSPRING_FINDED =  " was finded by Nanospring";
 
-    public static final String SUPPRESSWARNINGS_SET_UNUSED = "unused";
+    public static final String SET_ATTR_UNUSED = "unused";
 
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String ERROR_NANOSPRING_IN_FINDIMPLIMENT = "Not found impl for %s (type=%s)";
@@ -26,10 +26,7 @@ public class ConstantsCommon {
     public static final String ERROR_MAP_TO_JSON = "Ошибка при преобразовании Map в JSON";
     public static final String ERROR_JSON_TO_MAP = "Ошибка при преобразовании JSON в Map";
     public static final String ERROR_BASEREPOSITORY_FIND = "error in Baserepository in metod Find";
-    public static final String ERROR_BASEREPOSITORY_GET = "not found Entity with id ";
-    public static final String ERROR_BASEREPOSITORY_CREATE = "error while creating entity";
-    public static final String ERROR_BASEREPOSITORY_UPDATE = "error while updating entity";
-    public static final String ERROR_BASEREPOSITORY_DELETE = "error while deleting entity";
+    public static final String ERROR_LIQUBASE = "Ошибка Liquibase: ";
     public static final String ERROR_QUIZSERVICE_READ_FILE = "error read file in Quizservice";
     public static final String ERROR_CLEANER_REQ_NAME_GET = "GET";
     public static final String ERROR_REQ_SET_ATR = "error when attr set to Req";
@@ -106,18 +103,12 @@ public class ConstantsCommon {
     public final static String STATISTIC_ATTRIBUTE_ROULETTE_GAMERS = "rouletteGamers";
     public final static String STATISTIC_ATTRIBUTE_QUIZ_GAMERS = "quizGamers";
 
-    public final static String LIQUBASE_INIT_START_INFO = "Running Liquibase...";
-    public final static String LIQUBASE_INIT_END_INFO = "Running Liquibase...DONE";
     public final static String LIQUBASE_COMMAND_COPE_UPDATE = "update";
     public final static String LIQUBASE_COMMAND_UPDATE_ARGNAME_CHANGE_LOG = "changelogFile";
     public final static String LIQUBASE_COMMAND_UPDATE_ARGNAME_URL = "url";
     public final static String LIQUBASE_COMMAND_UPDATE_ARGNAME_USERNAME = "username";
     public final static String LIQUBASE_COMMAND_UPDATE_ARGNAME_PASSWORD = "password";
     public final static String LIQUBASE_URL_CHANGELOG_XML = "db/changelog.xml";
-
-    public final static String DB_URL = "jdbc:postgresql://localhost:5432/game";
-    public final static String DB_USERNAME = "postgres";
-    public final static String DB_PASSWORD = "postgres";
 
     public final static String NANO_SPRING_CLASSES_NAME = "classes";
     public final static String NANO_SPRING_CLASS_EXTENSION = ".class";

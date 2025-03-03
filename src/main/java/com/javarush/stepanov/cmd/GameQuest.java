@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 
-@SuppressWarnings(SUPPRESSWARNINGS_SET_UNUSED)
+@SuppressWarnings(SET_ATTR_UNUSED)
 public class GameQuest implements Command {
     private final QuestService questService;
 

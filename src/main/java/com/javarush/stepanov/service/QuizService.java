@@ -72,7 +72,7 @@ public class QuizService extends GameService {
     }
 
     @Override
-     void fillViewAttributes(Map<String, Object> attributesToView) {
+     protected void fillViewAttributes(Map<String, Object> attributesToView) {
         putParametrToMapIfNotNull(attributesToView, ConstantsCommon.ATTR_DESCRIPTION,question);
         putParametrToMapIfNotNull(attributesToView, QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);
     }

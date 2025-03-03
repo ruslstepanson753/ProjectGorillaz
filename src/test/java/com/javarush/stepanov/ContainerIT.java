@@ -14,16 +14,13 @@ public class ContainerIT {
     public static final String DOCKER_IMAGE_NAME = "postgres:16.3";
 
     static {
-        //create
         CONTAINER = new PostgreSQLContainer<>(DOCKER_IMAGE_NAME);
         CONTAINER.start();
-        //set new properties from TestContainers
         ApplicationProperties properties = NanoSpring.find(ApplicationProperties.class);
         properties.setProperty(HIBERNATE_CONNECTION_URL, CONTAINER.getJdbcUrl());
         properties.setProperty(HIBERNATE_CONNECTION_USERNAME, CONTAINER.getUsername());
         properties.setProperty(HIBERNATE_CONNECTION_PASSWORD, CONTAINER.getPassword());
-        //fill db
         Config config = NanoSpring.find(Config.class);
-        config.fillEmptyRepository(); // need transactional
+        config.fillEmptyRepository();
     }
 }

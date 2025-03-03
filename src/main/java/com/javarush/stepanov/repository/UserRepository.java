@@ -5,7 +5,6 @@ import com.javarush.stepanov.config.SessionCreator;
 import jakarta.transaction.Transactional;
 @Transactional
 public class UserRepository extends BaseRepository<User> {
-
     public UserRepository(SessionCreator sessionCreator) {
         super(sessionCreator, User.class);
     }

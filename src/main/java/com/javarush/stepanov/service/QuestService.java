@@ -64,7 +64,7 @@ public class QuestService extends GameService {
     }
 
     @Override
-     void fillViewAttributes(Map<String, Object> attributesToView) {
+     protected void fillViewAttributes(Map<String, Object> attributesToView) {
         putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_BUTTON_LEFT, conditionEntity.getButtonLeftText());
         putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_BUTTON_RIGHT, conditionEntity.getButtonRightText());
         putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_RESULT_LEFT, conditionEntity.getResultLeftText());

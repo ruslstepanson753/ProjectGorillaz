@@ -24,19 +24,15 @@ public class BaseIT extends ContainerIT {
     protected User testGuest;
 
     protected BaseIT() {
-        //app config
         config = NanoSpring.find(Config.class);
         config.fillEmptyRepository();
-        //servlet config
         servletConfig = mock(ServletConfig.class);
         servletContext = mock(ServletContext.class);
         when(servletConfig.getServletContext()).thenReturn(servletContext);
-        //current op
         req = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         when(req.getSession()).thenReturn(session);
-        //test data
         testAdmin = User.builder()
                 .id(1L)
                 .login("testAdmin")
