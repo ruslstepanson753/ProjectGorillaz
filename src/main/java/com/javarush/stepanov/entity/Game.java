@@ -17,7 +17,7 @@ public class Game implements AbstractEntity{
     private Long id;
     @ManyToOne
     @JoinColumn(name = "users_id")
-    private UserTo user;
+    private User user;
 
     private int gamesCount;
 
@@ -26,9 +26,5 @@ public class Game implements AbstractEntity{
     private int lossCount;
 
     private String gameName;
-
-// in 1 thread after 3 updates throws OptimisticLockException,reason unknown
-//    @Version
-//    Long version;
 
 }

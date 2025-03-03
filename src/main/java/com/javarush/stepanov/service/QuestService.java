@@ -1,8 +1,8 @@
 package com.javarush.stepanov.service;
 
+import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.entity.QuestInfoEntity;
 import com.javarush.stepanov.entity.QuestMap;
-import com.javarush.stepanov.entity.UserTo;
 import com.javarush.stepanov.repository.QuestInfoEntityRepository;
 import com.javarush.stepanov.repository.QuestMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
@@ -36,7 +36,7 @@ public class QuestService extends GameService {
     }
 
     @Override
-    public Map<String, Object> processAttributes(String pickedButton, UserTo user) {
+    public Map<String, Object> processAttributes(String pickedButton, UserTo userTo) {
         if (pickedButton != null) {
             this.pickedButton = pickedButton;
         }
@@ -55,9 +55,9 @@ public class QuestService extends GameService {
         step++;
 
         if (lossCheck()) {
-            setLossInfo(attributesToView, user);
+            setLossInfo(attributesToView, userTo);
         } else if (winCheck()) {
-            setWinInfo(attributesToView, user);
+            setWinInfo(attributesToView, userTo);
         }
 
         return attributesToView;
@@ -111,14 +111,14 @@ public class QuestService extends GameService {
         }
     }
 
-    private void setWinInfo(Map<String, Object> attributesToView, UserTo user) {
+    private void setWinInfo(Map<String, Object> attributesToView, UserTo userTo) {
         Map.ofEntries(
                 Map.entry(ATTR_DESCRIPTION, questMap.get(QUEST_MAP_DESCRIPTION_TEXT_WIN)),
                 Map.entry(ATTR_IMG_URL, getImgViewFromMap(QUEST_MAP_IMAGE_URL_WIN)),
                 Map.entry(QUEST_ATTRIBUTE_IS_WIN, true)
         ).forEach(attributesToView::put);
-        if (user!=null){
-            userService.addUserWin(user, GAME_QUEST_NAME);
+        if (userTo!=null){
+            userService.addUserWin(userTo, GAME_QUEST_NAME);
         }
     }
 

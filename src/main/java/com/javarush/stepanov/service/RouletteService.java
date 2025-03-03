@@ -1,8 +1,8 @@
 package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.constants.ConstantsCommon;
+import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.entity.RouletteMap;
-import com.javarush.stepanov.entity.UserTo;
 import com.javarush.stepanov.repository.RouletteMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
 
@@ -34,12 +34,12 @@ public class RouletteService extends GameService {
     }
 
     @Override
-    public Map<String, Object> processAttributes(String userAnswer, UserTo user) {
+    public Map<String, Object> processAttributes(String userAnswer, UserTo userTo) {
         Map<String, Object> attributesToView = new HashMap<>();
         if (userAnswer == null) {
             fillViewAttributes(attributesToView);
         } else {
-            fillFinishViewAttributes(attributesToView, userAnswer, user);
+            fillFinishViewAttributes(attributesToView, userAnswer, userTo);
         }
 
         return attributesToView;

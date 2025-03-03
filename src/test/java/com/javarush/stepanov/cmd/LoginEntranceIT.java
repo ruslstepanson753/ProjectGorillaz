@@ -2,7 +2,7 @@ package com.javarush.stepanov.cmd;
 
 import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
-import com.javarush.stepanov.entity.UserTo;
+import com.javarush.stepanov.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ class LoginEntranceIT extends BaseIT {
         String actualRedirect = loginEntr.doPost(req);
         Assertions.assertEquals(actualRedirect, GO_START);
 
-        verify(session).setAttribute(eq(ATTR_USER), any(UserTo.class));
+        verify(session).setAttribute(eq(ATTR_USER), any(User.class));
     }
 
     @Test
@@ -40,7 +40,7 @@ class LoginEntranceIT extends BaseIT {
 
         loginEntr.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTR_USER), any(UserTo.class));
+        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
 
         Assertions.assertEquals(eq(ERROR_NO_ARGS), session.getAttribute(ERROR_MESSAGE));
     }
@@ -53,7 +53,7 @@ class LoginEntranceIT extends BaseIT {
 
         loginEntr.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTR_USER), any(UserTo.class));
+        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
 
         Assertions.assertEquals(eq(ERROR_PASSWORD_OR_LOGIN_INCORRECT), session.getAttribute(ERROR_MESSAGE));
     }

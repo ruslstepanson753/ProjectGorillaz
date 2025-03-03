@@ -2,7 +2,7 @@ package com.javarush.stepanov.repository;
 
 import com.javarush.stepanov.ContainerIT;
 import com.javarush.stepanov.config.NanoSpring;
-import com.javarush.stepanov.entity.UserTo;
+import com.javarush.stepanov.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class UserRepositoryIT extends ContainerIT {
 
     private final UserRepository userRepository = NanoSpring.find(UserRepository.class);
-    private UserTo admin;
+    private User admin;
 
     @BeforeEach
     void createAdmin() {
@@ -20,7 +20,7 @@ class UserRepositoryIT extends ContainerIT {
 
     @Test
     void get() {
-        UserTo user = userRepository.get(admin.getId());
+        User user = userRepository.get(admin.getId());
         Assertions.assertEquals(admin, user);
     }
 
@@ -28,7 +28,7 @@ class UserRepositoryIT extends ContainerIT {
     void update() {
         admin.setLogin("newLogin");
         userRepository.update(admin);
-        UserTo user = userRepository.get(admin.getId());
+        User user = userRepository.get(admin.getId());
         Assertions.assertEquals(admin, user);
     }
 

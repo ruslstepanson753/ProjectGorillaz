@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
+
 import java.util.Objects;
 @NamedEntityGraph(
-        name = UserTo.GRAPH_USER_GAMES_FETCH,
+        name = User.GRAPH_USER_GAMES_FETCH,
         attributeNodes = {
                 @NamedAttributeNode(value = "games"),
         }
@@ -23,7 +25,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class UserTo implements AbstractEntity {
+public class User implements AbstractEntity {
     public static final String GRAPH_USER_GAMES_FETCH = "join_games_fetch_profile";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,7 +97,7 @@ public class UserTo implements AbstractEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != Hibernate.getClass(o)) return false;
-        UserTo user = (UserTo) o;
+        User user = (User) o;
         return Objects.equals(id, user.id);
     }
 

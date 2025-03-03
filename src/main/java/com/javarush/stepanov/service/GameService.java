@@ -1,6 +1,7 @@
 package com.javarush.stepanov.service;
 
-import com.javarush.stepanov.entity.UserTo;
+
+import com.javarush.stepanov.dto.UserTo;
 
 import java.util.Map;
 

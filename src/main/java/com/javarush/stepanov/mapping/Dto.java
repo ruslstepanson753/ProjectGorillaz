@@ -2,8 +2,8 @@ package com.javarush.stepanov.mapping;
 
 import com.javarush.stepanov.dto.*;
 import com.javarush.stepanov.entity.*;
-import com.javarush.stepanov.entity.UserTo;
 import org.mapstruct.Mapper;
+
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -19,7 +19,8 @@ public interface Dto {
 
     RouletteMapTo from(RouletteMap rouletteMap);
 
-    UserTo from(com.javarush.stepanov.dto.UserTo userTo);
-    com.javarush.stepanov.dto.UserTo from(UserTo user);
+    User from(UserTo userTo);
+
+    UserTo from(User user);
 
 }

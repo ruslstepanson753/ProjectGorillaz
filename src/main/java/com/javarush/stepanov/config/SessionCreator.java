@@ -1,5 +1,9 @@
 package com.javarush.stepanov.config;
 
+import com.javarush.stepanov.dto.GameTo;
+import com.javarush.stepanov.dto.QuestInfoEntityTo;
+import com.javarush.stepanov.dto.QuestMapTo;
+import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.entity.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +31,7 @@ public class SessionCreator implements Closeable {
     public SessionCreator(ApplicationProperties applicationProperties) {
         Configuration configuration = new Configuration();
         configuration.addProperties(applicationProperties);
-        configuration.addAnnotatedClass(UserTo.class);
+        configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(QuestInfoEntity.class);
         configuration.addAnnotatedClass(QuestMap.class);
         configuration.addAnnotatedClass(RouletteMap.class);

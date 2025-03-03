@@ -2,7 +2,7 @@ package com.javarush.stepanov.cmd;
 
 import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
-import com.javarush.stepanov.entity.UserTo;
+import com.javarush.stepanov.entity.User;
 import com.javarush.stepanov.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,15 +32,15 @@ class LoginRegistrationIT extends BaseIT {
         String actualRedirect = loginReg.doPost(req);
         Assertions.assertEquals(actualRedirect, GO_START);
 
-        verify(session).setAttribute(eq(ATTR_USER), any(UserTo.class));
+        verify(session).setAttribute(eq(ATTR_USER), any(User.class));
 
         deleteLastUser();
     }
 
     private static void deleteLastUser() {
         UserRepository userRepository = NanoSpring.find(UserRepository.class);
-        List<UserTo> users = (List<UserTo>)userRepository.getAll();
-        UserTo actualUser = users.get(users.size() - 1);
+        List<User> users = (List<User>)userRepository.getAll();
+        User actualUser = users.get(users.size() - 1);
         userRepository.delete(actualUser);
     }
 
@@ -52,7 +52,7 @@ class LoginRegistrationIT extends BaseIT {
 
         loginReg.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTR_USER), any(UserTo.class));
+        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
 
         Assertions.assertEquals(eq(ERROR_NO_ARGS), session.getAttribute(ERROR_MESSAGE));
     }
@@ -65,10 +65,9 @@ class LoginRegistrationIT extends BaseIT {
 
         String actualRedirect = loginReg.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTR_USER), any(UserTo.class));
+        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
 
         Assertions.assertEquals(eq(ERROR_USER_EXIST), session.getAttribute(ERROR_MESSAGE));
     }
-
 
 }

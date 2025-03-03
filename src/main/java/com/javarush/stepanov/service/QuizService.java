@@ -1,7 +1,7 @@
 package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.constants.ConstantsCommon;
-import com.javarush.stepanov.entity.UserTo;
+import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.exception.AppException;
 
 import java.io.BufferedReader;
@@ -37,6 +37,7 @@ public class QuizService extends GameService {
             throw new AppException(ERROR_QUIZSERVICE_READ_FILE, e);
         }
     }
+
 
     @Override
     public Map<String, Object> processAttributes(String userAnswer, UserTo user) {

@@ -1,6 +1,5 @@
 package com.javarush.stepanov.dto;
 
-import com.javarush.stepanov.entity.UserTo;
 import lombok.Builder;
 import lombok.Data;
 

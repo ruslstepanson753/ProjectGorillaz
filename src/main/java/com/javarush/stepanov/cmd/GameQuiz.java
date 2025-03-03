@@ -1,6 +1,6 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.entity.UserTo;
+import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.service.QuizService;
 import com.javarush.stepanov.util.ReqHelp;

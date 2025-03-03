@@ -37,13 +37,13 @@ public interface Command {
         return convertCamelCaseToKebabStyle(simpleName);
     }
 
-    default void addUserInfoToSession(HttpServletRequest req, UserTo user) {
-        if(user!=null) {
-            ReqHelp.setAttrSession(req, ATTR_USER, user);
-            ReqHelp.setAttrSession(req, ATTR_LOGIN, user.getLogin());
-            ReqHelp.setAttrSession(req, ATTR_GAMES_COUNT, user.getGamesCount());
-            ReqHelp.setAttrSession(req, ATTR_WINS_COUNT, user.getWinsCount());
-            ReqHelp.setAttrSession(req, ATTR_LOSS_COUNT, user.getLossCount());
+    default void addUserInfoToSession(HttpServletRequest req, UserTo userTo) {
+        if(userTo!=null) {
+            ReqHelp.setAttrSession(req, ATTR_USER, userTo);
+            ReqHelp.setAttrSession(req, ATTR_LOGIN, userTo.getLogin());
+            ReqHelp.setAttrSession(req, ATTR_GAMES_COUNT, userTo.getGamesCount());
+            ReqHelp.setAttrSession(req, ATTR_WINS_COUNT, userTo.getWinsCount());
+            ReqHelp.setAttrSession(req, ATTR_LOSS_COUNT, userTo.getLossCount());
         }
     }
 
