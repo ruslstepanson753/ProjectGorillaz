@@ -1,6 +1,6 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.UserTo;
 import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.service.QuestService;
 import com.javarush.stepanov.util.ReqHelp;
@@ -18,7 +18,7 @@ public class GameQuest implements Command {
 
     @Override
     public String doGet(HttpServletRequest req) {
-        User user = ReqHelp.getAttrFromSession(req, ATTR_USER);
+        UserTo user = ReqHelp.getAttrFromSession(req, ATTR_USER);
         String pickedButton = req.getParameter(ATTR_PICKED_BUTTON);
 
         Map <String,Object> attributesToView = questService.processAttributes(pickedButton,user);

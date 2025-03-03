@@ -2,7 +2,7 @@ package com.javarush.stepanov;
 
 import com.javarush.stepanov.config.Config;
 import com.javarush.stepanov.config.NanoSpring;
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.UserTo;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,9 +19,9 @@ public class BaseIT extends ContainerIT {
     protected final Config config;
     protected final ServletConfig servletConfig;
     protected final ServletContext servletContext;
-    protected User testAdmin;
-    protected User testUser;
-    protected User testGuest;
+    protected UserTo testAdmin;
+    protected UserTo testUser;
+    protected UserTo testGuest;
 
     protected BaseIT() {
         config = NanoSpring.find(Config.class);
@@ -33,17 +33,17 @@ public class BaseIT extends ContainerIT {
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         when(req.getSession()).thenReturn(session);
-        testAdmin = User.builder()
+        testAdmin = UserTo.builder()
                 .id(1L)
                 .login("testAdmin")
                 .password("testAdmin")
                 .build();
-        testUser = User.builder()
+        testUser = UserTo.builder()
                 .id(2L)
                 .login("testUser")
                 .password("testUser")
                 .build();
-        testGuest = User.builder()
+        testGuest = UserTo.builder()
                 .id(3L)
                 .login("testGuest")
                 .password("testGuest")

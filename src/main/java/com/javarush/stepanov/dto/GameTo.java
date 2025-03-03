@@ -1,7 +1,6 @@
 package com.javarush.stepanov.dto;
 
-import com.javarush.stepanov.entity.User;
-import jakarta.persistence.*;
+import com.javarush.stepanov.entity.UserTo;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +8,7 @@ import lombok.Data;
 @Builder
 public class GameTo {
     Long id;
-    User user;
+    UserTo user;
     int gamesCount;
     int winsCount;
     int lossCount;

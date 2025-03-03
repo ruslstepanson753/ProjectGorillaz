@@ -1,44 +1,60 @@
 package com.javarush.stepanov.service;
 
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.UserTo;
+import com.javarush.stepanov.mapping.Dto;
 import com.javarush.stepanov.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 import java.util.Optional;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.EMPTY_LINE;
 
+@AllArgsConstructor
 @Transactional
 public class UserService implements Validable, Autorizationable {
-
+    private final Dto dto;
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-
-    public User createUser(String login, String password) {
-        User user = User.builder()
+    public com.javarush.stepanov.dto.UserTo createUser(String login, String password) {
+        UserTo user = UserTo.builder()
                 .login(login)
                 .password(password)
                 .build();
         userRepository.create(user);
-        return user;
+        return dto.from(user);
     }
 
-    public Collection<User> getAll() {
-        return userRepository.getAll();
+    public Collection<com.javarush.stepanov.dto.UserTo> getAll() {
+        return userRepository
+                .getAll()
+                .stream()
+                .map(dto::from)
+                .toList();
     }
 
-    public Optional<User> get(long id) {
-        return Optional.ofNullable(userRepository.get(id));
+    public Optional<com.javarush.stepanov.dto.UserTo> get(long id) {
+        return Optional
+                .ofNullable(userRepository.get(id))
+                .map(dto::from);
     }
 
-    public User findUser(String login) {
-        Collection<User> allUsers = getAll();
-        for (User u : allUsers) {
+    public Optional<com.javarush.stepanov.dto.UserTo> get(String login, String password) {
+        UserTo patternUser = UserTo
+                .builder()
+                .login(login)
+                .password(password)
+                .build();
+        return userRepository
+                .find(patternUser)
+                .findAny()
+                .map(dto::from);
+    }
+
+    public com.javarush.stepanov.dto.UserTo findUser(String login) {
+        Collection<com.javarush.stepanov.dto.UserTo> allUsersTo = getAll();
+        for (com.javarush.stepanov.dto.UserTo u : allUsersTo) {
             if (u.getLogin().equals(login)) {
                 return u;
             }
@@ -46,7 +62,8 @@ public class UserService implements Validable, Autorizationable {
         return null;
     }
 
-    public void updateUser(User user) {
+    public void updateUser(com.javarush.stepanov.dto.UserTo userTo) {
+        UserTo user = dto.from(userTo);
         userRepository.update(user);
     }
 
@@ -57,9 +74,9 @@ public class UserService implements Validable, Autorizationable {
 
     @Override
     public boolean loginOrPasswordIsIncorrect(String login, String password) {
-        Collection<User> users = getAll();
-        for (User user : users) {
-            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+        Collection<com.javarush.stepanov.dto.UserTo> users = getAll();
+        for (com.javarush.stepanov.dto.UserTo userTo : users) {
+            if (userTo.getLogin().equals(login) && userTo.getPassword().equals(password)) {
                 return false;
             }
         }
@@ -68,23 +85,27 @@ public class UserService implements Validable, Autorizationable {
 
     @Override
     public boolean isExistLogin(String login) {
-        Collection<User> users = getAll();
-        for (User user : users) {
-            if (user.getLogin().equals(login)) {
+        Collection<com.javarush.stepanov.dto.UserTo> usersTo = getAll();
+        for (com.javarush.stepanov.dto.UserTo userTo : usersTo) {
+            if (userTo.getLogin().equals(login)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void addUserLoss(User user, String gameName) {
+    public void addUserLoss(com.javarush.stepanov.dto.UserTo userTo, String gameName) {
+        UserTo user = dto.from(userTo);
         user.setLossCount(gameName);
-        updateUser(user);
+        com.javarush.stepanov.dto.UserTo userToNew = dto.from(user);
+        updateUser(userToNew);
     }
 
-    public void addUserWin(User user, String gameName) {
+    public void addUserWin(com.javarush.stepanov.dto.UserTo userTo, String gameName) {
+        UserTo user = dto.from(userTo);
         user.setWinsCount(gameName);
-        updateUser(user);
+        com.javarush.stepanov.dto.UserTo userToNew = dto.from(user);
+        updateUser(userToNew);
     }
 
 }

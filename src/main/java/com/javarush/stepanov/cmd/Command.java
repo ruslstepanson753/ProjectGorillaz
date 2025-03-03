@@ -1,10 +1,9 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.entity.User;
-import com.javarush.stepanov.service.UserService;
+import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.util.ReqHelp;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,7 +37,7 @@ public interface Command {
         return convertCamelCaseToKebabStyle(simpleName);
     }
 
-    default void addUserInfoToSession(HttpServletRequest req, User user) {
+    default void addUserInfoToSession(HttpServletRequest req, UserTo user) {
         if(user!=null) {
             ReqHelp.setAttrSession(req, ATTR_USER, user);
             ReqHelp.setAttrSession(req, ATTR_LOGIN, user.getLogin());

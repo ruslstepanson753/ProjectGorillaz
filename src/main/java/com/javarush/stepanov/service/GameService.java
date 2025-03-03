@@ -1,6 +1,6 @@
 package com.javarush.stepanov.service;
 
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.UserTo;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ public abstract class GameService {
         this.userService = userService;
     }
 
-    abstract Map <String,Object> processAttributes (String userAnswer, User user);
+    abstract Map <String,Object> processAttributes (String userAnswer, UserTo user);
 
     abstract void fillViewAttributes(Map<String, Object> attributesToView);
 

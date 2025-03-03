@@ -17,7 +17,7 @@ public class Game implements AbstractEntity{
     private Long id;
     @ManyToOne
     @JoinColumn(name = "users_id")
-    private User user;
+    private UserTo user;
 
     private int gamesCount;
 

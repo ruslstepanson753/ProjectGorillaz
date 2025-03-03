@@ -1,6 +1,6 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.service.UserService;
 import com.javarush.stepanov.util.ReqHelp;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,8 +23,8 @@ public class LoginRegistration implements Command {
         } else if (userService.loginOrPasswordIsEmpty(enteredLogin, enteredPassword)) {
             ReqHelp.createErrorToView(req, ERROR_NO_ARGS);
         } else {
-            User user = userService.createUser(enteredLogin, enteredPassword);
-            addUserInfoToSession(req, user);
+            UserTo userTo = userService.createUser(enteredLogin, enteredPassword);
+            addUserInfoToSession(req, userTo);
         }
         return GO_START;
     }

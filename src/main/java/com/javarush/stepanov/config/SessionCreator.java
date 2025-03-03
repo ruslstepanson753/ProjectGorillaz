@@ -27,7 +27,7 @@ public class SessionCreator implements Closeable {
     public SessionCreator(ApplicationProperties applicationProperties) {
         Configuration configuration = new Configuration();
         configuration.addProperties(applicationProperties);
-        configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(UserTo.class);
         configuration.addAnnotatedClass(QuestInfoEntity.class);
         configuration.addAnnotatedClass(QuestMap.class);
         configuration.addAnnotatedClass(RouletteMap.class);

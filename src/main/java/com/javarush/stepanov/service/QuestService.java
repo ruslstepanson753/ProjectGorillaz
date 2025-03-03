@@ -2,7 +2,7 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.entity.QuestInfoEntity;
 import com.javarush.stepanov.entity.QuestMap;
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.UserTo;
 import com.javarush.stepanov.repository.QuestInfoEntityRepository;
 import com.javarush.stepanov.repository.QuestMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
@@ -36,7 +36,7 @@ public class QuestService extends GameService {
     }
 
     @Override
-    public Map<String, Object> processAttributes(String pickedButton, User user) {
+    public Map<String, Object> processAttributes(String pickedButton, UserTo user) {
         if (pickedButton != null) {
             this.pickedButton = pickedButton;
         }
@@ -99,19 +99,19 @@ public class QuestService extends GameService {
         gold += conditionEntity.getDeltaGold(pickedButton);
     }
 
-    private void setLossInfo(Map<String, Object> attributesToView, User user) {
+    private void setLossInfo(Map<String, Object> attributesToView, UserTo userTo) {
         Map.ofEntries(
                 Map.entry(QUEST_ATTRIBUTE_LOSS_CAUSE, getLossCause()),
                 Map.entry(ATTR_DESCRIPTION, questMap.get(QUEST_MAP_DESCRIPTION_TEXT_LOSS)),
                 Map.entry(ATTR_IMG_URL, getImgViewFromMap(QUEST_MAP_IMAGE_URL_LOSS)),
                 Map.entry(QUEST_ATTRIBUTE_IS_LOSS, true)
         ).forEach(attributesToView::put);
-        if (user!=null){
-            userService.addUserLoss(user, GAME_QUEST_NAME);
+        if (userTo!=null){
+            userService.addUserLoss(userTo, GAME_QUEST_NAME);
         }
     }
 
-    private void setWinInfo(Map<String, Object> attributesToView, User user) {
+    private void setWinInfo(Map<String, Object> attributesToView, UserTo user) {
         Map.ofEntries(
                 Map.entry(ATTR_DESCRIPTION, questMap.get(QUEST_MAP_DESCRIPTION_TEXT_WIN)),
                 Map.entry(ATTR_IMG_URL, getImgViewFromMap(QUEST_MAP_IMAGE_URL_WIN)),

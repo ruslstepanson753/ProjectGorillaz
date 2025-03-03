@@ -2,7 +2,7 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.constants.ConstantsCommon;
 import com.javarush.stepanov.entity.RouletteMap;
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.UserTo;
 import com.javarush.stepanov.repository.RouletteMapRepository;
 import com.javarush.stepanov.util.UrlHelper;
 
@@ -34,7 +34,7 @@ public class RouletteService extends GameService {
     }
 
     @Override
-    public Map<String, Object> processAttributes(String userAnswer, User user) {
+    public Map<String, Object> processAttributes(String userAnswer, UserTo user) {
         Map<String, Object> attributesToView = new HashMap<>();
         if (userAnswer == null) {
             fillViewAttributes(attributesToView);
@@ -57,7 +57,7 @@ public class RouletteService extends GameService {
         putParametrToMapIfNotNull(attributesToView, ConstantsCommon.KEY_IMAGE_URL_START, getImgViewFromMap(ConstantsCommon.KEY_IMAGE_URL_START));
     }
 
-    private void fillFinishViewAttributes(Map<String, Object> attributesToView, String userAnswer, User user) {
+    private void fillFinishViewAttributes(Map<String, Object> attributesToView, String userAnswer, UserTo user) {
         String rouletteColor = getResultOfRotation();
         String resultImgColorKey = ROULET_MAP_IMAGE_URL_ + rouletteColor;
         String resultImgColor = getImgViewFromMap(resultImgColorKey);

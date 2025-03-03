@@ -1,7 +1,7 @@
 package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.constants.ConstantsCommon;
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.UserTo;
 import com.javarush.stepanov.exception.AppException;
 
 import java.io.BufferedReader;
@@ -39,7 +39,7 @@ public class QuizService extends GameService {
     }
 
     @Override
-    public Map<String, Object> processAttributes(String userAnswer, User user) {
+    public Map<String, Object> processAttributes(String userAnswer, UserTo user) {
         Map<String, Object> attributesToView = new HashMap<>();
 
         if (userAnswer != null) {
@@ -77,7 +77,7 @@ public class QuizService extends GameService {
         putParametrToMapIfNotNull(attributesToView, QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);
     }
 
-    private void fillFinalViewAttributes(Map<String, Object> attributesToView, String userAnswer, User user) {
+    private void fillFinalViewAttributes(Map<String, Object> attributesToView, String userAnswer, UserTo user) {
         StringBuilder resultText = getFinalDescription(userAnswer);
         putParametrToMapIfNotNull(attributesToView, ConstantsCommon.ATTR_DESCRIPTION,resultText.toString());
         putParametrToMapIfNotNull(attributesToView, QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);

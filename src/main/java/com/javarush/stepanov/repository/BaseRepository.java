@@ -2,7 +2,7 @@ package com.javarush.stepanov.repository;
 
 import com.javarush.stepanov.config.SessionCreator;
 import com.javarush.stepanov.entity.AbstractEntity;
-import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.entity.UserTo;
 import com.javarush.stepanov.exception.AppException;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.Predicate;
@@ -73,9 +73,9 @@ public class BaseRepository<E extends AbstractEntity> implements Repository<E> {
     @Override
     public E get(long id) {
         Session session = sessionCreator.getSession();
-        if (entityClass.equals(User.class)) {
-            EntityGraph<?> entityGraph = session.getEntityGraph(User.GRAPH_USER_GAMES_FETCH);
-            return (E) session.find(User.class, id, Map.of("javax.persistence.fetchgraph", entityGraph));
+        if (entityClass.equals(UserTo.class)) {
+            EntityGraph<?> entityGraph = session.getEntityGraph(UserTo.GRAPH_USER_GAMES_FETCH);
+            return (E) session.find(UserTo.class, id, Map.of("javax.persistence.fetchgraph", entityGraph));
         }
         return session.find(entityClass, id);
     }
