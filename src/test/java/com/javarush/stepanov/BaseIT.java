@@ -33,20 +33,5 @@ public class BaseIT extends ContainerIT {
         response = Mockito.mock(HttpServletResponse.class);
         session = Mockito.mock(HttpSession.class);
         Mockito.when(req.getSession()).thenReturn(session);
-        testAdmin = User.builder()
-                .id(1L)
-                .login("testAdmin")
-                .password("testAdmin")
-                .build();
-        testUser = User.builder()
-                .id(2L)
-                .login("testUser")
-                .password("testUser")
-                .build();
-        testGuest = User.builder()
-                .id(3L)
-                .login("testGuest")
-                .password("testGuest")
-                .build();
     }
 }
