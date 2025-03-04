@@ -27,7 +27,7 @@
             <c:forEach var="questGamers" items="${sessionScope.questGamers}" varStatus="loop">
                 <tr>
                     <td style="border: 1px solid black; padding: 10px;">${loop.index + 1}</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${questGamers.user.login}</td>
+                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${questGamers.login}</td>
                     <td style="border: 1px solid black; padding: 10px;">${questGamers.gamesCount}</td>
                     <td style="border: 1px solid black; padding: 10px;">${questGamers.winsCount}</td>
                 </tr>
@@ -50,7 +50,7 @@
             <c:forEach var="rouletteGamers" items="${sessionScope.rouletteGamers}" varStatus="loop">
                 <tr>
                     <td style="border: 1px solid black; padding: 10px;">${loop.index + 1}</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${rouletteGamers.user.login}</td>
+                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${rouletteGamers.login}</td>
                     <td style="border: 1px solid black; padding: 10px;">${rouletteGamers.gamesCount}</td>
                     <td style="border: 1px solid black; padding: 10px;">${rouletteGamers.winsCount}</td>
                 </tr>
@@ -73,7 +73,7 @@
             <c:forEach var="quizGamers" items="${sessionScope.quizGamers}" varStatus="loop">
                 <tr>
                     <td style="border: 1px solid black; padding: 10px;">${loop.index + 1}</td>
-                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${quizGamers.user.login}</td>
+                    <td style="border: 1px solid black; padding: 10px; text-align: left;">${quizGamers.login}</td>
                     <td style="border: 1px solid black; padding: 10px;">${quizGamers.gamesCount}</td>
                     <td style="border: 1px solid black; padding: 10px;">${quizGamers.winsCount}</td>
                 </tr>

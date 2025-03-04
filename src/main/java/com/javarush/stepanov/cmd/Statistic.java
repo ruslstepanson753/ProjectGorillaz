@@ -1,5 +1,6 @@
 package com.javarush.stepanov.cmd;
 
+import com.javarush.stepanov.dto.GameTo;
 import com.javarush.stepanov.entity.Game;
 import com.javarush.stepanov.service.StatisticService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ public class Statistic implements Command {
 
     @Override
     public String doGet(HttpServletRequest req) {
-        Map<String, Set<Game>> gameStats = Map.of(
+        Map<String, Set<GameTo>> gameStats = Map.of(
                 STATISTIC_ATTRIBUTE_QUEST_GAMERS, statisticService.getGamers(GAME_QUEST_NAME),
                 STATISTIC_ATTRIBUTE_ROULETTE_GAMERS, statisticService.getGamers(GAME_ROULETTE_NAME),
                 STATISTIC_ATTRIBUTE_QUIZ_GAMERS, statisticService.getGamers(GAME_QUIZ_NAME)

@@ -17,7 +17,8 @@ public interface Dto {
     Dto MAPPER = Mappers.getMapper(Dto.class);
 
     @Mappings({
-            @Mapping(target = "userId", source = "user.id")
+            @Mapping(target = "userId", source = "user.id"),
+            @Mapping(target = "login", source = "user.login")
     })
     GameTo from(Game game);
 

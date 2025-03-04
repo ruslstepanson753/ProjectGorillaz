@@ -8,6 +8,7 @@ import lombok.Data;
 public class GameTo {
     Long id;
     Long userId;
+    String login;
     int gamesCount;
     int winsCount;
     int lossCount;
