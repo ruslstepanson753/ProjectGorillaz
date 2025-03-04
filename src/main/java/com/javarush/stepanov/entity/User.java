@@ -62,13 +62,13 @@ public class User implements AbstractEntity {
         return lossTotalCount;
     }
 
-    public void setWinsCount(String nameGame) {
+    public void inkrWinsCount(String nameGame) {
         Game game = getGame(nameGame);
         game.setGamesCount(game.getGamesCount() + 1);
         game.setWinsCount(game.getWinsCount() + 1);
     }
 
-    public void setLossCount(String nameGame) {
+    public void inkrLossCount(String nameGame) {
         Game game = getGame(nameGame);
         game.setGamesCount(game.getGamesCount() + 1);
         game.setLossCount(game.getLossCount() + 1);

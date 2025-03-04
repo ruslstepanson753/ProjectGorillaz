@@ -11,8 +11,9 @@ import static com.javarush.stepanov.constants.ConstantsCommon.*;
 @SuppressWarnings(SET_ATTR_UNUSED)
 public class GameQuest implements Command {
     private final QuestService questService;
-
+    private final UserService userService;
     public GameQuest(QuestService questService, UserService userService) {
+        this.userService = userService;
         this.questService = questService;
     }
 
@@ -24,7 +25,8 @@ public class GameQuest implements Command {
         Map <String,Object> attributesToView = questService.processAttributes(pickedButton,userTo);
 
         attributesToView.forEach(req::setAttribute);
-        addUserInfoToSession(req, userTo);
+        UserTo userToActual = userService.getActualUserTo(userTo);
+        addUserInfoToSession(req, userToActual);
 
         return getView();
     }

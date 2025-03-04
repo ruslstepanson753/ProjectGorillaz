@@ -2,14 +2,12 @@ package com.javarush.stepanov.service;
 
 import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.entity.User;
-import com.javarush.stepanov.exception.AppException;
 import com.javarush.stepanov.mapping.Dto;
 import com.javarush.stepanov.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.EMPTY_LINE;
@@ -26,23 +24,14 @@ public class UserService implements Validable, Autorizationable {
         return dto.from(loginPattern);
     }
 
-    public void updateUser(UserTo userTo) {
-        User user = dto.from(userTo);
-        User userInDb = userRepository.get(userTo.getId());
-        userInDb.setLogin(userTo.getLogin());
-        userInDb.setPassword(userTo.getPassword());
-        userRepository.update(userInDb);
-    }
-
     public Collection<UserTo> getAll() {
-        List<User> list = userRepository
+        return userRepository
                 .getAll()
                 .stream()
+                .map(dto::from)
                 .toList();
-        List<UserTo> list2= list.stream().map(dto::from).toList();
-        return list2;
-
     }
+
 
     public Optional<UserTo> get(long id) {
         return Optional
@@ -100,17 +89,22 @@ public class UserService implements Validable, Autorizationable {
     }
 
     public void addUserLoss(UserTo userTo, String gameName) {
-        User user = dto.from(userTo);
-        user.setLossCount(gameName);
-        UserTo userToNew = dto.from(user);
-        updateUser(userToNew);
+        Long id = userTo.getId();
+        User user = userRepository.get(id);
+        user.inkrLossCount(gameName);
     }
 
     public void addUserWin(UserTo userTo, String gameName) {
-        User user = dto.from(userTo);
-        user.setWinsCount(gameName);
-        UserTo userToNew = dto.from(user);
-        updateUser(userToNew);
+        Long id = userTo.getId();
+        User user = userRepository.get(id);
+        user.inkrWinsCount(gameName);
     }
 
+    public UserTo getActualUserTo(UserTo userTo) {
+        if (userTo != null){
+            Long id = userTo.getId();
+            return get(id).orElse(null);
+        }
+        return null;
+    }
 }

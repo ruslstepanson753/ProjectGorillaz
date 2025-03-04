@@ -29,6 +29,4 @@ public interface Dto {
 
     @Mapping(target = "games", qualifiedByName = "mapGames")
     UserTo from(User user);
-
-    User from(UserTo userTo);
 }
