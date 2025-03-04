@@ -1,10 +1,8 @@
 package com.javarush.stepanov.cmd;
 
 import com.javarush.stepanov.dto.GameTo;
-import com.javarush.stepanov.entity.Game;
 import com.javarush.stepanov.service.StatisticService;
 import jakarta.servlet.http.HttpServletRequest;
-
 import java.util.Map;
 import java.util.Set;
 import static com.javarush.stepanov.constants.ConstantsCommon.*;

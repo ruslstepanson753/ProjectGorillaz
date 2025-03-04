@@ -1,6 +1,5 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.BaseIT;
 import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.service.QuizService;
 import com.javarush.stepanov.service.UserService;
@@ -8,13 +7,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 
+import com.javarush.stepanov.BaseIT;
 import java.util.List;
 import java.util.Map;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 class GameQuizIT extends BaseIT {
 
@@ -30,7 +31,7 @@ class GameQuizIT extends BaseIT {
     void whenStartThenInitVariable() {
         String actualRedirect = gameQuiz.doGet(req);
         Assertions.assertEquals(actualRedirect, "game-quiz");
-        verify(req).setAttribute(eq(QUIZ_ATTRIBUTE_QUESTION_NUMBER), eq(1));
+        Mockito.verify(req).setAttribute(ArgumentMatchers.eq(QUIZ_ATTRIBUTE_QUESTION_NUMBER), ArgumentMatchers.eq(1));
     }
 
     @Test
@@ -41,29 +42,29 @@ class GameQuizIT extends BaseIT {
         GameQuiz gameQuizTest = new GameQuiz(userService, quizServiceTest);
 
         gameQuizTest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("1");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("1");
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("1");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("1");
         gameQuizTest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("2");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("2");
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("2");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("2");
         gameQuizTest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("3");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("3");
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("3");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("3");
         gameQuizTest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("4");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("4");
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("4");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("4");
         gameQuizTest.doGet(req);
 
         Map<String,String> wrongAnswers = quizServiceTest.getWrongAnswersMapForTest();
         assertEquals(wrongAnswers.size(), 4);
         assertEquals(quizServiceTest.isNullWrongAnswers(), false);
 
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("5");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("5");
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("5");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn("5");
         gameQuizTest.doGet(req);
 
-        verify(req).setAttribute(eq(QUIZ_ATTRIBUTE_QUESTION_NUMBER), eq(5));
-        verify(req).setAttribute(eq(ATTR_IS_DONE), eq(true));
+        Mockito.verify(req).setAttribute(ArgumentMatchers.eq(QUIZ_ATTRIBUTE_QUESTION_NUMBER), ArgumentMatchers.eq(5));
+        Mockito.verify(req).setAttribute(ArgumentMatchers.eq(ATTR_IS_DONE), ArgumentMatchers.eq(true));
 
     }
 
@@ -78,20 +79,20 @@ class GameQuizIT extends BaseIT {
         Map<String,String> trueAnswersMap = quizServiceTest.getQuestionsMapForTest();
         List<String> questionsForTest = quizServiceTest.getQuestionsListForTest();
 
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("1");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(0)));
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("1");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(0)));
         gameQuizTest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("2");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(1)));
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("2");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(1)));
         gameQuizTest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("3");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(2)));
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("3");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(2)));
         gameQuizTest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("4");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(3)));
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("4");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(3)));
         gameQuizTest.doGet(req);
-        when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("5");
-        when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(4)));
+        Mockito.when(req.getParameter(ATTR_PICKED_BUTTON)).thenReturn("5");
+        Mockito.when(req.getParameter(QUIZ_ATTRIBUTE_ANSWER)).thenReturn(trueAnswersMap.get(questionsForTest.get(4)));
 
 
         assertEquals(quizServiceTest.isNullWrongAnswers(), true);

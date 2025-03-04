@@ -1,11 +1,13 @@
 package com.javarush.stepanov.repository;
 
-import com.javarush.stepanov.ContainerIT;
 import com.javarush.stepanov.config.NanoSpring;
 import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.javarush.stepanov.ContainerIT;
 
 
 class UserRepositoryIT extends ContainerIT {

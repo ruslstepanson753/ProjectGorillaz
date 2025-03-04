@@ -1,15 +1,19 @@
 package com.javarush.stepanov.cmd;
 
-import com.javarush.stepanov.BaseIT;
+import com.javarush.stepanov.cmd.LoginEntrance;
 import com.javarush.stepanov.config.NanoSpring;
+import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
+
+import com.javarush.stepanov.BaseIT;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
-import static org.mockito.Mockito.*;
 
 class LoginEntranceIT extends BaseIT {
 
@@ -21,41 +25,41 @@ class LoginEntranceIT extends BaseIT {
     }
 
     @Test
-    @DisplayName("when log then return to start with  user in session")
+    @DisplayName("when registation then return to start with  userTo in session")
     void whenLogThenReturnToStartWithNeUserInSession() {
-        when(req.getParameter(ATTR_LOGIN)).thenReturn("Khmelov");
-        when(req.getParameter(ATTR_PASSWORD)).thenReturn("admin");
+        Mockito.when(req.getParameter(ATTR_LOGIN)).thenReturn("Khmelov");
+        Mockito.when(req.getParameter(ATTR_PASSWORD)).thenReturn("admin");
 
         String actualRedirect = loginEntr.doPost(req);
         Assertions.assertEquals(actualRedirect, GO_START);
 
-        verify(session).setAttribute(eq(ATTR_USER), any(User.class));
+        Mockito.verify(session).setAttribute(ArgumentMatchers.eq(ATTR_USER), ArgumentMatchers.any(UserTo.class));
     }
 
     @Test
     @DisplayName("when empty field then exception")
     void whenEmptyFieldThenException() {
-        when(req.getParameter(ATTR_LOGIN)).thenReturn("");
-        when(req.getParameter(ATTR_PASSWORD)).thenReturn("123");
+        Mockito.when(req.getParameter(ATTR_LOGIN)).thenReturn("");
+        Mockito.when(req.getParameter(ATTR_PASSWORD)).thenReturn("123");
 
         loginEntr.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
+        Mockito.verify(session, Mockito.never()).setAttribute(ArgumentMatchers.eq(ATTR_USER), ArgumentMatchers.any(User.class));
 
-        Assertions.assertEquals(eq(ERROR_NO_ARGS), session.getAttribute(ERROR_MESSAGE));
+        Assertions.assertEquals(ArgumentMatchers.eq(ERROR_NO_ARGS), session.getAttribute(ERROR_MESSAGE));
     }
 
     @Test
     @DisplayName("when invalid data then error msg")
     void whenInvalidDataThenErrorMsg() {
-        when(req.getParameter(ATTR_LOGIN)).thenReturn("Khmelov");
-        when(req.getParameter(ATTR_PASSWORD)).thenReturn("123");
+        Mockito.when(req.getParameter(ATTR_LOGIN)).thenReturn("Khmelov");
+        Mockito.when(req.getParameter(ATTR_PASSWORD)).thenReturn("123");
 
         loginEntr.doPost(req);
 
-        verify(session, never()).setAttribute(eq(ATTR_USER), any(User.class));
+        Mockito.verify(session, Mockito.never()).setAttribute(ArgumentMatchers.eq(ATTR_USER), ArgumentMatchers.any(User.class));
 
-        Assertions.assertEquals(eq(ERROR_PASSWORD_OR_LOGIN_INCORRECT), session.getAttribute(ERROR_MESSAGE));
+        Assertions.assertEquals(ArgumentMatchers.eq(ERROR_PASSWORD_OR_LOGIN_INCORRECT), session.getAttribute(ERROR_MESSAGE));
     }
 
 }
