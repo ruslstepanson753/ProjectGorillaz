@@ -13,21 +13,23 @@ import static com.javarush.stepanov.constants.ConstantsCommon.*;
 @SuppressWarnings("unused")
 public class GameRoulette implements Command {
     private final RouletteService rouletteService;
+    private final UserService userService;
 
     public GameRoulette(UserService userService, RouletteService rouletteService) {
+        this.userService = userService;
         this.rouletteService = rouletteService;
     }
 
     @Override
     public String doGet(HttpServletRequest req) {
-
-        UserTo user = ReqHelp.getAttrFromSession(req, ATTR_USER);
+        UserTo userTo = ReqHelp.getAttrFromSession(req, ATTR_USER);
         String userAnswer = req.getParameter(ATTR_PICKED_BUTTON);
 
-        Map<String,Object> attributesToView = rouletteService.processAttributes(userAnswer,user);
+        Map<String,Object> attributesToView = rouletteService.processAttributes(userAnswer,userTo);
 
         attributesToView.forEach(req::setAttribute);
-        addUserInfoToSession(req, user);
+        UserTo userToActual = userService.getActualUserTo(userTo);
+        addUserInfoToSession(req, userToActual);
 
         return getView();
     }

@@ -13,21 +13,23 @@ import static com.javarush.stepanov.constants.ConstantsCommon.*;
 @SuppressWarnings("unused")
 public class GameQuiz implements Command {
     QuizService quizService;
-
+    UserService userService;
 
     public GameQuiz(UserService userService, QuizService quizService) {
+        this.userService = userService;
         this.quizService = quizService;
     }
 
     @Override
     public String doGet(HttpServletRequest req) {
-        UserTo user = ReqHelp.getAttrFromSession(req, ATTR_USER);
+        UserTo userTo = ReqHelp.getAttrFromSession(req, ATTR_USER);
         String userAnswer = req.getParameter(QUIZ_ATTRIBUTE_ANSWER);
 
-        Map<String,Object> attributesToView = quizService.processAttributes(userAnswer,user);
+        Map<String,Object> attributesToView = quizService.processAttributes(userAnswer,userTo);
 
         attributesToView.forEach(req::setAttribute);
-        addUserInfoToSession(req, user);
+        UserTo actualUserTo = userService.getActualUserTo(userTo);
+        addUserInfoToSession(req, actualUserTo);
 
         return getView();
     }
