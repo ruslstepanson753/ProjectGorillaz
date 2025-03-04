@@ -1,9 +1,5 @@
 package com.javarush.stepanov.config;
 
-import com.javarush.stepanov.dto.GameTo;
-import com.javarush.stepanov.dto.QuestInfoEntityTo;
-import com.javarush.stepanov.dto.QuestMapTo;
-import com.javarush.stepanov.dto.UserTo;
 import com.javarush.stepanov.entity.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

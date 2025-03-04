@@ -3,7 +3,6 @@ package com.javarush.stepanov.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @Getter
 @Setter

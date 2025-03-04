@@ -95,6 +95,11 @@ public class ConstantsCommon {
     public final static String ATTR_RESULT_COLOR = "resultColor";
     public final static String ATTR_WIN_LOSS_DESCRIPTION = "winLossDescription";
     public final static String ATTR_PASSWORD = "password";
+    public final static String ATTR_IMG_START_HEAD = "IMG_START_HEAD";
+    public final static String ATTR_IMG_START_QUEST = "IMG_START_QUEST";
+    public final static String ATTR_IMG_START_ROULETTE = "IMG_START_ROULETTE";
+    public final static String ATTR_IMG_START_QUIZ = "IMG_START_QUIZ";
+    public final static String ATTR_AUDIO_START_FOOTER = "AUDIO_START_FOOTER";
 
     public final static String QUIZ_ATTRIBUTE_ANSWER = "answer";
     public final static String QUIZ_ATTRIBUTE_QUESTION_NUMBER = "questionNumber";
