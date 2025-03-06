@@ -1,12 +1,8 @@
 # Hibernate final Project
 
 ### Instructions for launching:
-1. connect the latest version of postgres database with the following parameters:
-name - postgres
-password - postgres
-database - game
-2. Run Dockerfile
-3. Open in browser:
-http://localhost/
-
+1. Выполните команду в терминале для создания образа (из директории с Dockerfile):
+docker build -t db_postgres_stepanov .
+2. Чтобы запустить контейнер с пробросом порта 5432, выполните:
+docker run -d --name my_postgres -p 5432:5432 db_postgres_stepanov
 #### _2025 JRU Gorillaz, Stepanov Ruslan._
