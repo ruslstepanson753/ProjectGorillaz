@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SessionCreator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.config</a> &gt; <span class="el_source">SessionCreator.java</span></div><h1>SessionCreator.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.config;
+
+import com.javarush.stepanov.entity.*;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
+import org.hibernate.cfg.Configuration;
+
+import java.io.Closeable;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+
+<span class="fc" id="L17">@Slf4j</span>
+public class SessionCreator implements Closeable {
+
+    private final SessionFactory sessionFactory;
+<span class="fc" id="L21">    private final ThreadLocal&lt;AtomicInteger&gt; levelBox = new ThreadLocal&lt;&gt;();</span>
+<span class="fc" id="L22">    private final ThreadLocal&lt;Session&gt; sessionBox = new ThreadLocal&lt;&gt;();</span>
+    private static final String BROWN = &quot;\u001B[38;5;94m&quot;;
+    private static final String RESET = &quot;\u001B[0m&quot;;
+
+<span class="pc" id="L26">    @SneakyThrows</span>
+<span class="fc" id="L27">    public SessionCreator(ApplicationProperties applicationProperties) {</span>
+<span class="fc" id="L28">        Configuration configuration = new Configuration();</span>
+<span class="fc" id="L29">        configuration.addProperties(applicationProperties);</span>
+<span class="fc" id="L30">        configuration.addAnnotatedClass(User.class);</span>
+<span class="fc" id="L31">        configuration.addAnnotatedClass(QuestInfoEntity.class);</span>
+<span class="fc" id="L32">        configuration.addAnnotatedClass(QuestMap.class);</span>
+<span class="fc" id="L33">        configuration.addAnnotatedClass(RouletteMap.class);</span>
+<span class="fc" id="L34">        configuration.addAnnotatedClass(Game.class);</span>
+<span class="fc" id="L35">        configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());</span>
+<span class="fc" id="L36">        sessionFactory = configuration.buildSessionFactory();</span>
+<span class="fc" id="L37">    }</span>
+
+    public Session getSession() {
+<span class="pc bpc" id="L40" title="2 of 4 branches missed.">        return sessionBox.get() == null || !sessionBox.get().isOpen()</span>
+<span class="nc" id="L41">                ? sessionFactory.openSession()</span>
+<span class="fc" id="L42">                : sessionBox.get();</span>
+    }
+
+
+    public void beginTransactional() {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (levelBox.get() == null) {</span>
+<span class="fc" id="L48">            levelBox.set(new AtomicInteger(0));</span>
+        }
+<span class="fc" id="L50">        AtomicInteger level = levelBox.get();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (level.getAndIncrement() == 0) {</span>
+<span class="fc" id="L52">            Session session = sessionFactory.openSession();</span>
+<span class="fc" id="L53">            sessionBox.set(session);</span>
+<span class="fc" id="L54">            session.beginTransaction();</span>
+        }
+<span class="fc" id="L56">        log(level.get(), LOG_INFO_LIQUBESE_BEGIN_LEVEL);</span>
+<span class="fc" id="L57">    }</span>
+
+    public void endTransactional() {
+<span class="fc" id="L60">        AtomicInteger level = levelBox.get();</span>
+<span class="fc" id="L61">        Session session = sessionBox.get();</span>
+<span class="fc" id="L62">        log(level.get(), LOG_INFO_LIQUBESE_END_LEVEL);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (level.decrementAndGet() == 0) {</span>
+            try {
+<span class="fc" id="L65">                session.getTransaction().commit();</span>
+<span class="nc" id="L66">            } catch (RuntimeException e) {</span>
+<span class="nc" id="L67">                session.getTransaction().rollback();</span>
+<span class="nc" id="L68">                throw e;</span>
+<span class="fc" id="L69">            }</span>
+        }
+<span class="fc" id="L71">    }</span>
+
+    private void log(int level, String message) {
+<span class="fc" id="L74">        String simpleName = Thread.currentThread().getStackTrace()[4].toString();</span>
+<span class="fc" id="L75">       log.info(BROWN+&quot;\t&quot;.repeat(level) + message + level + LOG_INFO_LIQUBESE_FROM + simpleName+RESET);</span>
+<span class="fc" id="L76">    }</span>
+
+    public void close() {
+<span class="nc" id="L79">        sessionFactory.close();</span>
+<span class="nc" id="L80">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

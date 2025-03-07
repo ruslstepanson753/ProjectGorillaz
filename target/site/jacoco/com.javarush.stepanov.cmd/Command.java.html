@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Command.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.cmd</a> &gt; <span class="el_source">Command.java</span></div><h1>Command.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.cmd;
+
+import com.javarush.stepanov.dto.UserTo;
+import com.javarush.stepanov.util.ReqHelp;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+public interface Command {
+
+    private static String convertCamelCaseToKebabStyle(String string) {
+<span class="fc" id="L15">        String snakeName = string.chars()</span>
+<span class="fc" id="L16">                .mapToObj(s -&gt; String.valueOf((char) s))</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">                .flatMap(s -&gt; s.matches(&quot;[A-Z]&quot;)</span>
+<span class="fc" id="L18">                        ? Stream.of(&quot;-&quot;, s)</span>
+<span class="fc" id="L19">                        : Stream.of(s))</span>
+<span class="fc" id="L20">                .collect(Collectors.joining())</span>
+<span class="fc" id="L21">                .toLowerCase();</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        return snakeName.startsWith(&quot;-&quot;)</span>
+<span class="fc" id="L23">                ? snakeName.substring(1)</span>
+<span class="nc" id="L24">                : snakeName;</span>
+    }
+
+    default String doGet(HttpServletRequest request) {
+<span class="nc" id="L28">        return getView();</span>
+    }
+
+    default String doPost(HttpServletRequest request) {
+<span class="nc" id="L32">        return getView();</span>
+    }
+
+    default String getView() {
+<span class="fc" id="L36">        String simpleName = this.getClass().getSimpleName();</span>
+<span class="fc" id="L37">        return convertCamelCaseToKebabStyle(simpleName);</span>
+    }
+
+    default void addUserInfoToSession(HttpServletRequest req, UserTo userTo) {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if(userTo!=null) {</span>
+<span class="fc" id="L42">            ReqHelp.setAttrSession(req, ATTR_USER, userTo);</span>
+<span class="fc" id="L43">            ReqHelp.setAttrSession(req, ATTR_LOGIN, userTo.getLogin());</span>
+<span class="fc" id="L44">            ReqHelp.setAttrSession(req, ATTR_GAMES_COUNT, userTo.getGamesCount());</span>
+<span class="fc" id="L45">            ReqHelp.setAttrSession(req, ATTR_WINS_COUNT, userTo.getWinsCount());</span>
+<span class="fc" id="L46">            ReqHelp.setAttrSession(req, ATTR_LOSS_COUNT, userTo.getLossCount());</span>
+        }
+<span class="fc" id="L48">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

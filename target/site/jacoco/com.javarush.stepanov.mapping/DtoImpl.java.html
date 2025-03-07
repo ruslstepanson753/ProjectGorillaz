@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DtoImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.mapping</a> &gt; <span class="el_source">DtoImpl.java</span></div><h1>DtoImpl.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.mapping;
+
+import com.javarush.stepanov.dto.GameTo;
+import com.javarush.stepanov.dto.UserTo;
+import com.javarush.stepanov.entity.Game;
+import com.javarush.stepanov.entity.User;
+import javax.annotation.processing.Generated;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2025-03-07T12:54:46+0300&quot;,
+    comments = &quot;version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)&quot;
+)
+<span class="fc" id="L14">public class DtoImpl implements Dto {</span>
+
+    @Override
+    public GameTo from(Game game) {
+<span class="pc bpc" id="L18" title="1 of 2 branches missed.">        if ( game == null ) {</span>
+<span class="nc" id="L19">            return null;</span>
+        }
+
+<span class="fc" id="L22">        GameTo.GameToBuilder gameTo = GameTo.builder();</span>
+
+<span class="fc" id="L24">        gameTo.userId( gameUserId( game ) );</span>
+<span class="fc" id="L25">        gameTo.login( gameUserLogin( game ) );</span>
+<span class="fc" id="L26">        gameTo.id( game.getId() );</span>
+<span class="fc" id="L27">        gameTo.gamesCount( game.getGamesCount() );</span>
+<span class="fc" id="L28">        gameTo.winsCount( game.getWinsCount() );</span>
+<span class="fc" id="L29">        gameTo.lossCount( game.getLossCount() );</span>
+<span class="fc" id="L30">        gameTo.gameName( game.getGameName() );</span>
+
+<span class="fc" id="L32">        return gameTo.build();</span>
+    }
+
+    @Override
+    public UserTo from(User user) {
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if ( user == null ) {</span>
+<span class="nc" id="L38">            return null;</span>
+        }
+
+<span class="fc" id="L41">        UserTo.UserToBuilder userTo = UserTo.builder();</span>
+
+<span class="fc" id="L43">        userTo.games( mapGames( user.getGames() ) );</span>
+<span class="fc" id="L44">        userTo.id( user.getId() );</span>
+<span class="fc" id="L45">        userTo.login( user.getLogin() );</span>
+<span class="fc" id="L46">        userTo.password( user.getPassword() );</span>
+
+<span class="fc" id="L48">        return userTo.build();</span>
+    }
+
+    private Long gameUserId(Game game) {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if ( game == null ) {</span>
+<span class="nc" id="L53">            return null;</span>
+        }
+<span class="fc" id="L55">        User user = game.getUser();</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if ( user == null ) {</span>
+<span class="nc" id="L57">            return null;</span>
+        }
+<span class="fc" id="L59">        Long id = user.getId();</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if ( id == null ) {</span>
+<span class="nc" id="L61">            return null;</span>
+        }
+<span class="fc" id="L63">        return id;</span>
+    }
+
+    private String gameUserLogin(Game game) {
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if ( game == null ) {</span>
+<span class="nc" id="L68">            return null;</span>
+        }
+<span class="fc" id="L70">        User user = game.getUser();</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if ( user == null ) {</span>
+<span class="nc" id="L72">            return null;</span>
+        }
+<span class="fc" id="L74">        String login = user.getLogin();</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if ( login == null ) {</span>
+<span class="nc" id="L76">            return null;</span>
+        }
+<span class="fc" id="L78">        return login;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

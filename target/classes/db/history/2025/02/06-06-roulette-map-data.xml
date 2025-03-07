@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+<changeSet id="2025-02-06-06-roulette-map-data" author="stepanov">
+    <insert tableName="roulette_map">
+    <column name="key">START_DESCRIPTION</column>
+    <column name="value"><![CDATA[Добро пожаловать в Питерское казино. Делайте ставку!]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">RED_BUTTON_DESCRIPTION</column>
+        <column name="value"><![CDATA[Ставлю на красное]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">BLACK_BUTTON_DESCRIPTION</column>
+        <column name="value"><![CDATA[Ставлю на чёрное]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">ZERO_BUTTON_DESCRIPTION</column>
+        <column name="value"><![CDATA[Ставлю на зеро]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">RESULT_COLOR_BLACK</column>
+        <column name="value"><![CDATA[Выпал чёрный цвет!
+]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">RESULT_COLOR_RED</column>
+        <column name="value"><![CDATA[Выпал красный цвет!
+]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">RESULT_COLOR_ZERO</column>
+        <column name="value"><![CDATA[Выпало зеро!
+]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">RESULT_WIN</column>
+        <column name="value"><![CDATA[Вы победили!]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">RESULT_LOSS</column>
+        <column name="value"><![CDATA[Вы проиграли!]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">RED</column>
+        <column name="value"><![CDATA[RED]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">BLACK</column>
+        <column name="value"><![CDATA[BLACK]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">ZERO</column>
+        <column name="value"><![CDATA[ZERO]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">IMAGE_URL_START</column>
+        <column name="value"><![CDATA[roulette_start.jpg]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">IMAGE_URL_RED</column>
+        <column name="value"><![CDATA[roulette_red.jpg]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">IMAGE_URL_BLACK</column>
+        <column name="value"><![CDATA[roulette_black.jpg]]></column>
+    </insert>
+    <insert tableName="roulette_map">
+        <column name="key">IMAGE_URL_ZERO</column>
+        <column name="value"><![CDATA[roulette_zero.jpg]]></column>
+    </insert>
+</changeSet>
+</databaseChangeLog>

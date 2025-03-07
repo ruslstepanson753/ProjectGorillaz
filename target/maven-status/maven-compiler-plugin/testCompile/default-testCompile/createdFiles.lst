@@ -1,0 +1,10 @@
+com\javarush\stepanov\cmd\LoginEntranceIT.class
+com\javarush\stepanov\cmd\QuizServiceTest.class
+com\javarush\stepanov\BaseIT.class
+com\javarush\stepanov\cmd\GameQuizIT.class
+com\javarush\stepanov\ContainerIT.class
+com\javarush\stepanov\repository\UserRepositoryIT.class
+com\javarush\stepanov\cmd\GameRouletteIT$TestRouletteService.class
+com\javarush\stepanov\cmd\GameRouletteIT.class
+com\javarush\stepanov\cmd\LoginRegistrationIT.class
+com\javarush\stepanov\cmd\GameQuestIT.class

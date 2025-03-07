@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuizService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.service</a> &gt; <span class="el_source">QuizService.java</span></div><h1>QuizService.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.service;
+
+import com.javarush.stepanov.constants.ConstantsCommon;
+import com.javarush.stepanov.dto.UserTo;
+import com.javarush.stepanov.exception.AppException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+public class QuizService extends GameService {
+<span class="fc" id="L17">    private final Map&lt;String, String&gt; allQuestionMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L18">    protected Map&lt;String, String&gt; questionsMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L19">    protected List&lt;String&gt; questionsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">    protected Map&lt;String, String&gt; wrongAnswers = new HashMap&lt;&gt;();</span>
+    private String question;
+    private String answer;
+    private int step;
+
+    public QuizService(UserService userService) {
+<span class="fc" id="L26">        super(userService);</span>
+<span class="fc" id="L27">        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(QUIZ_TEXT_FILE_NAME);</span>
+<span class="fc" id="L28">             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">            while (bufferedReader.ready()) {</span>
+<span class="fc" id="L30">                String line = bufferedReader.readLine();</span>
+<span class="fc" id="L31">                String[] split = line.split(&quot;\\|&quot;);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">                if (split.length == 2) {</span>
+<span class="fc" id="L33">                    allQuestionMap.put(split[0].trim(), split[1].trim());</span>
+                }
+<span class="fc" id="L35">            }</span>
+<span class="nc" id="L36">        } catch (IOException e) {</span>
+<span class="nc" id="L37">            throw new AppException(ERROR_QUIZSERVICE_READ_FILE, e);</span>
+<span class="fc" id="L38">        }</span>
+<span class="fc" id="L39">    }</span>
+
+
+    @Override
+    public Map&lt;String, Object&gt; processAttributes(String userAnswer, UserTo user) {
+<span class="fc" id="L44">        Map&lt;String, Object&gt; attributesToView = new HashMap&lt;&gt;();</span>
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (userAnswer != null) {</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            if (quizIsNotEnding()) {</span>
+<span class="fc" id="L48">                setCondition(userAnswer);</span>
+            } else {
+<span class="fc" id="L50">                fillFinalViewAttributes(attributesToView,userAnswer,user);</span>
+<span class="fc" id="L51">                return attributesToView;</span>
+            }
+        } else {
+<span class="fc" id="L54">            setStartCondition();</span>
+        }
+<span class="fc" id="L56">        fillViewAttributes(attributesToView);</span>
+<span class="fc" id="L57">        step++;</span>
+<span class="fc" id="L58">        return attributesToView;</span>
+    }
+
+    private void setStartCondition() {
+<span class="fc" id="L62">        step = QUIZ_FIRST_STEP;</span>
+<span class="fc" id="L63">        questionsMap = getRandomQuestionMap();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (String question : questionsMap.keySet()) {</span>
+<span class="fc" id="L65">            questionsList.add(question);</span>
+<span class="fc" id="L66">        }</span>
+<span class="fc" id="L67">        question = questionsList.get(step);</span>
+<span class="fc" id="L68">    }</span>
+
+    private void setCondition(String usersAnswer) {
+<span class="fc" id="L71">        сheckingCorrectnessAnswer(usersAnswer);</span>
+<span class="fc" id="L72">        question = questionsList.get(step);</span>
+<span class="fc" id="L73">    }</span>
+
+    @Override
+     protected void fillViewAttributes(Map&lt;String, Object&gt; attributesToView) {
+<span class="fc" id="L77">        putParametrToMapIfNotNull(attributesToView, ConstantsCommon.ATTR_DESCRIPTION,question);</span>
+<span class="fc" id="L78">        putParametrToMapIfNotNull(attributesToView, QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);</span>
+<span class="fc" id="L79">    }</span>
+
+    private void fillFinalViewAttributes(Map&lt;String, Object&gt; attributesToView, String userAnswer, UserTo user) {
+<span class="fc" id="L82">        StringBuilder resultText = getFinalDescription(userAnswer);</span>
+<span class="fc" id="L83">        putParametrToMapIfNotNull(attributesToView, ConstantsCommon.ATTR_DESCRIPTION,resultText.toString());</span>
+<span class="fc" id="L84">        putParametrToMapIfNotNull(attributesToView, QUIZ_ATTRIBUTE_QUESTION_NUMBER,step + 1);</span>
+<span class="fc" id="L85">        putParametrToMapIfNotNull(attributesToView, ATTR_IS_DONE,true);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if(user!=null){</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">            if (isNullWrongAnswers()) {</span>
+<span class="nc" id="L88">                userService.addUserWin(user, GAME_QUIZ_NAME);</span>
+            } else {
+<span class="nc" id="L90">                userService.addUserLoss(user, GAME_QUIZ_NAME);</span>
+            }
+        }
+<span class="fc" id="L93">        clearDataCash();</span>
+
+<span class="fc" id="L95">    }</span>
+
+    private Map&lt;String, String&gt; getRandomQuestionMap() {
+<span class="fc" id="L98">        List&lt;String&gt; keys = new ArrayList&lt;&gt;(allQuestionMap.keySet());</span>
+<span class="fc" id="L99">        Collections.shuffle(keys);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (int i = 0; i &lt; QUIZ_NUMBER_OF_QUESTIONS; i++) {</span>
+<span class="fc" id="L101">            String key = keys.get(i);</span>
+<span class="fc" id="L102">            questionsMap.put(key, allQuestionMap.get(key));</span>
+        }
+<span class="fc" id="L104">        return questionsMap;</span>
+    }
+
+    private void clearRandomMap() {
+<span class="fc" id="L108">        questionsMap.clear();</span>
+<span class="fc" id="L109">    }</span>
+
+    private boolean quizIsNotEnding() {
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        return (step != questionsMap.size());</span>
+    }
+
+    private void сheckingCorrectnessAnswer(String usersAnswer) {
+<span class="fc" id="L116">        answer = questionsMap.get(question);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        if (!usersAnswer.equalsIgnoreCase(answer)) {</span>
+<span class="fc" id="L118">            wrongAnswers.put(question, usersAnswer);</span>
+        }
+<span class="fc" id="L120">    }</span>
+
+    private void clearDataCash() {
+<span class="fc" id="L123">        questionsMap.clear();</span>
+<span class="fc" id="L124">        questionsList.clear();</span>
+<span class="fc" id="L125">        wrongAnswers.clear();</span>
+<span class="fc" id="L126">        clearRandomMap();</span>
+<span class="fc" id="L127">    }</span>
+
+    private StringBuilder getFinalDescription(String userAnswer) {
+<span class="fc" id="L130">        сheckingCorrectnessAnswer(userAnswer);</span>
+<span class="fc" id="L131">        StringBuilder resultText = buildResultText();</span>
+<span class="fc" id="L132">        return resultText;</span>
+    }
+
+    private StringBuilder buildResultText() {
+<span class="fc" id="L136">        StringBuilder resultText = new StringBuilder();</span>
+<span class="fc" id="L137">        resultText.append(QUIZ_TRUE_ANSWERS);</span>
+<span class="fc" id="L138">        resultText.append(QUIZ_NUMBER_OF_QUESTIONS - wrongAnswers.size());</span>
+<span class="fc" id="L139">        resultText.append(QUIZ_OF_);</span>
+<span class="fc" id="L140">        resultText.append(questionsList.size());</span>
+<span class="fc" id="L141">        resultText.append(DOUBLE_NEXT_LINE);</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        for (String question : wrongAnswers.keySet()) {</span>
+<span class="fc" id="L143">            resultText.append(QUIZ_FOR_ANSWER);</span>
+<span class="fc" id="L144">            resultText.append(question);</span>
+<span class="fc" id="L145">            resultText.append(NEXT_LINE);</span>
+<span class="fc" id="L146">            resultText.append(QUIZ_ENTERED_WRONG_ANSWER);</span>
+<span class="fc" id="L147">            resultText.append(wrongAnswers.get(question));</span>
+<span class="fc" id="L148">            resultText.append(NEXT_LINE);</span>
+<span class="fc" id="L149">            resultText.append(QUIZ_TRUE_ANSWER);</span>
+<span class="fc" id="L150">            resultText.append(questionsMap.get(question));</span>
+<span class="fc" id="L151">            resultText.append(DOUBLE_NEXT_LINE);</span>
+<span class="fc" id="L152">        }</span>
+<span class="fc" id="L153">        return resultText;</span>
+    }
+
+    protected boolean isNullWrongAnswers() {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        boolean result = (wrongAnswers.size() == 0);</span>
+<span class="nc" id="L158">        return result;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.repository</a> &gt; <span class="el_source">BaseRepository.java</span></div><h1>BaseRepository.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.repository;
+
+import com.javarush.stepanov.config.SessionCreator;
+import com.javarush.stepanov.dto.UserTo;
+import com.javarush.stepanov.entity.AbstractEntity;
+import com.javarush.stepanov.entity.User;
+import com.javarush.stepanov.exception.AppException;
+import jakarta.persistence.*;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import lombok.AllArgsConstructor;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.hibernate.query.criteria.HibernateCriteriaBuilder;
+import org.hibernate.query.criteria.JpaCriteriaQuery;
+
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Stream;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+@AllArgsConstructor
+public class BaseRepository&lt;E extends AbstractEntity&gt; implements Repository&lt;E&gt; {
+
+    private final SessionCreator sessionCreator;
+
+    private final Class&lt;E&gt; entityClass;
+
+    @Override
+    public Collection&lt;E&gt; getAll() {
+<span class="fc" id="L32">        Session session = sessionCreator.getSession();</span>
+<span class="fc" id="L33">        return session.createQuery(&quot;SELECT e FROM %s e&quot;.formatted(entityClass.getName()), entityClass).list();</span>
+    }
+
+    @Override
+    public Stream&lt;E&gt; find(E pattern) {
+        try {
+<span class="nc" id="L39">            Session session = sessionCreator.getSession();</span>
+<span class="nc" id="L40">            HibernateCriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();</span>
+<span class="nc" id="L41">            JpaCriteriaQuery&lt;E&gt; criteriaQuery = criteriaBuilder.createQuery(entityClass);</span>
+<span class="nc" id="L42">            Root&lt;E&gt; root = criteriaQuery.from(entityClass);</span>
+<span class="nc" id="L43">            Field[] fields = pattern.getClass().getDeclaredFields();</span>
+<span class="nc" id="L44">            List&lt;Predicate&gt; predicates = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">            for (Field field : fields) {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">                if (field.trySetAccessible()) {</span>
+<span class="nc" id="L47">                    String name = field.getName();</span>
+<span class="nc" id="L48">                    Object value = field.get(pattern);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                    if (isPredacate(field, value)) {</span>
+<span class="nc" id="L50">                        Predicate predicate = criteriaBuilder.equal(root.get(name), value);</span>
+<span class="nc" id="L51">                        predicates.add(predicate);</span>
+                    }
+                }
+            }
+<span class="nc" id="L55">            criteriaQuery.select(root);</span>
+<span class="nc" id="L56">            criteriaQuery.where(predicates.toArray(new Predicate[0]));</span>
+<span class="nc" id="L57">            Query&lt;E&gt; query = session.createQuery(criteriaQuery);</span>
+<span class="nc" id="L58">            List&lt;E&gt; list = query.list();</span>
+<span class="nc" id="L59">            return list.stream();</span>
+<span class="nc" id="L60">        } catch (IllegalAccessException e) {</span>
+<span class="nc" id="L61">            throw new AppException(ERROR_BASEREPOSITORY_FIND,e);</span>
+        }
+    }
+
+    private static boolean isPredacate(Field field, Object value) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        return Objects.nonNull(value)</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">                &amp;&amp; !field.isAnnotationPresent(Transient.class)</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                &amp;&amp; !field.isAnnotationPresent(OneToMany.class)</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                &amp;&amp; !field.isAnnotationPresent(ManyToOne.class)</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                &amp;&amp; !field.isAnnotationPresent(OneToOne.class)</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                &amp;&amp; !field.isAnnotationPresent(ManyToMany.class);</span>
+    }
+
+    @Override
+    public E get(long id) {
+<span class="fc" id="L76">        Session session = sessionCreator.getSession();</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (entityClass.equals(User.class)) {</span>
+<span class="fc" id="L78">            EntityGraph&lt;?&gt; entityGraph = session.getEntityGraph(User.GRAPH_USER_GAMES_FETCH);</span>
+<span class="fc" id="L79">            return (E) session.find(User.class, id, Map.of(&quot;javax.persistence.fetchgraph&quot;, entityGraph));</span>
+        }
+<span class="nc" id="L81">        return session.find(entityClass, id);</span>
+    }
+
+    @Override
+    public void create(E entity) {
+<span class="fc" id="L86">        Session session = sessionCreator.getSession();</span>
+<span class="fc" id="L87">        session.persist(entity);</span>
+<span class="fc" id="L88">    }</span>
+
+    @Override
+    public void update(E entity) {
+<span class="fc" id="L92">        Session session = sessionCreator.getSession();</span>
+<span class="fc" id="L93">        session.merge(entity);</span>
+<span class="fc" id="L94">    }</span>
+
+    @Override
+    public void delete(E entity) {
+<span class="fc" id="L98">        Session session = sessionCreator.getSession();</span>
+<span class="fc" id="L99">        session.remove(entity);</span>
+<span class="fc" id="L100">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

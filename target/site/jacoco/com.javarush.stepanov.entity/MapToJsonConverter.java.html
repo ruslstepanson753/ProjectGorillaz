@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapToJsonConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.entity</a> &gt; <span class="el_source">MapToJsonConverter.java</span></div><h1>MapToJsonConverter.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.entity;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javarush.stepanov.exception.AppException;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
+import java.util.Map;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+@Converter(autoApply = true)
+<span class="fc" id="L13">public class MapToJsonConverter implements AttributeConverter&lt;Map&lt;String, Integer&gt;, String&gt; {</span>
+<span class="fc" id="L14">    private final ObjectMapper objectMapper = new ObjectMapper();</span>
+
+    @Override
+    public String convertToDatabaseColumn(Map&lt;String, Integer&gt; attribute) {
+        try {
+<span class="fc" id="L19">            return objectMapper.writeValueAsString(attribute);</span>
+<span class="nc" id="L20">        } catch (JsonProcessingException e) {</span>
+<span class="nc" id="L21">            throw new AppException(ERROR_MAP_TO_JSON, e);</span>
+        }
+    }
+
+    @Override
+    public Map&lt;String, Integer&gt; convertToEntityAttribute(String dbData) {
+        try {
+<span class="fc" id="L28">            return objectMapper.readValue(dbData, new TypeReference&lt;Map&lt;String, Integer&gt;&gt;() {});</span>
+<span class="nc" id="L29">        } catch (JsonProcessingException e) {</span>
+<span class="nc" id="L30">            throw new AppException(ERROR_JSON_TO_MAP, e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

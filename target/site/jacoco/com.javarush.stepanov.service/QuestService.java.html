@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuestService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.service</a> &gt; <span class="el_source">QuestService.java</span></div><h1>QuestService.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.service;
+
+import com.javarush.stepanov.dto.UserTo;
+import com.javarush.stepanov.entity.QuestInfoEntity;
+import com.javarush.stepanov.entity.QuestMap;
+import com.javarush.stepanov.repository.QuestInfoEntityRepository;
+import com.javarush.stepanov.repository.QuestMapRepository;
+import com.javarush.stepanov.util.UrlHelper;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+import static com.javarush.stepanov.constants.ConstantsCommon.QUEST_ATTRIBUTE_RESULT_LEFT;
+
+public class QuestService extends GameService {
+    private final QuestMapRepository questMapRepository;
+    private final QuestInfoEntityRepository questInfoEntityRepository;
+    private final List&lt;QuestInfoEntity&gt; questList;
+    private final Map&lt;String, String&gt; questMap;
+    private QuestInfoEntity conditionEntity;
+    private Integer time;
+    private Integer evidence;
+    private Integer gold;
+<span class="fc" id="L27">    private String pickedButton = QUEST_BUTTON_LEFT;</span>
+    private int step;
+
+    public QuestService(QuestMapRepository questMapRepository, QuestInfoEntityRepository questInfoEntityRepository, UserService userService) {
+<span class="fc" id="L31">        super(userService);</span>
+<span class="fc" id="L32">        this.questMapRepository = questMapRepository;</span>
+<span class="fc" id="L33">        this.questInfoEntityRepository = questInfoEntityRepository;</span>
+<span class="fc" id="L34">        questList = getQuestList();</span>
+<span class="fc" id="L35">        questMap = getQuestMap();</span>
+<span class="fc" id="L36">    }</span>
+
+    @Override
+    public Map&lt;String, Object&gt; processAttributes(String pickedButton, UserTo userTo) {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (pickedButton != null) {</span>
+<span class="fc" id="L41">            this.pickedButton = pickedButton;</span>
+        }
+<span class="fc" id="L43">        Map&lt;String, Object&gt; attributesToView = new HashMap&lt;&gt;();</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (pickedButton != null) {</span>
+<span class="fc" id="L46">            setCondition();</span>
+        } else {
+<span class="fc" id="L48">            setStartCondition();</span>
+        }
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (questIsNotEnding()) {</span>
+<span class="fc" id="L52">            fillViewAttributes(attributesToView);</span>
+        }
+
+<span class="fc" id="L55">        step++;</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (lossCheck()) {</span>
+<span class="fc" id="L58">            setLossInfo(attributesToView, userTo);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        } else if (winCheck()) {</span>
+<span class="fc" id="L60">            setWinInfo(attributesToView, userTo);</span>
+        }
+
+<span class="fc" id="L63">        return attributesToView;</span>
+    }
+
+    @Override
+     protected void fillViewAttributes(Map&lt;String, Object&gt; attributesToView) {
+<span class="fc" id="L68">        putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_BUTTON_LEFT, conditionEntity.getButtonLeftText());</span>
+<span class="fc" id="L69">        putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_BUTTON_RIGHT, conditionEntity.getButtonRightText());</span>
+<span class="fc" id="L70">        putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_RESULT_LEFT, conditionEntity.getResultLeftText());</span>
+<span class="fc" id="L71">        putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_RESULT_RIGHT, conditionEntity.getResultRightText());</span>
+<span class="fc" id="L72">        putParametrToMapIfNotNull(attributesToView, ATTR_DESCRIPTION, conditionEntity.getDescription());</span>
+<span class="fc" id="L73">        putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_TIME, time);</span>
+<span class="fc" id="L74">        putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_EVIDENCE, evidence);</span>
+<span class="fc" id="L75">        putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_GOLD, gold);</span>
+<span class="fc" id="L76">        putParametrToMapIfNotNull(attributesToView, ATTR_IMG_URL, getImgViewFromCondition());</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        String result = ((pickedButton.equals(QUEST_BUTTON_LEFT))</span>
+<span class="fc" id="L78">                ? conditionEntity.getResultLeftText()</span>
+<span class="fc" id="L79">                : conditionEntity.getResultRightText());</span>
+<span class="fc" id="L80">        putParametrToMapIfNotNull(attributesToView, QUEST_ATTRIBUTE_RESULT, result);</span>
+<span class="fc" id="L81">        List.of(ATTR_IMG_EVIDENCE, ATTR_IMG_GOLD, ATTR_IMG_TIME)</span>
+<span class="fc" id="L82">                .forEach(attr -&gt; attributesToView.put(attr, getImgViewFromMap(attr)));</span>
+<span class="fc" id="L83">    }</span>
+
+    private void setStartCondition() {
+<span class="fc" id="L86">        step = Integer.parseInt(questMap.get(QUEST_MAP_START_STEP));</span>
+<span class="fc" id="L87">        time = Integer.parseInt(questMap.get(QUEST_MAP_START_TIME));</span>
+<span class="fc" id="L88">        evidence = Integer.parseInt(questMap.get(QUEST_MAP_START_EVIDENCE));</span>
+<span class="fc" id="L89">        gold = Integer.parseInt(questMap.get(QUEST_MAP_START_GOLD));</span>
+<span class="fc" id="L90">        conditionEntity = questList.get(step);</span>
+<span class="fc" id="L91">    }</span>
+
+    private void setCondition() {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (step &lt; questList.size()) {</span>
+<span class="fc" id="L95">            conditionEntity = questList.get(step);</span>
+        }
+<span class="fc" id="L97">        time += conditionEntity.getDeltaTime(pickedButton);</span>
+<span class="fc" id="L98">        evidence += conditionEntity.getDeltaEvidence(pickedButton);</span>
+<span class="fc" id="L99">        gold += conditionEntity.getDeltaGold(pickedButton);</span>
+<span class="fc" id="L100">    }</span>
+
+    private void setLossInfo(Map&lt;String, Object&gt; attributesToView, UserTo userTo) {
+<span class="fc" id="L103">        Map.ofEntries(</span>
+<span class="fc" id="L104">                Map.entry(QUEST_ATTRIBUTE_LOSS_CAUSE, getLossCause()),</span>
+<span class="fc" id="L105">                Map.entry(ATTR_DESCRIPTION, questMap.get(QUEST_MAP_DESCRIPTION_TEXT_LOSS)),</span>
+<span class="fc" id="L106">                Map.entry(ATTR_IMG_URL, getImgViewFromMap(QUEST_MAP_IMAGE_URL_LOSS)),</span>
+<span class="fc" id="L107">                Map.entry(QUEST_ATTRIBUTE_IS_LOSS, true)</span>
+<span class="fc" id="L108">        ).forEach(attributesToView::put);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">        if (userTo!=null){</span>
+<span class="nc" id="L110">            userService.addUserLoss(userTo, GAME_QUEST_NAME);</span>
+        }
+<span class="fc" id="L112">    }</span>
+
+    private void setWinInfo(Map&lt;String, Object&gt; attributesToView, UserTo userTo) {
+<span class="fc" id="L115">        Map.ofEntries(</span>
+<span class="fc" id="L116">                Map.entry(ATTR_DESCRIPTION, questMap.get(QUEST_MAP_DESCRIPTION_TEXT_WIN)),</span>
+<span class="fc" id="L117">                Map.entry(ATTR_IMG_URL, getImgViewFromMap(QUEST_MAP_IMAGE_URL_WIN)),</span>
+<span class="fc" id="L118">                Map.entry(QUEST_ATTRIBUTE_IS_WIN, true)</span>
+<span class="fc" id="L119">        ).forEach(attributesToView::put);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (userTo!=null){</span>
+<span class="nc" id="L121">            userService.addUserWin(userTo, GAME_QUEST_NAME);</span>
+        }
+<span class="fc" id="L123">    }</span>
+
+    private List&lt;QuestInfoEntity&gt; getQuestList() {
+<span class="fc" id="L126">        return (List&lt;QuestInfoEntity&gt;) questInfoEntityRepository.getAll();</span>
+    }
+
+    private Map&lt;String, String&gt; getQuestMap() {
+<span class="fc" id="L130">        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L131">        List&lt;QuestMap&gt; questMapList = (List&lt;QuestMap&gt;) questMapRepository.getAll();</span>
+<span class="fc" id="L132">        questMapList.forEach(questMap -&gt; {</span>
+<span class="fc" id="L133">            map.put(questMap.getKey(), questMap.getValue());</span>
+<span class="fc" id="L134">        });</span>
+<span class="fc" id="L135">        return map;</span>
+    }
+
+    private boolean questIsNotEnding() {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        return (step &lt; questList.size());</span>
+    }
+
+    private String getImgViewFromMap(String imgKey) {
+<span class="fc" id="L143">        String nameFile = questMap.get(imgKey);</span>
+<span class="fc" id="L144">        return UrlHelper.createUrlFromFileName(nameFile);</span>
+    }
+
+    private String getImgViewFromCondition() {
+<span class="fc" id="L148">        String nameFile = conditionEntity.getImageUrl();</span>
+<span class="fc" id="L149">        return UrlHelper.createUrlFromFileName(nameFile);</span>
+    }
+
+    private boolean winCheck() {
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        return step == QUEST_END_STEP;</span>
+    }
+
+    private boolean lossCheck() {
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        return (time &lt;= QUEST_MIN_RESOURCE)</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">                || (evidence &lt;= QUEST_MIN_RESOURCE)</span>
+<span class="pc bpc" id="L159" title="1 of 4 branches missed.">                || (gold &lt;= QUEST_MIN_RESOURCE)</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                || ((step == QUEST_LOSS_STEP) &amp; (pickedButton.equals(QUEST_BUTTON_RIGHT)));</span>
+    }
+
+    private String getLossCause() {
+<span class="fc" id="L164">        String key = Stream.of(</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">                        Map.entry(time == QUEST_MIN_RESOURCE, QUEST_MAP_CAUSE_TEXT_TIME_LOSS),</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                        Map.entry(gold == QUEST_MIN_RESOURCE, QUEST_MAP_CAUSE_TEXT_GOLD_LOSS),</span>
+<span class="pc bpc" id="L167" title="2 of 4 branches missed.">                        Map.entry(evidence == QUEST_MIN_RESOURCE, QUEST_MAP_CAUSE_TEXT_EVIDENCE_LOSS),</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">                        Map.entry(step == QUEST_LOSS_STEP &amp;&amp; pickedButton.equals(QUEST_BUTTON_RIGHT), QUEST_MAP_CAUSE_TEXT_WRONG_STEP_LOSS)</span>
+                )
+<span class="fc" id="L170">                .filter(Map.Entry::getKey)</span>
+<span class="fc" id="L171">                .findFirst()</span>
+<span class="fc" id="L172">                .map(Map.Entry::getValue)</span>
+<span class="fc" id="L173">                .orElse(questMap.get(QUEST_MAP_CAUSE_TEXT_UNKNOWN_LOSS));</span>
+<span class="fc" id="L174">        return questMap.get(key);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

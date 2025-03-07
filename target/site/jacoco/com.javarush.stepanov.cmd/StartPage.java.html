@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StartPage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.cmd</a> &gt; <span class="el_source">StartPage.java</span></div><h1>StartPage.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.cmd;
+
+import com.javarush.stepanov.util.ReqHelp;
+import jakarta.servlet.http.HttpServletRequest;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L8">public class StartPage implements Command {</span>
+    private static void addConstatnsToSession(HttpServletRequest request) {
+<span class="nc" id="L10">        ReqHelp.setAttrSession(request, ATTR_IMG_START_HEAD, IMG_START_HEAD);</span>
+<span class="nc" id="L11">        ReqHelp.setAttrSession(request, ATTR_IMG_START_QUEST, IMG_START_QUEST);</span>
+<span class="nc" id="L12">        ReqHelp.setAttrSession(request, ATTR_IMG_START_ROULETTE, IMG_START_ROULETTE);</span>
+<span class="nc" id="L13">        ReqHelp.setAttrSession(request, ATTR_IMG_START_QUIZ, IMG_START_QUIZ);</span>
+<span class="nc" id="L14">        ReqHelp.setAttrSession(request, ATTR_AUDIO_START_FOOTER, AUDIO_START_FOOTER);</span>
+<span class="nc" id="L15">    }</span>
+
+    public String doGet(HttpServletRequest request) {
+<span class="nc" id="L18">        addConstatnsToSession(request);</span>
+<span class="nc" id="L19">        return getView();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

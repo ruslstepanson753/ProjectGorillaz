@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StatisticService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.service</a> &gt; <span class="el_source">StatisticService.java</span></div><h1>StatisticService.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.service;
+
+import com.javarush.stepanov.dto.GameTo;
+import com.javarush.stepanov.entity.Game;
+import com.javarush.stepanov.mapping.Dto;
+import com.javarush.stepanov.repository.GameRepository;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
+import java.util.*;
+import java.util.stream.Collectors;
+@AllArgsConstructor
+public class StatisticService {
+    private final GameRepository gameRepository;
+    private final Dto dto;
+
+    public Set&lt;GameTo&gt; getGamers(String gameName) {
+<span class="nc" id="L18">        Collection&lt;Game&gt; collection = gameRepository.getAll();</span>
+<span class="nc" id="L19">        Set&lt;GameTo&gt; games = collection.stream()</span>
+<span class="nc" id="L20">                .filter(game -&gt; gameName.equals(game.getGameName()))</span>
+<span class="nc" id="L21">                .sorted(Comparator</span>
+<span class="nc" id="L22">                        .comparingInt(Game::getWinsCount).reversed()</span>
+<span class="nc" id="L23">                        .thenComparingInt(Game::getGamesCount)</span>
+                )
+<span class="nc" id="L25">                .map(dto::from)</span>
+<span class="nc" id="L26">                .collect(Collectors.toCollection(LinkedHashSet::new));</span>
+<span class="nc" id="L27">        return games;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

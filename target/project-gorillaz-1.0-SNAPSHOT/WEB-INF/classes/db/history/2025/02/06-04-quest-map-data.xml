@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+<changeSet id="2025-02-06-04-quest-map-data" author="stepanov">
+    <insert tableName="quest_map">
+    <column name="key">DESCRIPTION_TEXT_WIN</column>
+    <column name="value"><![CDATA[   Вы находите реликвию. Память возвращается к вам. Ваше внутреннее состояние - экстаз]]></column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">DESCRIPTION_TEXT_LOSS</column>
+        <column name="value"><![CDATA[   Вам не удаётся пройти квест. Однако Питерские бездомные подбадривают вас и согревают своей позитивной энергией.]]></column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">CAUSE_TEXT_TIME_LOSS</column>
+        <column name="value"><![CDATA[   Время истекло]]></column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">CAUSE_TEXT_GOLD_LOSS</column>
+        <column name="value"><![CDATA[   Золото закончилось]]></column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">CAUSE_TEXT_EVIDENCE_LOSS</column>
+        <column name="value"><![CDATA[   Улик не осталось]]></column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">CAUSE_TEXT_WRONG_STEP_LOSS</column>
+        <column name="value"><![CDATA[   Сделан неверный шаг]]></column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">CAUSE_TEXT_UNKNOWN_LOSS</column>
+        <column name="value"><![CDATA[   Причина не указана]]></column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">IMAGE_URL_WIN</column>
+        <column name="value">quest_win.jpg</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">IMAGE_URL_LOSS</column>
+        <column name="value">quest_loss.jpg</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">IMAGE_URL_TIME</column>
+        <column name="value">quest_time.jpg</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">IMAGE_URL_GOLD</column>
+        <column name="value">quest_gold.jpg</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">IMAGE_URL_EVIDENCE</column>
+        <column name="value">quest_evidence.jpg</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">START_TIME</column>
+        <column name="value">4</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">START_EVIDENCE</column>
+        <column name="value">1</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">START_GOLD</column>
+        <column name="value">3</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">START_STEP</column>
+        <column name="value">0</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">QUEST_END_STEP</column>
+        <column name="value">6</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">QUEST_LOSS_STEP</column>
+        <column name="value">2</column>
+    </insert>
+    <insert tableName="quest_map">
+        <column name="key">QUEST_MIN_RESOURCE</column>
+        <column name="value">0</column>
+    </insert>
+</changeSet>
+</databaseChangeLog>

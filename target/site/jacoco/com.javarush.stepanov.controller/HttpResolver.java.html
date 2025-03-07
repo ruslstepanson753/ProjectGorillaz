@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.controller</a> &gt; <span class="el_source">HttpResolver.java</span></div><h1>HttpResolver.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.controller;
+
+import com.javarush.stepanov.cmd.Command;
+import com.javarush.stepanov.config.NanoSpring;
+import jakarta.servlet.http.HttpServletRequest;
+
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+<span class="nc" id="L9">public class HttpResolver {</span>
+
+    public Command resolve(HttpServletRequest request) {
+        //   /cmd-example
+        try {
+<span class="nc" id="L14">            String requestURI = request.getRequestURI();</span>
+<span class="nc bnc" id="L15" title="All 2 branches missed.">            requestURI = requestURI.equals(HTTP_RESOLVER_EMPTY_URI) ? GO_START : requestURI;</span>
+<span class="nc" id="L16">            String kebabName = requestURI.split(&quot;[?#/]&quot;)[1];</span>
+<span class="nc" id="L17">            String simpleName = convertKebabStyleToCamelCase(kebabName);</span>
+<span class="nc" id="L18">            String fullName = Command.class.getPackageName() + HTTP_RESOLVER_DOT + simpleName;</span>
+<span class="nc" id="L19">            Class&lt;?&gt; aClass = Class.forName(fullName);</span>
+<span class="nc" id="L20">            return (Command) NanoSpring.find(aClass);</span>
+<span class="nc" id="L21">        } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L22">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    private String convertKebabStyleToCamelCase(String input) {
+<span class="nc" id="L27">        StringBuilder result = new StringBuilder();</span>
+<span class="nc" id="L28">        boolean capitalizeNext = true;</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        for (char c : input.toCharArray()) {</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">            if (c == '-') {</span>
+<span class="nc" id="L31">                capitalizeNext = true;</span>
+            } else {
+<span class="nc bnc" id="L33" title="All 2 branches missed.">                if (capitalizeNext) {</span>
+<span class="nc" id="L34">                    result.append(Character.toUpperCase(c));</span>
+<span class="nc" id="L35">                    capitalizeNext = false;</span>
+                } else {
+<span class="nc" id="L37">                    result.append(Character.toLowerCase(c));</span>
+                }
+            }
+        }
+<span class="nc" id="L41">        return result.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

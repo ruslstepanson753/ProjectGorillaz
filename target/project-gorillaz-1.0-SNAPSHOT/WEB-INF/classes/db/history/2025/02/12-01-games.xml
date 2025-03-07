@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+<changeSet id="2025-02-12-01-games" author="stepanov">
+    <createTable tableName="games" >
+        <column autoIncrement="true" name="id" type="BIGINT">
+            <constraints nullable="false" primaryKey="true" primaryKeyName="games_pkey"/>
+        </column>
+        <column name="users_id" type="BIGINT"/>
+        <column name="games_count" type="BIGINT"/>
+        <column name="wins_count" type="BIGINT"/>
+        <column name="loss_count" type="BIGINT"/>
+        <column name="game_name" type="VARCHAR(64)"/>
+        <column name="version" type="BIGINT" defaultValue="1"/>
+    </createTable>
+</changeSet>
+    <changeSet id="2025-02-12-01-add-games-fk" author="stepanov">
+        <addForeignKeyConstraint baseColumnNames="users_id"
+                                 baseTableName="games"
+                                 constraintName="fk_games_users"
+                                 onDelete="SET NULL"
+                                 onUpdate="SET NULL"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+</databaseChangeLog>

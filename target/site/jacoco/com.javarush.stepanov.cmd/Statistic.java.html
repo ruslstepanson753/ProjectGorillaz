@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Statistic.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.cmd</a> &gt; <span class="el_source">Statistic.java</span></div><h1>Statistic.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.cmd;
+
+import com.javarush.stepanov.dto.GameTo;
+import com.javarush.stepanov.service.StatisticService;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.Set;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+public class Statistic implements Command {
+    private final StatisticService statisticService;
+
+<span class="nc" id="L13">    public Statistic(StatisticService statisticService) {</span>
+<span class="nc" id="L14">        this.statisticService = statisticService;</span>
+<span class="nc" id="L15">    }</span>
+
+    @Override
+    public String doGet(HttpServletRequest req) {
+<span class="nc" id="L19">        Map&lt;String, Set&lt;GameTo&gt;&gt; gameStats = Map.of(</span>
+<span class="nc" id="L20">                STATISTIC_ATTRIBUTE_QUEST_GAMERS, statisticService.getGamers(GAME_QUEST_NAME),</span>
+<span class="nc" id="L21">                STATISTIC_ATTRIBUTE_ROULETTE_GAMERS, statisticService.getGamers(GAME_ROULETTE_NAME),</span>
+<span class="nc" id="L22">                STATISTIC_ATTRIBUTE_QUIZ_GAMERS, statisticService.getGamers(GAME_QUIZ_NAME)</span>
+        );
+
+<span class="nc" id="L25">        gameStats.forEach(req.getSession()::setAttribute);</span>
+
+<span class="nc" id="L27">        return getView();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

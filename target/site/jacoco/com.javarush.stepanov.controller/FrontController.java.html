@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrontController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.controller</a> &gt; <span class="el_source">FrontController.java</span></div><h1>FrontController.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.controller;
+
+import com.javarush.stepanov.cmd.Command;
+import com.javarush.stepanov.config.Config;
+import com.javarush.stepanov.config.SessionCreator;
+import com.javarush.stepanov.config.NanoSpring;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+@WebServlet({GO_EMPTY_ADRESS, GO_HOME, GO_START, GO_QUEST, GO_QUIZ,
+        GO_ROULETTE, GO_LOGIN_ENTRANCE, GO_LOGIN_REGISTRATION, GO_STATISTIC})
+<span class="nc" id="L18">public class FrontController extends HttpServlet {</span>
+
+<span class="nc" id="L20">    private final HttpResolver httpResolver = NanoSpring.find(HttpResolver.class);</span>
+
+    private static String getJsp(String view) {
+<span class="nc" id="L23">        return FRONT_CONTROLLER_WEB_INF_VIEW + view + FRONT_CONTROLLER_JSP_EXTENSION;</span>
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L28">        Command command = httpResolver.resolve(req);</span>
+<span class="nc" id="L29">        String view = command.doGet(req);</span>
+<span class="nc" id="L30">        String jsp = getJsp(view);</span>
+<span class="nc" id="L31">        req.getRequestDispatcher(jsp).forward(req, resp);</span>
+<span class="nc" id="L32">    }</span>
+
+    @Override
+    public void init(ServletConfig servletConfig) {
+<span class="nc" id="L36">        Config config = NanoSpring.find(Config.class);</span>
+<span class="nc" id="L37">        config.fillEmptyRepository();</span>
+<span class="nc" id="L38">    }</span>
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L42">        Command command = httpResolver.resolve(req);</span>
+<span class="nc" id="L43">        String redirect = command.doPost(req);</span>
+<span class="nc" id="L44">        resp.sendRedirect(redirect);</span>
+<span class="nc" id="L45">    }</span>
+
+    @Override
+    public void destroy() {
+<span class="nc" id="L49">        NanoSpring.find(SessionCreator.class).close();</span>
+<span class="nc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

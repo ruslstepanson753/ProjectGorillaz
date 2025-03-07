@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConstantsCommon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.constants</a> &gt; <span class="el_source">ConstantsCommon.java</span></div><h1>ConstantsCommon.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.constants;
+
+import lombok.experimental.UtilityClass;
+import java.io.File;
+
+@UtilityClass
+public class ConstantsCommon {
+
+    public static final String LOG_INFO_LIQUBESE_RUN = &quot;Running Liquibase...&quot;;
+    public static final String LOG_INFO_LIQUBESE_DONE = &quot;Running Liquibase...DONE&quot;;
+    public static final String LOG_INFO_LIQUBESE_FROM = &quot; from &quot;;
+    public static final String LOG_INFO_LIQUBESE_END_LEVEL = &quot; end level: &quot;;
+    public static final String LOG_INFO_LIQUBESE_BEGIN_LEVEL = &quot;begin level: &quot;;
+    public static final String LOG_INFO_NANOSPRING_BEGIN = &quot;nanospring init begin: &quot;;
+    public static final String LOG_INFO_NANOSPRING_END =  &quot;nanospring init end: &quot;;
+    public static final String LOG_INFO_NANOSPRING_FINDED =  &quot; was finded by Nanospring&quot;;
+
+    public static final String SET_ATTR_UNUSED = &quot;unused&quot;;
+
+    public static final String ERROR_MESSAGE = &quot;errorMessage&quot;;
+    public static final String ERROR_NANOSPRING_IN_FINDIMPLIMENT = &quot;Not found impl for %s (type=%s)&quot;;
+    public static final String ERROR_NANOSPRING_IN_SCAN_PACKAGES = &quot;Error in scan packages in Nanospring&quot;;
+    public static final String ERROR_NO_ARGS = &quot;login or password is empty&quot;;
+    public static final String ERROR_USER_EXIST = &quot;such user already exists&quot;;
+    public static final String ERROR_PASSWORD_OR_LOGIN_INCORRECT = &quot;login or password is incorrect&quot;;
+    public static final String ERROR_MAP_TO_JSON = &quot;Ошибка при преобразовании Map в JSON&quot;;
+    public static final String ERROR_JSON_TO_MAP = &quot;Ошибка при преобразовании JSON в Map&quot;;
+    public static final String ERROR_BASEREPOSITORY_FIND = &quot;error in Baserepository in metod Find&quot;;
+    public static final String ERROR_LIQUBASE = &quot;Ошибка Liquibase: &quot;;
+    public static final String ERROR_QUIZSERVICE_READ_FILE = &quot;error read file in Quizservice&quot;;
+    public static final String ERROR_CLEANER_REQ_NAME_GET = &quot;GET&quot;;
+    public static final String ERROR_REQ_SET_ATR = &quot;error when attr set to Req&quot;;
+
+<span class="fc" id="L34">    public static final String IMG_PATH = &quot;images&quot; + File.separator;</span>
+<span class="fc" id="L35">    public static final String IMG_START_QUEST = IMG_PATH + &quot;start_quest.jpg&quot;;</span>
+<span class="fc" id="L36">    public static final String IMG_START_ROULETTE = IMG_PATH + &quot;start_roulette.jpg&quot;;</span>
+<span class="fc" id="L37">    public static final String IMG_START_QUIZ = IMG_PATH + &quot;start_quiz.jpg&quot;;</span>
+<span class="fc" id="L38">    public static final String IMG_START_HEAD = IMG_PATH + &quot;start_head.jpg&quot;;</span>
+
+<span class="fc" id="L40">    public static final String AUDIO_PATH = &quot;audio&quot; + File.separator;</span>
+<span class="fc" id="L41">    public static final String AUDIO_START_FOOTER = AUDIO_PATH + &quot;Vesennijj_Leningrad.mp3&quot;;</span>
+
+    public static final String GO_EMPTY_ADRESS = &quot;&quot;;
+    public static final String GO_HOME = &quot;/home&quot;;
+    public static final String GO_START = &quot;/start-page&quot;;
+    public static final String GO_QUEST = &quot;/game-quest&quot;;
+    public static final String GO_QUIZ = &quot;/game-quiz&quot;;
+    public static final String GO_ROULETTE = &quot;/game-roulette&quot;;
+    public static final String GO_LOGIN_ENTRANCE = &quot;/login-entrance&quot;;
+    public static final String GO_LOGIN_REGISTRATION = &quot;/login-registration&quot;;
+    public static final String GO_STATISTIC = &quot;/statistic&quot;;
+
+<span class="fc" id="L53">    public static int QUIZ_NUMBER_OF_QUESTIONS = 5;</span>
+<span class="fc" id="L54">    public static String QUIZ_TEXT_FILE_NAME = &quot;questions.txt&quot;;</span>
+    public static final int QUIZ_FIRST_STEP = 0;
+    public static final String QUIZ_TRUE_ANSWERS = &quot; Верных ответов &quot; ;
+    public static final String QUIZ_FOR_ANSWER = &quot; На вопрос:  &quot; ;
+    public static final String QUIZ_OF_ = &quot; из  &quot; ;
+    public static final String QUIZ_ENTERED_WRONG_ANSWER = &quot;Получен неверный ответ: &quot; ;
+    public static final String QUIZ_TRUE_ANSWER = &quot;Верный ответ: &quot; ;
+
+    public static final String NEXT_LINE = &quot;\n&quot; ;
+    public static final String DOUBLE_NEXT_LINE = &quot;\n\n&quot; ;
+    public final static String EMPTY_LINE = &quot;&quot;;
+    public final static String KEY_START_DESCRIPTION = &quot;START_DESCRIPTION&quot;;
+    public final static String KEY_RED_BUTTON_DESCRIPTION = &quot;RED_BUTTON_DESCRIPTION&quot;;
+    public final static String KEY_BLACK_BUTTON_DESCRIPTION = &quot;BLACK_BUTTON_DESCRIPTION&quot;;
+    public final static String KEY_IMAGE_URL_START = &quot;IMAGE_URL_START&quot;;
+
+    public final static String ROULET_RED = &quot;RED&quot;;
+    public final static String ROULET_BLACK = &quot;BLACK&quot;;
+    public final static String ROULET_ZERO = &quot;ZERO&quot;;
+    public final static String ROULET_MAP_RESULT_WIN = &quot;RESULT_WIN&quot;;
+    public final static String ROULET_MAP_RESULT_LOSS = &quot;RESULT_LOSS&quot;;
+    public final static String ROULET_MAP_IMAGE_URL_ = &quot;IMAGE_URL_&quot;;
+    public final static String ROULET_RESULT_COLOR_ = &quot;RESULT_COLOR_&quot;;
+    public final static String ROULET_ZERO_BUTTON_DESCRIPTION = &quot;ZERO_BUTTON_DESCRIPTION&quot;;
+
+    public final static String GAME_QUEST_NAME = &quot;game-quest&quot;;
+    public final static String GAME_ROULETTE_NAME = &quot;game-roulette&quot;;
+    public final static String GAME_QUIZ_NAME = &quot;game-quiz&quot;;
+
+    public static final String ATTR_LOGIN = &quot;login&quot; ;
+    public final static String ATTR_USER = &quot;user&quot;;
+    public final static String ATTR_GAMES_COUNT = &quot;gamescount&quot;;
+    public final static String ATTR_WINS_COUNT = &quot;winscount&quot;;
+    public final static String ATTR_LOSS_COUNT = &quot;losscount&quot;;
+    public final static String ATTR_IMG_EVIDENCE = &quot;IMAGE_URL_EVIDENCE&quot;;
+    public final static String ATTR_IMG_GOLD = &quot;IMAGE_URL_GOLD&quot;;
+    public final static String ATTR_IMG_TIME = &quot;IMAGE_URL_TIME&quot;;
+    public final static String ATTR_DESCRIPTION = &quot;description&quot;;
+    public final static String ATTR_IMG_URL = &quot;imageUrl&quot;;
+    public final static String ATTR_PICKED_BUTTON = &quot;pickedButton&quot;;
+    public final static String ATTR_IS_DONE = &quot;isDone&quot;;
+    public final static String ATTR_RESULT_COLOR = &quot;resultColor&quot;;
+    public final static String ATTR_WIN_LOSS_DESCRIPTION = &quot;winLossDescription&quot;;
+    public final static String ATTR_PASSWORD = &quot;password&quot;;
+    public final static String ATTR_IMG_START_HEAD = &quot;IMG_START_HEAD&quot;;
+    public final static String ATTR_IMG_START_QUEST = &quot;IMG_START_QUEST&quot;;
+    public final static String ATTR_IMG_START_ROULETTE = &quot;IMG_START_ROULETTE&quot;;
+    public final static String ATTR_IMG_START_QUIZ = &quot;IMG_START_QUIZ&quot;;
+    public final static String ATTR_AUDIO_START_FOOTER = &quot;AUDIO_START_FOOTER&quot;;
+
+    public final static String QUIZ_ATTRIBUTE_ANSWER = &quot;answer&quot;;
+    public final static String QUIZ_ATTRIBUTE_QUESTION_NUMBER = &quot;questionNumber&quot;;
+
+    public final static String STATISTIC_ATTRIBUTE_QUEST_GAMERS = &quot;questGamers&quot;;
+    public final static String STATISTIC_ATTRIBUTE_ROULETTE_GAMERS = &quot;rouletteGamers&quot;;
+    public final static String STATISTIC_ATTRIBUTE_QUIZ_GAMERS = &quot;quizGamers&quot;;
+
+    public final static String LIQUBASE_COMMAND_COPE_UPDATE = &quot;update&quot;;
+    public final static String LIQUBASE_COMMAND_UPDATE_ARGNAME_CHANGE_LOG = &quot;changelogFile&quot;;
+    public final static String LIQUBASE_COMMAND_UPDATE_ARGNAME_URL = &quot;url&quot;;
+    public final static String LIQUBASE_COMMAND_UPDATE_ARGNAME_USERNAME = &quot;username&quot;;
+    public final static String LIQUBASE_COMMAND_UPDATE_ARGNAME_PASSWORD = &quot;password&quot;;
+    public final static String LIQUBASE_URL_CHANGELOG_XML = &quot;db/changelog.xml&quot;;
+
+    public final static String NANO_SPRING_CLASSES_NAME = &quot;classes&quot;;
+    public final static String NANO_SPRING_CLASS_EXTENSION = &quot;.class&quot;;
+    public final static String NANO_SPRING_DOT = &quot;.&quot;;
+    public final static String NANO_SPRING_EMPTY = &quot;&quot;;
+    public final static String NANO_SPRING_CLASS_NAME = &quot;NanoSpring.class&quot;;
+
+    public final static String FRONT_CONTROLLER_WEB_INF_VIEW = &quot;/WEB-INF/&quot;;
+    public final static String FRONT_CONTROLLER_JSP_EXTENSION = &quot;.jsp&quot;;
+
+    public final static String HTTP_RESOLVER_EMPTY_URI = &quot;/&quot;;
+    public final static String HTTP_RESOLVER_DOT = &quot;.&quot;;
+
+    public final static String QUEST_MAP_DESCRIPTION_TEXT_WIN = &quot;DESCRIPTION_TEXT_WIN&quot;;
+    public final static String QUEST_MAP_IMAGE_URL_WIN = &quot;IMAGE_URL_WIN&quot;;
+    public final static String QUEST_MAP_DESCRIPTION_TEXT_LOSS = &quot;DESCRIPTION_TEXT_LOSS&quot;;
+    public final static String QUEST_MAP_IMAGE_URL_LOSS = &quot;IMAGE_URL_LOSS&quot;;
+    public static final String QUEST_BUTTON_LEFT = &quot;l&quot;;
+    public static final String QUEST_BUTTON_RIGHT = &quot;r&quot;;
+    public static final String QUEST_MAP_START_STEP = &quot;START_STEP&quot;;
+    public static final String QUEST_MAP_START_TIME = &quot;START_TIME&quot;;
+    public static final String QUEST_MAP_START_EVIDENCE = &quot;START_EVIDENCE&quot;;
+    public static final String QUEST_MAP_START_GOLD = &quot;START_GOLD&quot;;
+    public static final String QUEST_MAP_CAUSE_TEXT_TIME_LOSS = &quot;CAUSE_TEXT_TIME_LOSS&quot;;
+    public static final String QUEST_MAP_CAUSE_TEXT_GOLD_LOSS = &quot;CAUSE_TEXT_GOLD_LOSS&quot;;
+    public static final String QUEST_MAP_CAUSE_TEXT_EVIDENCE_LOSS = &quot;CAUSE_TEXT_EVIDENCE_LOSS&quot;;
+    public static final String QUEST_MAP_CAUSE_TEXT_WRONG_STEP_LOSS = &quot;CAUSE_TEXT_WRONG_STEP_LOSS&quot;;
+    public static final String QUEST_MAP_CAUSE_TEXT_UNKNOWN_LOSS = &quot;CAUSE_TEXT_UNKNOWN_LOSS&quot;;
+    public final static String QUEST_ATTRIBUTE_BUTTON_LEFT = &quot;buttonLeft&quot;;
+    public final static String QUEST_ATTRIBUTE_BUTTON_RIGHT = &quot;buttonRight&quot;;
+    public final static String QUEST_ATTRIBUTE_RESULT = &quot;result&quot;;
+    public final static String QUEST_ATTRIBUTE_RESULT_RIGHT = &quot;resultRight&quot;;
+    public final static String QUEST_ATTRIBUTE_RESULT_LEFT = &quot;resultLeft&quot;;
+    public final static String QUEST_ATTRIBUTE_TIME = &quot;time&quot;;
+    public final static String QUEST_ATTRIBUTE_EVIDENCE = &quot;evidence&quot;;
+    public final static String QUEST_ATTRIBUTE_GOLD = &quot;gold&quot;;
+    public final static String QUEST_ATTRIBUTE_IS_WIN = &quot;isWin&quot;;
+    public final static String QUEST_ATTRIBUTE_IS_LOSS = &quot;isLoss&quot;;
+    public final static String QUEST_ATTRIBUTE_LOSS_CAUSE = &quot;lossСause&quot;;
+    public static final int QUEST_END_STEP = 6;
+    public static final int QUEST_MIN_RESOURCE = 0;
+    public static final int QUEST_LOSS_STEP = 2;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

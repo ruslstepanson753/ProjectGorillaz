@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginRegistration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjectGorillaz</a> &gt; <a href="index.source.html" class="el_package">com.javarush.stepanov.cmd</a> &gt; <span class="el_source">LoginRegistration.java</span></div><h1>LoginRegistration.java</h1><pre class="source lang-java linenums">package com.javarush.stepanov.cmd;
+
+import com.javarush.stepanov.dto.UserTo;
+import com.javarush.stepanov.service.UserService;
+import com.javarush.stepanov.util.ReqHelp;
+import jakarta.servlet.http.HttpServletRequest;
+import static com.javarush.stepanov.constants.ConstantsCommon.*;
+
+public class LoginRegistration implements Command {
+    private final UserService userService;
+
+<span class="fc" id="L12">    public LoginRegistration(UserService userService) {</span>
+<span class="fc" id="L13">        this.userService = userService;</span>
+<span class="fc" id="L14">    }</span>
+
+    @Override
+    public String doPost(HttpServletRequest req) {
+<span class="fc" id="L18">        String enteredLogin = req.getParameter(ATTR_LOGIN);</span>
+<span class="fc" id="L19">        String enteredPassword = req.getParameter(ATTR_PASSWORD);</span>
+
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if ((userService.isExistLogin(enteredLogin))) {</span>
+<span class="fc" id="L22">            ReqHelp.createErrorToView(req, ERROR_USER_EXIST);</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        } else if (userService.loginOrPasswordIsEmpty(enteredLogin, enteredPassword)) {</span>
+<span class="fc" id="L24">            ReqHelp.createErrorToView(req, ERROR_NO_ARGS);</span>
+        } else {
+<span class="fc" id="L26">            UserTo userTo = userService.createUser(enteredLogin, enteredPassword);</span>
+<span class="fc" id="L27">            addUserInfoToSession(req, userTo);</span>
+        }
+<span class="fc" id="L29">        return GO_START;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
