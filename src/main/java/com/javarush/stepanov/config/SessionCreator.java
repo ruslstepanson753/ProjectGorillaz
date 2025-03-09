@@ -1,9 +1,6 @@
 package com.javarush.stepanov.config;
 
 import com.javarush.stepanov.entity.*;
-import io.lettuce.core.RedisClient;
-import io.lettuce.core.RedisURI;
-import io.lettuce.core.api.StatefulRedisConnection;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -43,13 +40,13 @@ public class SessionCreator implements Closeable {
 //        redisClient =  prepareRedisClient();
     }
 
-    private RedisClient prepareRedisClient() {
-        RedisClient redisClient = RedisClient.create(RedisURI.create("localhost", 6379));
-        try (StatefulRedisConnection<String, String> connection = redisClient.connect()) {
-            System.out.println("\nConnected to Redis\n");
-        }
-        return redisClient;
-    }
+//    private RedisClient prepareRedisClient() {
+//        RedisClient redisClient = RedisClient.create(RedisURI.create("localhost", 6379));
+//        try (StatefulRedisConnection<String, String> connection = redisClient.connect()) {
+//            System.out.println("\nConnected to Redis\n");
+//        }
+//        return redisClient;
+//    }
 
     public Session getSession() {
         return sessionBox.get() == null || !sessionBox.get().isOpen()
