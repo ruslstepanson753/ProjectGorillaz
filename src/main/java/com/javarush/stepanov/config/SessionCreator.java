@@ -1,6 +1,9 @@
 package com.javarush.stepanov.config;
 
 import com.javarush.stepanov.entity.*;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.RedisURI;
+import io.lettuce.core.api.StatefulRedisConnection;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -12,16 +15,19 @@ import java.io.Closeable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.javarush.stepanov.constants.ConstantsCommon.*;
+import static java.util.Objects.nonNull;
 
 
 @Slf4j
 public class SessionCreator implements Closeable {
 
     private final SessionFactory sessionFactory;
+//    private final RedisClient redisClient;
     private final ThreadLocal<AtomicInteger> levelBox = new ThreadLocal<>();
     private final ThreadLocal<Session> sessionBox = new ThreadLocal<>();
     private static final String BROWN = "\u001B[38;5;94m";
     private static final String RESET = "\u001B[0m";
+
 
     @SneakyThrows
     public SessionCreator(ApplicationProperties applicationProperties) {
@@ -34,6 +40,15 @@ public class SessionCreator implements Closeable {
         configuration.addAnnotatedClass(Game.class);
         configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
         sessionFactory = configuration.buildSessionFactory();
+//        redisClient =  prepareRedisClient();
+    }
+
+    private RedisClient prepareRedisClient() {
+        RedisClient redisClient = RedisClient.create(RedisURI.create("localhost", 6379));
+        try (StatefulRedisConnection<String, String> connection = redisClient.connect()) {
+            System.out.println("\nConnected to Redis\n");
+        }
+        return redisClient;
     }
 
     public Session getSession() {
@@ -78,5 +93,14 @@ public class SessionCreator implements Closeable {
     public void close() {
         sessionFactory.close();
     }
+
+//    private void shutdown() {
+//        if (nonNull(sessionFactory)) {
+//            sessionFactory.close();
+//        }
+//        if (nonNull(redisClient)) {
+//            redisClient.shutdown();
+//        }
+//    }
 
 }
