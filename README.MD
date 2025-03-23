@@ -1,4 +1,4 @@
 # Hibernate final Project
 ### Instructions for launching:
-- launch run_docker.bat
+- launch docker-compose.yml
 #### _2025 JRU Gorillaz, Stepanov Ruslan._
